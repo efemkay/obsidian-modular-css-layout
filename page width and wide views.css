@@ -1,0 +1,37 @@
+
+/* In order to use this modular css snippet, you would need to
+   1) disable "Readable line length" in Settings > Editor
+   
+   and for enabling wide view for table and dataview results,
+   you will need mgmeyer's Contextual Typography plugin
+   
+   applicable cssClass:
+    - wide-page
+	- wide-dataview
+	- wide-table
+*/
+
+/* === Set Manual Readable Line Length (RLL) === */
+/* --- settings applicable to editing and reading view */
+	.markdown-source-view.mod-cm6 .cm-contentContainer,
+	.markdown-preview-view .markdown-preview-sizer > div
+	{ max-width: 750px; margin: auto; }
+
+
+/* === Set Wide Page to Override RLL Above === */
+/* --- settings applicable to all, including dataview and table */
+	.wide-page.markdown-source-view.mod-cm6:not(.is-rtl) .cm-contentContainer,
+	.wide-page.markdown-preview-view .markdown-preview-sizer > div
+	{ max-width: 1400px; margin: auto; }
+
+/* === Set Wide Dataview to Override RLL Above === */
+/* --- settings applicable to dataview only, the rest remain with default RLL */
+	.wide-dataview.markdown-preview-view .markdown-preview-sizer .el-lang-dataview
+	{ max-width: 1400px; }
+
+/* === Set Wide Table to Override RLL Above === */
+/* --- settings applicable to dataview only, the rest remain with default RLL */
+	.wide-table.markdown-preview-view .markdown-preview-sizer .el-table
+	{ max-width: 1400px; }
+	.wide-table.markdown-preview-view .markdown-preview-sizer .el-table > table
+	{ margin: auto; }
