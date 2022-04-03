@@ -1,37 +1,80 @@
-
-/* In order to use this modular css snippet, you would need to
-   1) disable "Readable line length" in Settings > Editor
-   
-   and for enabling wide view for table and dataview results,
-   you will need mgmeyer's Contextual Typography plugin
-   
-   applicable cssClass:
-    - wide-page
-	- wide-dataview
-	- wide-table
+/* === README ===
+	Updated: 2022-04-03 (version: 0.0.5)
+	Author: Faiz Khuzaimah (@faizkhuzaimah)
+	
+	What is this snippet for?
+	- In order to use this modular css snippet, you would need to
+		1) disable "Readable line length" in Settings > Editor
+		
+		and for enabling wide view for table and dataview results,
+		you will need mgmeyer's Contextual Typography plugin
+	- available cssClass:
+		- wide-page
+		- wide-dataview
+		- wide-table
+		
+	Compatibility
+	- tested to work fine with the following Community Theme
+		- Default Theme
+		- Primary
+		- ITS Theme
+		- Willemstad
 */
 
 /* === Set Manual Readable Line Length (RLL) === */
-/* --- settings applicable to editing and reading view */
-	.markdown-source-view.mod-cm6 .cm-contentContainer,
-	.markdown-preview-view .markdown-preview-sizer > div
-	{ max-width: 750px; margin: auto; }
+	/* - reset the RLL to wide (1400px) */
+	.wide-page.markdown-source-view.mod-cm6 .cm-contentContainer,
+	.wide-page.markdown-source-view.mod-cm6 .cm-contentContainer *
+		{ max-width: 2400px !important; }
+	.wide-page.markdown-source-view.mod-cm6 .cm-contentContainer .cm-content
+		{ width: 100%;}
 
-
-/* === Set Wide Page to Override RLL Above === */
-/* --- settings applicable to all, including dataview and table */
-	.wide-page.markdown-source-view.mod-cm6:not(.is-rtl) .cm-contentContainer,
+	.wide-page.markdown-preview-view .markdown-preview-sizer.markdown-preview-sizer,
 	.wide-page.markdown-preview-view .markdown-preview-sizer > div
-	{ max-width: 1400px; margin: auto; }
+		{ max-width: 2400px; margin: auto; }
+	.wide-page.markdown-preview-view .markdown-preview-sizer,
+	.wide-page.markdown-preview-view.is-readable-line-width .markdown-preview-sizer
+		{ width: 100% ; }
 
-/* === Set Wide Dataview to Override RLL Above === */
-/* --- settings applicable to dataview only, the rest remain with default RLL */
-	.wide-dataview.markdown-preview-view .markdown-preview-sizer .el-lang-dataview
-	{ max-width: 1400px; }
 
-/* === Set Wide Table to Override RLL Above === */
-/* --- settings applicable to dataview only, the rest remain with default RLL */
-	.wide-table.markdown-preview-view .markdown-preview-sizer .el-table
-	{ max-width: 1400px; }
-	.wide-table.markdown-preview-view .markdown-preview-sizer .el-table > table
-	{ margin: auto; }
+/* === Set Wide Dataview and Wide Table === */
+
+	/* set the main container to wide view */
+	/* - Editing View */
+	.wide-table.cm-contentContainer .cm-content,
+	.wide-dataview.cm-contentContainer .cm-content,
+	
+	.wide-table.markdown-source-view.mod-cm6 .cm-contentContainer,
+	.wide-table.markdown-source-view.mod-cm6 .cm-contentContainer *,
+	.wide-dataview.markdown-source-view.mod-cm6 .cm-contentContainer,
+	.wide-dataview.markdown-source-view.mod-cm6 .cm-contentContainer *
+	{ max-width: 1400px !important;	margin: auto;}
+	
+	.wide-table.markdown-source-view.mod-cm6 .cm-contentContainer .cm-content,
+	.wide-dataview.markdown-source-view.mod-cm6 .cm-contentContainer .cm-content { width: 100% ; }
+	
+	.wide-table.markdown-source-view.mod-cm6 .cm-contentContainer > div > div,
+	.wide-dataview.markdown-source-view.mod-cm6 .cm-contentContainer > div > div
+	{max-width: 750px !important; margin: auto !important;}
+	.wide-table.markdown-source-view.mod-cm6 .cm-contentContainer > div > div.el-table,
+	.wide-dataview.markdown-source-view.mod-cm6 .cm-contentContainer > div > div.cm-preview-code-block
+	{max-width: 1400px !important; margin: auto !important;}
+	
+	/* - Reading View */
+	.wide-table.markdown-preview-view .markdown-preview-sizer.markdown-preview-sizer,
+	.wide-dataview.markdown-preview-view .markdown-preview-sizer.markdown-preview-sizer { max-width: 1400px; }
+	
+	.wide-table.markdown-preview-view.is-readable-line-width .markdown-preview-sizer, 						/* for blue topaz */
+	.wide-dataview.markdown-preview-view.is-readable-line-width .markdown-preview-sizer { width: 100%; }	/* for blue topaz */
+	.wide-table table { margin-inline: auto;}																/* for ITS theme */
+	
+	/* - set all the div under the main container (including those i want wide view to normal view */
+	.wide-table.markdown-preview-view .markdown-preview-sizer > div,
+	.wide-dataview.markdown-preview-view .markdown-preview-sizer > div	{ max-width: 750px; margin: auto; }
+	/* individually set the div i want wide view to wide view */
+	.wide-table.cm-contentContainer .cm-content > div.el-table,
+	.wide-table.markdown-preview-view .markdown-preview-sizer > div.el-table { max-width: 1400px; }
+	.wide-dataview.markdown-preview-view .markdown-preview-sizer > div.el-lang-dataview { max-width: 1400px; }
+	
+
+
