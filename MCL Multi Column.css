@@ -1,0 +1,188 @@
+/* === README ===
+	Updated: 2022-04-10 (version: 0.0.5)
+	- version 0.1.0 for list-based, 0.0.5 for callout based
+	Author: Faiz Khuzaimah (@faizkhuzaimah)
+	
+	What is this snippet for?
+	- to allow Obsidian users to change the layout with preset css by just specifying
+	  the cssClass in the frontmatter (YAML) or naming the Callout block
+	- available cssClass
+		- cssClass: two-column-list
+		- cssClass: {.two-column-list-block}
+		- cssClass: three-column-list
+		- cssClass: {.three-column-list-block}
+		- cssClass: multi-column-list
+	- available Callout format
+		- [!multi-column]
+		- [!blank-container]
+*/
+
+/* @settings
+
+name: Modular CSS Layout
+id: a-unique-id2
+settings:
+
+    - 
+        id: multi-column-title
+        title: Multi Column Settings
+        type: heading
+        level: 3
+    - 
+        id: callout-min-width
+        title: Minimum Sub-Callout Width
+        description: for sub-callout in [!multi-column]. in px units
+        type: variable-number-slider
+        default: 200
+        min: 100
+        max: 500
+        step: 50
+		format: px
+    - 
+        id: float-small-width
+        title: Floating Callout Width - Small
+        description: in px units
+        type: variable-number-slider
+        default: 300
+        min: 200
+        max: 400
+        step: 50
+		format: px
+    - 
+        id: float-medium-width
+        title: Floating Callout Width - Medium
+        description: in px units
+        type: variable-number-slider
+        default: 400
+        min: 300
+        max: 500
+        step: 50
+		format: px
+    - 
+        id: float-large-width
+        title: Floating Callout Width - Large
+        description: in px units
+        type: variable-number-slider
+        default: 600
+        min: 500
+        max: 700
+        step: 50
+		format: px
+
+    - 
+        id: mc-list-title
+        title: Multi Column List Settings
+        type: heading
+        level: 3
+    - 
+        id: list-min-width
+        title: Minimum Column Width
+        description: in px units
+        type: variable-number-slider
+        default: 200
+        min: 100
+        max: 500
+        step: 50
+		format: px
+    - 
+        id: col-rule-color
+        title: Column Ruler Color
+        type: variable-color
+        format: hsl-split
+        default: '#b3b3b3'
+    - 
+        id: col-rule-width
+        title: Column Ruler Width
+        description: in px units
+        type: variable-number-slider
+        default: 1
+        min: 0
+        max: 4
+        step: 1
+		format: px
+
+*/
+
+body{
+	--callout-min-width: 200px;
+	--list-min-width: 200px;
+	--col-rule-color: #b3b3b3;
+	--col-rule-width: 1px;
+	--float-small-width: 300px;
+	--float-medium-width: 400px;
+	--float-large-width: 600px;
+}
+
+
+/* === Multi Column "DIV"'s Using Callout === */
+	/* - Main multi-column snippet using Callout */
+
+	/* the main placeholder, hide everything */
+	div[data-callout="multi-column"].callout { background: unset; border: unset; margin: unset; padding: unset; }
+	div[data-callout="multi-column"].callout > .callout-title { display: none; }
+	/* make main placeholder callout-content a flex */
+	div[data-callout="multi-column"].callout > .callout-content { display: flex; flex-wrap: wrap; padding: 0; gap: 0.5rem;}
+	div[data-callout="multi-column"].callout > .callout-content .callout { flex: 1 1 var(--callout-min-width); margin: 0;}
+	
+	/* this is a workaround, need to figure out how to solve div height issue */
+	div[data-callout="multi-column"].callout > .callout-content .callout-content { border: unset; }
+	
+	@media (min-width: 500px) {
+		div[data-callout="multi-column"].callout > div.callout-content .callout.is-collapsed { background-color: unset; border: unset;}
+		div[data-callout="multi-column"].callout > div.callout-content .callout.is-collapsed .callout-title { border-left: 4px solid rgba(var(--callout-color)); border-top-left-radius: 3px;}
+	}
+
+
+
+
+	/* - Blank Container "DIV"'s - can be used with Main Multi-Column layout above */
+	div[data-callout="blank-container"].callout,
+	div[data-callout="blank-container"].callout > .callout-content { border: 0 !important; padding-top: 0; background: unset !important; }
+	div[data-callout="blank-container"].callout > .callout-title { display: none; }
+
+	/* testing for another */
+	div[data-callout="multi-column-flex-height"].callout { background: unset; border: unset; margin: unset; padding: unset; }
+	div[data-callout="multi-column-flex-height"].callout > .callout-title { display: none; }
+	
+	div[data-callout="multi-column-flex-height"].callout > .callout-content { display: flex; flex-wrap: wrap; padding: 0; gap: 0.5rem;}
+	div[data-callout="multi-column-flex-height"].callout > .callout-content .callout {flex: 1 1 var(--callout-min-width); margin: 0; background: unset; border-left: unset;}
+	div[data-callout="multi-column-flex-height"].callout > .callout-content .callout .callout-title { border-left: 4px solid rgba(var(--callout-color)); border-top-left-radius: 3px;}
+	div[data-callout="multi-column-flex-height"].callout > .callout-content .callout .callout-content { margin: 0; border-left: 4px solid rgba(var(--callout-color)); border-bottom-left-radius: 3px; background-color: var(--background-secondary);}
+
+
+/* === Floating Callout === */
+	@media (min-width: 500px){	
+		div[data-callout*="left"].callout {float: left; margin-right: 20px; margin-top: 0;}
+		div[data-callout*="right"].callout {float: right; margin-left: 20px; margin-top: 0;}
+		div[data-callout*="small"].callout {width: var(--float-small-width);}
+		div[data-callout*="medium"].callout {width: var(--float-medium-width);}
+	}
+	@media (min-width: 750px){	
+		div[data-callout*="large"].callout {width: var(--float-large-width);}
+	}
+
+/* === Multi Column Lists === */
+
+	/* - xx-column-list for first level only list, but apply anywhere */
+	/* - xx-column-list-block apply at block level - but require JV's Markdown Attributes plugin */
+	
+	@media (min-width: 500px ){
+		.two-column-list div > ul,
+		.two-column-list-block {columns: 2; column-gap: 3rem;}
+		.three-column-list div > ul,
+		.three-column-list-block {columns: 3; column-gap: 3rem;} 
+	}
+	
+
+	/* - dashboard style, page level only, apply to any first level */
+	/* -- applicable only when width > 400pt, else just single column */
+	@media (min-width: 500px)
+		{ .two-column-grid-list div > ul { display: grid; grid-column-gap:3em; grid-template-columns:repeat(2,1fr);} }
+	@media (min-width: 600px){
+		.three-column-grid-list div > ul { display: grid; grid-column-gap:3em; grid-template-columns:repeat(3,1fr);}
+	}
+	
+	.multi-column-list div > ul,
+	.multi-column-list-block {
+		column-width: var(--list-min-width); column-gap: 3rem; column-rule: var(--col-rule-width) solid var(--col-rule-color);
+	}

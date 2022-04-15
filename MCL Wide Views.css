@@ -1,0 +1,79 @@
+/* === README ===
+	Updated: 2022-04-16 (version: 0.0.7)
+	- pending: style settings for width and toggle whole class
+	Author: Faiz Khuzaimah / twitter: @faizkhuzaimah / github: https://github.com/efemkay
+	
+	What is this snippet for?
+	- In order to use this modular css snippet, you would need to
+		1) disable "Readable line length" in Settings > Editor
+		
+		and for enabling wide view for table and dataview results,
+		you will need mgmeyer's Contextual Typography plugin
+	- available cssClass:
+		- wide-page
+		- wide-dataview
+		- wide-table
+		- wide-backlinks
+		
+	Compatibility
+	- tested to work fine with the following Community Theme
+		- Default Theme
+		- Big Sur / Blue Topaz / California Cost / Notation / Pisum / Primary / Prism / Things / Typewriter
+	- Partial
+		- ITS Theme / Willemstad (partial support, it also has own good width control support)
+	- Community Theme not compatible
+		- Atom (because it uses !important at .markdown-preview-sizer, fix to be done at later date)
+		- Minimal (I won't support this, it already has good width control support)
+	
+	Credits
+	- Kevin Powell Youtube channel
+*/
+
+
+/* === Wide Page === */
+
+	/*	Editing View -- set Readable Line Length (RLL) to wide (100%) for any css class with "wide" word
+		in it. "width:100%" added for Blue Topaz */
+	div[class*="wide-"].markdown-source-view.mod-cm6 .cm-contentContainer.cm-contentContainer,
+	div[class*="wide-"].markdown-source-view.mod-cm6 .cm-contentContainer.cm-contentContainer > div,
+	div[class*="wide-"].markdown-source-view.mod-cm6 .cm-contentContainer.cm-contentContainer > div .cm-line
+		{ max-width: 100%; width: 100%;}
+		
+	/*	Reading View -- similar to Editing View, set the RLL to 100% for any css class with "wide" word
+		in it. "width:100%" added for Blue Topaz */
+	div[class*="wide-"].markdown-preview-view .markdown-preview-sizer.markdown-preview-sizer, /* double-up for specificity */
+	div[class*="wide-"].markdown-preview-view .markdown-preview-sizer.markdown-preview-sizer > div
+		{ max-width: 100%; margin: auto; width: 100%;} /* important is for Atom theme */
+	
+	/* special adjustment for Willemstad theme, since its table not auto margin */
+	table { margin-inline: auto; }
+		
+	/* special line just for Atom theme -- commented out for now */
+	/*
+	div[class*="wide-"].markdown-preview-view .markdown-preview-sizer.markdown-preview-sizer,
+	div[class*="wide-"].markdown-preview-view .markdown-preview-sizer.markdown-preview-sizer > div
+		{ max-width: 100% !important; }
+	*/
+
+
+/* === Wide Dataview, Table & Backlink === */
+
+	/*	Editing View -- set all divs back to normal width (ensuring specificity rule over some theme), then
+		expand to full-width for each selected css class (i.e. wide-dataview, wide-table and wide-backlinks) */
+	div.markdown-source-view.mod-cm6:is(.wide-dataview,.wide-table,.wide-backlinks) .cm-contentContainer.cm-contentContainer > div > div,
+	div.markdown-source-view.mod-cm6:is(.wide-dataview,.wide-table,.wide-backlinks) .cm-contentContainer.cm-contentContainer > div > .cm-line
+		{max-width: 750px; margin: auto !important;} /* important for margin needed because app.css:2842 use it */
+	div[class*="-dataview"].markdown-source-view.mod-cm6 .cm-contentContainer.cm-contentContainer > div > div:is(.cm-preview-code-block),
+	div[class*="-table"].markdown-source-view.mod-cm6 .cm-contentContainer.cm-contentContainer > div > div:is(.HyperMD-table-row, .cm-table-widget),
+	div[class*="-backlinks"].markdown-source-view.mod-cm6 .cm-contentContainer.cm-contentContainer > div:is(.embedded-backlinks) > div
+		{ max-width: 100%; }
+
+
+	/*	Reading View -- similar to Editing View, set all divs to normal-width and then selected divs to full-width, 
+		however, for Reading View, wide-dataview and wide-table will require Contextual Typography plugin */
+	div.markdown-preview-view:is(.wide-dataview,.wide-table,.wide-backlinks) .markdown-preview-sizer.markdown-preview-sizer > div
+		{ max-width: 750px; margin: auto; } /* important is for Atom theme */
+	div[class*="-dataview"].markdown-preview-view .markdown-preview-sizer.markdown-preview-sizer > div:is(.el-lang-dataview),
+	div[class*="-table"].markdown-preview-view .markdown-preview-sizer.markdown-preview-sizer > div:is(.el-table),
+	div[class*="-backlinks"].markdown-preview-view .markdown-preview-sizer.markdown-preview-sizer > div:is(.embedded-backlinks)
+		{ max-width: 100%; }
