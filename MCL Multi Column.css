@@ -15,6 +15,18 @@
 	- available Callout format
 		- [!multi-column]
 		- [!blank-container]
+		
+	Compatibility
+	- tested to work fine with the following Community Theme
+		- Default Theme
+		- Big Sur / Blue Topaz / California Cost / Notation / Pisum / Prism / Things / Typewriter (with minor issue on title color)
+	- known to be not working
+		- Primary (due to the theme heaving theming, box-shadow and so on)
+	
+	Credits
+	- Kevin Powell Youtube channel
+	- https://css-tricks.com/
+	- discord OMG members @Cáo thoát tục (Cáo thoát tục#6993), @mulfok (mulfok#6931) and @Rainbell (Rainbell#3617)
 */
 
 /* @settings
@@ -122,13 +134,14 @@ body{
 	div[data-callout="multi-column"].callout > .callout-title { display: none; }
 	/* make main placeholder callout-content a flex */
 	div[data-callout="multi-column"].callout > .callout-content { display: flex; flex-wrap: wrap; padding: 0; gap: 0.5rem;}
-	div[data-callout="multi-column"].callout > .callout-content .callout { flex: 1 1 var(--callout-min-width); margin: 0;}
+	div[data-callout="multi-column"].callout > .callout-content > div { flex: 1 1 var(--callout-min-width); margin: 0;}
 	
 	/* this is a workaround, need to figure out how to solve div height issue */
 	div[data-callout="multi-column"].callout > .callout-content .callout-content { border: unset; }
 	
 	@media (min-width: 500px) {
-		div[data-callout="multi-column"].callout > div.callout-content .callout.is-collapsed { background-color: unset; border: unset;}
+		/* .is-collapsed is used to draw the border-left only when it's collapsed */
+		div[data-callout="multi-column"].callout > div.callout-content .callout.is-collapsed { background-color: unset; border: unset; box-shadow: unset;}
 		div[data-callout="multi-column"].callout > div.callout-content .callout.is-collapsed .callout-title { border-left: 4px solid rgba(var(--callout-color)); border-top-left-radius: 3px;}
 	}
 
@@ -137,7 +150,7 @@ body{
 
 	/* - Blank Container "DIV"'s - can be used with Main Multi-Column layout above */
 	div[data-callout="blank-container"].callout,
-	div[data-callout="blank-container"].callout > .callout-content { border: 0 !important; padding-top: 0; background: unset !important; }
+	div[data-callout="blank-container"].callout > .callout-content { border: 0 !important; padding-top: 0; background: unset !important; box-shadow: unset; }
 	div[data-callout="blank-container"].callout > .callout-title { display: none; }
 
 	/* testing for another */
@@ -146,6 +159,7 @@ body{
 	
 	div[data-callout="multi-column-flex-height"].callout > .callout-content { display: flex; flex-wrap: wrap; padding: 0; gap: 0.5rem;}
 	div[data-callout="multi-column-flex-height"].callout > .callout-content .callout {flex: 1 1 var(--callout-min-width); margin: 0; background: unset; border-left: unset;}
+	/* need to reintroduce border-left as original callout put border on the parent callout */
 	div[data-callout="multi-column-flex-height"].callout > .callout-content .callout .callout-title { border-left: 4px solid rgba(var(--callout-color)); border-top-left-radius: 3px;}
 	div[data-callout="multi-column-flex-height"].callout > .callout-content .callout .callout-content { margin: 0; border-left: 4px solid rgba(var(--callout-color)); border-bottom-left-radius: 3px; background-color: var(--background-secondary);}
 
@@ -176,10 +190,12 @@ body{
 
 	/* - dashboard style, page level only, apply to any first level */
 	/* -- applicable only when width > 400pt, else just single column */
+	/* grid list block level cannot be done, it breaks formatting */
 	@media (min-width: 500px)
 		{ .two-column-grid-list div > ul { display: grid; grid-column-gap:3em; grid-template-columns:repeat(2,1fr);} }
 	@media (min-width: 600px){
-		.three-column-grid-list div > ul { display: grid; grid-column-gap:3em; grid-template-columns:repeat(3,1fr);}
+		.three-column-grid-list div > ul
+			{ display: grid; grid-column-gap:3em; grid-template-columns:repeat(3,1fr);}
 	}
 	
 	.multi-column-list div > ul,
