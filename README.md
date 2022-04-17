@@ -13,20 +13,18 @@ For wide-dataview and wide-table, you will need to install [Contextual Typograph
 <img src="https://user-images.githubusercontent.com/42369515/163697717-911d36b3-f505-49c2-803b-775f1d7fae9a.png" height="350px">
 
 
-
 ## Multi Column Views
 ### Using Callout
 - Custom Callout available
-	- `> [!three-column]`
-	- `> [!two-column]`
+	- `> [!multi-column]`
 	- `> [!blank-container]`
 
-This layout take advantage of the new Obsidian Callout feature. Using the callout as parent 'div' to house the sub callout.
+This layout take advantage of the new Obsidian Callout feature. Using the callout as parent 'div' to house the sub callout. You can nest as many sub-callouts/dataview codeblocks within the [!multi-column] callout - it will create a sub-callout/dataview renders with minimum width of 200px (can be change using Sytle Settings plugin). The sub-callout/dataview renders will expand if [!multi-column] has extra space or overflow to next row if it doesn't.
 
 Once you enabled the css snippet, you use this feature by creating a custom callout like example below
 
 ~~~markdown
-> [!three-column]
+> [!multi-column]
 > 
 >> [!note]+ Work
 >> your notes or lists here. using markdown formatting
