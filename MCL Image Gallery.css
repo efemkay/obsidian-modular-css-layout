@@ -1,0 +1,28 @@
+/* === README ===
+	Updated: 2022-04-17 (version: 0.0.5)
+	- version 0.1.0 for list-based, 0.0.5 for callout based
+	Author: Faiz Khuzaimah (@faizkhuzaimah)
+	
+	What is this snippet for?
+	- to allow Obsidian users to change the layout with preset css by just specifying
+	  the cssClass in the frontmatter (YAML) or naming the Callout block
+	- available cssClass
+		- cssClass: image-gallery
+	- available Callout format
+		- [!image gallery container]
+*/
+
+/* === Image Gallery direct in note === */
+	.image-gallery div[data-embed-type="image"] > p { display: flex; gap: 5px; margin-block: 5px; }
+	.image-gallery div[data-embed-type="image"] img { max-height: 350px; border-radius: 15px; border: 1px solid var(--background-modifier-border); }
+
+/* === Image Gallery with Callout === */
+	
+	/* - Blank Container "DIV"'s - can be used with Main Multi-Column layout above */
+	div[data-callout*="container"].callout,
+	div[data-callout*="container"].callout > .callout-content { border: 0 !important; padding-top: 0; background: unset !important; }
+	div[data-callout*="container"].callout > .callout-title { display: none; }
+	
+	/* - to use add callout with [!image gallery container] */
+	div[data-callout*="image"].callout > .callout-content > p { display: flex; margin-block:5px; gap: 5px; }
+	div[data-callout*="image"].callout > .callout-content > p img { border-radius: 15px; max-height: 350px; border: 1px solid var(--background-modifier-border) }
