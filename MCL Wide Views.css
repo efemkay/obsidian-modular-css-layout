@@ -1,5 +1,5 @@
 /* === README ===
-	Updated: 2022-04-18 (version: 0.0.8)
+	Updated: 2022-04-19 (version: 0.0.8)
 	- pending: style settings for width and toggle whole class
 	Author: Faiz Khuzaimah / twitter: @faizkhuzaimah / github: https://github.com/efemkay
 	
@@ -30,6 +30,34 @@
 	- Kevin Powell Youtube channel
 */
 
+/* @settings
+
+name: Modular CSS Layout - Wide Views
+id: modular-css-layout
+settings:
+
+    - 
+        id: wide-view-title
+        title: Wide View Settings
+        type: heading
+        level: 2
+		collapsed: true
+    - 
+        id: normal-max-width
+        title: Max Width for Normal Width
+        description: width 'narrow' view . unit in px
+        type: variable-number-slider
+        default: 750
+        min: 600
+        max: 900
+        step: 50
+		format: px
+
+*/
+
+body{
+	--normal-max-width: 750px;
+}
 
 /* === Wide Page === */
 
@@ -48,6 +76,8 @@
 	
 	/* special adjustment for Willemstad theme, since its table not auto margin */
 	table { margin-inline: auto; }
+	/* special adjustment for Minimal theme */
+	div[class*="wide-"].markdown-preview-view {padding-inline: 30px;}
 		
 	/* special line just for Atom theme -- commented out for now */
 	/*
@@ -63,7 +93,7 @@
 		expand to full-width for each selected css class (i.e. wide-dataview, wide-table and wide-backlinks) */
 	div.markdown-source-view.mod-cm6:is(.wide-dataview,.wide-table,.wide-backlinks,.wide-callout) .cm-contentContainer.cm-contentContainer > div > div,
 	div.markdown-source-view.mod-cm6:is(.wide-dataview,.wide-table,.wide-backlinks,.wide-callout) .cm-contentContainer.cm-contentContainer > div > .cm-line
-		{max-width: 750px; margin: auto !important;} /* important for margin needed because app.css:2842 use it */
+		{max-width: var(--normal-max-width); margin: auto !important;} /* important for margin needed because app.css:2842 use it */
 	div[class*="-dataview"].markdown-source-view.mod-cm6 .cm-contentContainer.cm-contentContainer > div > div:is(.cm-preview-code-block),
 	div[class*="-table"].markdown-source-view.mod-cm6 .cm-contentContainer.cm-contentContainer > div > div:is(.HyperMD-table-row, .cm-table-widget),
 	div[class*="-callout"].markdown-source-view.mod-cm6 .cm-contentContainer.cm-contentContainer > div > div:is(.cm-callout),
@@ -74,7 +104,7 @@
 	/*	Reading View -- similar to Editing View, set all divs to normal-width and then selected divs to full-width, 
 		however, for Reading View, wide-dataview and wide-table will require Contextual Typography plugin */
 	div.markdown-preview-view:is(.wide-dataview,.wide-table,.wide-backlinks,.wide-callout) .markdown-preview-sizer.markdown-preview-sizer > div
-		{ max-width: 750px; margin: auto; } /* important is for Atom theme */
+		{ max-width: var(--normal-max-width); margin: auto; } /* important is for Atom theme */
 	div[class*="-dataview"].markdown-preview-view .markdown-preview-sizer.markdown-preview-sizer > div:is(.el-lang-dataview),
 	div[class*="-table"].markdown-preview-view .markdown-preview-sizer.markdown-preview-sizer > div:is(.el-table),
 	div[class*="-callout"].markdown-preview-view .markdown-preview-sizer.markdown-preview-sizer > div[data-callout],

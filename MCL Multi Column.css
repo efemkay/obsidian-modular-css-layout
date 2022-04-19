@@ -1,6 +1,6 @@
 /* === README ===
-	Updated: 2022-04-10 (version: 0.0.5)
-	- version 0.1.0 for list-based, 0.0.5 for callout based
+	Updated: 2022-04-19 (version: 0.0.6)
+	- version 0.1.0 for list-based, 0.0.6 for callout based
 	Author: Faiz Khuzaimah (@faizkhuzaimah)
 	
 	What is this snippet for?
@@ -31,15 +31,16 @@
 
 /* @settings
 
-name: Modular CSS Layout
-id: a-unique-id2
+name: Modular CSS Layout - Multi Column
+id: modular-css-layout
 settings:
 
     - 
         id: multi-column-title
-        title: Multi Column Settings
+        title: Callout Column Settings
         type: heading
-        level: 3
+        level: 2
+		collapsed: true
     - 
         id: callout-min-width
         title: Minimum Sub-Callout Width
@@ -52,44 +53,41 @@ settings:
 		format: px
     - 
         id: float-small-width
-        title: Floating Callout Width - Small
-        description: in px units
+        title: Floating Callout Width - Small (in px)
         type: variable-number-slider
         default: 300
         min: 200
-        max: 400
+        max: 450
         step: 50
 		format: px
     - 
         id: float-medium-width
-        title: Floating Callout Width - Medium
-        description: in px units
+        title: Floating Callout Width - Medium (in px)
         type: variable-number-slider
         default: 400
         min: 300
-        max: 500
+        max: 550
         step: 50
 		format: px
     - 
         id: float-large-width
-        title: Floating Callout Width - Large
-        description: in px units
+        title: Floating Callout Width - Large (in px)
         type: variable-number-slider
         default: 600
         min: 500
-        max: 700
+        max: 750
         step: 50
 		format: px
 
     - 
         id: mc-list-title
-        title: Multi Column List Settings
+        title: List Column Settings
         type: heading
-        level: 3
+        level: 2
+		collapsed: true
     - 
         id: list-min-width
-        title: Minimum Column Width
-        description: in px units
+        title: Minimum Column Width (in px)
         type: variable-number-slider
         default: 200
         min: 100
@@ -104,8 +102,7 @@ settings:
         default: '#b3b3b3'
     - 
         id: col-rule-width
-        title: Column Ruler Width
-        description: in px units
+        title: Column Ruler Width (in px)
         type: variable-number-slider
         default: 1
         min: 0
@@ -134,10 +131,16 @@ body{
 	div[data-callout="multi-column"].callout > .callout-title { display: none; }
 	/* make main placeholder callout-content a flex */
 	div[data-callout="multi-column"].callout > .callout-content { display: flex; flex-wrap: wrap; padding: 0; gap: 0.5rem;}
+
+	/* this is a workaround, need to figure out how to solve div height issue, and primary box-shadow */
+	div[data-callout="multi-column"].callout > .callout-content .callout-content { border: unset; background: unset; box-shadow: unset; }
 	div[data-callout="multi-column"].callout > .callout-content > div { flex: 1 1 var(--callout-min-width); margin: 0;}
 	
-	/* this is a workaround, need to figure out how to solve div height issue */
-	div[data-callout="multi-column"].callout > .callout-content .callout-content { border: unset; }
+	/* 	some issues still persists
+		(1) some theme has background-color color set for `.callout > .callout-content` and none for `.callout > .callout-content > .callout`
+		(2) some theme uses transparency to affect .callout-title
+	*/
+
 	
 	@media (min-width: 500px) {
 		/* .is-collapsed is used to draw the border-left only when it's collapsed */
@@ -166,13 +169,14 @@ body{
 
 /* === Floating Callout === */
 	@media (min-width: 500px){	
-		div[data-callout*="left"].callout {float: left; margin-right: 20px; margin-top: 0;}
-		div[data-callout*="right"].callout {float: right; margin-left: 20px; margin-top: 0;}
-		div[data-callout*="small"].callout {width: var(--float-small-width);}
-		div[data-callout*="medium"].callout {width: var(--float-medium-width);}
+		.markdown-reading-view div[data-callout-metadata|="left"].callout {float: left; margin-right: 20px; }
+		.markdown-reading-view div[data-callout-metadata|="right"].callout {float: right; margin-left: 20px; }
+		div[data-callout^="blank-container"].callout:is(div[data-callout-metadata|="left"], div[data-callout-metadata|="right"]) {margin-top: 0;}
+		div[data-callout-metadata$="small"].callout {width: var(--float-small-width);}
+		div[data-callout-metadata$="medium"].callout {width: var(--float-medium-width);}
 	}
 	@media (min-width: 750px){	
-		div[data-callout*="large"].callout {width: var(--float-large-width);}
+		div[data-callout-metadata$="large"].callout {width: var(--float-large-width);}
 	}
 
 /* === Multi Column Lists === */
