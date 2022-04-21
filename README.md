@@ -53,6 +53,14 @@ Once you enabled the css snippet, you use this feature by creating a custom call
 
 <img src="https://user-images.githubusercontent.com/42369515/163700640-245e4275-f329-4cb2-9138-07cb276354cc.png" height="350px">
 
+### Side Column / Floating Column
+- Using Callout metadata
+	- `> [!{anycallout}|{left|right}-{small|medium|large}]`
+	- `> [!blank-container||{left|right}-{small|medium|large}]`
+
+example
+`> [!warning|right-small]`
+
 ## Support
 I do this on my free time for personal joy. However, a cup of coffee or two would motivate me further! If you like what I do, and want to contribute back, you can support me via Ko-fi
 
