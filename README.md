@@ -6,7 +6,7 @@ This is a repository for modular CSS layout hack for use with [Obsidian.md](http
     - [Multi Column](https://github.com/efemkay/obsidian-modular-css-layout#multi-column)
         - [Using Callout](https://github.com/efemkay/obsidian-modular-css-layout#using-callout)
         - [Using (unordered) list](https://github.com/efemkay/obsidian-modular-css-layout#using-unordered-list)
-	- [Side Column / Floating Column](https://github.com/efemkay/obsidian-modular-css-layout#side-column--floating-column)
+        - [Side Column / Floating Column](https://github.com/efemkay/obsidian-modular-css-layout#side-column--floating-column)
     - [Support Me](https://github.com/efemkay/obsidian-modular-css-layout#support-me)
 
 ## How to use / install?
