@@ -4,7 +4,7 @@ cssclass: text-justify
 
 ## General linear model
 
-> [!blank-container|right-medium] Relationship of Data, Information and Intelligence
+> [!blank-container|right-medium no-margin] Relationship of Data, Information and Intelligence
 > ![[Pasted image 20220424085124.png]]
 > Example of [simple linear regression](https://en.wikipedia.org/wiki/Simple_linear_regression "Simple linear regression"), which has one independent variable
 
