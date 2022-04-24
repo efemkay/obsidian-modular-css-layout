@@ -1,7 +1,17 @@
 # Modular CSS Layout for Obsidian.md
 This is a repository for modular CSS layout hack for use with [Obsidian.md](https://obsidian.md/). It's meant to complement/assist Community Theme, focusing solely on providing alternative layout to standard width and standard top-bottom block view.
 
+- TOC
+    - [Wide Views](https://github.com/efemkay/obsidian-modular-css-layout/edit/main/README.md#wide-views)
+    - [Multi Column](https://github.com/efemkay/obsidian-modular-css-layout/edit/main/README.md#multi-column)
+        - [Using Callout](https://github.com/efemkay/obsidian-modular-css-layout/edit/main/README.md#using-callout)
+        - [Using (unordered) list](https://github.com/efemkay/obsidian-modular-css-layout/edit/main/README.md#using-unordered-list)
+	- [Side Column / Floating Column](https://github.com/efemkay/obsidian-modular-css-layout/edit/main/README.md#side-column--floating-column)
+    - [Support Me](https://github.com/efemkay/obsidian-modular-css-layout/edit/main/README.md#support-me)
+
+## How to use / install?
 To use, download or copy the css into your `[vault]/.obsidian/snippets` folder and enable them in Settings > Appearance > CSS snippets.
+Since I'm planning to update this snippets from time to time, you can use Mara Li's [Snippet Downloader](https://github.com/Mara-Li/obsidian-snippet-downloader) plugin to use Obsidian interface to download and update the snippets (when update is available).
 
 ## Wide Views
 > [css snippet here](https://github.com/efemkay/obsidian-css-layout/blob/main/page%20width%20and%20wide%20views.css)
@@ -13,7 +23,7 @@ For wide-dataview and wide-table, you will need to install [Contextual Typograph
 <img src="https://user-images.githubusercontent.com/42369515/163697717-911d36b3-f505-49c2-803b-775f1d7fae9a.png" height="350px">
 
 
-## Multi Column Views
+## Multi Column
 ### Using Callout
 - Custom Callout available
 	- `> [!multi-column]`
@@ -61,7 +71,7 @@ Once you enabled the css snippet, you use this feature by creating a custom call
 example
 `> [!warning|right-small]`
 
-## Support
+## Support Me
 I do this on my free time for personal joy. However, a cup of coffee or two would motivate me further! If you like what I do, and want to contribute back, you can support me via Ko-fi
 
 <a href='https://ko-fi.com/M4M3C77PF' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://cdn.ko-fi.com/cdn/kofi1.png?v=3' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
