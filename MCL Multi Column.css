@@ -1,6 +1,6 @@
 /* === README ===
-	Updated: 2022-04-19 (version: 0.0.6)
-	- version 0.1.0 for list-based, 0.0.6 for callout based
+	Updated: 2022-04-24 (version: 0.0.8)
+	- version 0.1.0 for list-based, 0.0.8 for callout based
 	Author: Faiz Khuzaimah (@faizkhuzaimah)
 	
 	What is this snippet for?
@@ -32,7 +32,7 @@
 /* @settings
 
 name: Modular CSS Layout - Multi Column
-id: modular-css-layout
+id: modular-css-layout-mc
 settings:
 
     - 
@@ -51,6 +51,12 @@ settings:
         max: 500
         step: 50
 		format: px
+    - 
+        id: callout-gap
+        title: Sub-Callout Gap (any unit)
+        description: NO spacing between figure and unit
+        type: variable-text
+        default: 0.5rem
     - 
         id: float-small-width
         title: Floating Callout Width - Small (in px)
@@ -114,6 +120,7 @@ settings:
 
 body{
 	--callout-min-width: 200px;
+	--callout-gap: 0.5rem;
 	--list-min-width: 200px;
 	--col-rule-color: #b3b3b3;
 	--col-rule-width: 1px;
@@ -127,14 +134,14 @@ body{
 	/* - Main multi-column snippet using Callout */
 
 	/* the main placeholder, hide everything */
-	div[data-callout="multi-column"].callout { background: unset; border: unset; margin: unset; padding: unset; }
+	div[data-callout="multi-column"].callout { background: unset; border: unset; margin: unset; padding: unset; clear: both; }
 	div[data-callout="multi-column"].callout > .callout-title { display: none; }
 	/* make main placeholder callout-content a flex */
-	div[data-callout="multi-column"].callout > .callout-content { display: flex; flex-wrap: wrap; padding: 0; gap: 0.5rem;}
+	div[data-callout="multi-column"].callout > .callout-content { display: flex; flex-wrap: wrap; padding: 0; gap: var(--callout-gap);}
 
 	/* this is a workaround, need to figure out how to solve div height issue, and primary box-shadow */
 	div[data-callout="multi-column"].callout > .callout-content .callout-content { border: unset; background: unset; box-shadow: unset; }
-	div[data-callout="multi-column"].callout > .callout-content > div { flex: 1 1 var(--callout-min-width); margin: 0;}
+	div[data-callout="multi-column"].callout > .callout-content > *:is(div,ul) { flex: 1 1 var(--callout-min-width); margin: 0;}
 	
 	/* 	some issues still persists
 		(1) some theme has background-color color set for `.callout > .callout-content` and none for `.callout > .callout-content > .callout`
@@ -149,11 +156,9 @@ body{
 	}
 
 
-
-
 	/* - Blank Container "DIV"'s - can be used with Main Multi-Column layout above */
 	div[data-callout="blank-container"].callout,
-	div[data-callout="blank-container"].callout > .callout-content { border: 0 !important; padding-top: 0; background: unset !important; box-shadow: unset; }
+	div[data-callout="blank-container"].callout > .callout-content { border: 0 !important; padding-top: 0; padding-inline: 5px; background: unset !important; box-shadow: unset; }
 	div[data-callout="blank-container"].callout > .callout-title { display: none; }
 
 	/* testing for another */
@@ -167,17 +172,28 @@ body{
 	div[data-callout="multi-column-flex-height"].callout > .callout-content .callout .callout-content { margin: 0; border-left: 4px solid rgba(var(--callout-color)); border-bottom-left-radius: 3px; background-color: var(--background-secondary);}
 
 
+	/* no margin */
+	.markdown-reading-view div[data-callout-metadata*="no-margin"].callout.callout {margin: 0;}
+
+
+	/* text justify */
+	.text-justify :is(.markdown-preview-view p,.markdown-source-view .cm-line) {
+		text-align: justify;
+	}
+
+
 /* === Floating Callout === */
 	@media (min-width: 500px){	
 		.markdown-reading-view div[data-callout-metadata|="left"].callout {float: left; margin-right: 20px; }
 		.markdown-reading-view div[data-callout-metadata|="right"].callout {float: right; margin-left: 20px; }
 		div[data-callout^="blank-container"].callout:is(div[data-callout-metadata|="left"], div[data-callout-metadata|="right"]) {margin-top: 0;}
-		div[data-callout-metadata$="small"].callout {width: var(--float-small-width);}
-		div[data-callout-metadata$="medium"].callout {width: var(--float-medium-width);}
+		div[data-callout-metadata*="-small"].callout {width: var(--float-small-width);}
+		div[data-callout-metadata*="-medium"].callout {width: var(--float-medium-width);}
 	}
 	@media (min-width: 750px){	
 		div[data-callout-metadata$="large"].callout {width: var(--float-large-width);}
 	}
+	.embedded-backlinks, .markdown-preview-view h2 { clear: both; }
 
 /* === Multi Column Lists === */
 
