@@ -14,9 +14,22 @@ To use, download or copy the css into your `[vault]/.obsidian/snippets` folder a
 Since I'm planning to update this snippets from time to time, you can use Mara Li's [Snippet Downloader](https://github.com/Mara-Li/obsidian-snippet-downloader) plugin to use Obsidian interface to download and update the snippets (when update is available).
 
 ## Wide Views
-> [css snippet here](https://github.com/efemkay/obsidian-css-layout/blob/main/page%20width%20and%20wide%20views.css)
+- CSS snippet: `MCL Wide Views.css`
+- Custom CSS class available
+	- `wide-page`
+	- `wide-dataview` -- require Contextual Typography plugin
+	- `wide-table` -- require Contextual Typography plugin
+	- `wide-backlinks`
 
-This snippet allow you to use cssclasses to enable either wide views - either wide-page, wide-dataview, wide-table or combination of those. For this snippet to works, you will need to disable "Readable line length" in `Settings > Editor`.
+This snippet allow you to use Obsidian CSS class helper to enable any of the wide views. To use it, add the helper class in the YAML (frontmatter) of your note (which must be at the top of the note) like below.
+
+```markdown
+---
+cssClass: wide-page
+---
+
+<the rest of your note>
+```
 
 For wide-dataview and wide-table, you will need to install [Contextual Typography](https://github.com/mgmeyers/obsidian-contextual-typography) plugin.
 
@@ -54,12 +67,22 @@ Once you enabled the css snippet, you use this feature by creating a custom call
 - css classes available
 	- `two-column-list`
 	- `three-column-list`
+	- `multi-column-list-block` -- require Markdown Attributes plugin
 	- `two-column-grid-list`
 	- `three-column-grid-list`
 
-`xx-column-list` uses CSS Column property where it will flow from top to bottom but spreading the list evenly between the number of columns (like how newspaper paragraph works)
+`<two|three|multi>-column-list` uses CSS Column property where it will flow from top to bottom but spreading the list evenly between the number of columns (like how newspaper paragraph works). The helper class must be put in the YAML (frontmatter) section and will apply to all first level list in the note.
 
-`xx-column-grid-list` uses CSS Grid layout where it will try to position top level list (bullet) from left to right (with sub-list behaving per normal (from top to bottom). In the case where the screen is too small, it will revert to stacking (top to bottom)
+Meanwhile `{.<two|three|multi>-column-list-block}` can be applied at list-block level (example as per below) but require J Valentine's [Markdown Attributes](https://github.com/valentine195/obsidian-markdown-attributes) plugin. This will allow only certain list be subject to column layout while others remain unchanged.
+```markdown
+- item a
+- item b
+- item c
+- item d
+{.two-column-list-block}
+```
+
+`<two|three>-column-grid-list` uses CSS Grid layout where it will try to position top level list (bullet) from left to right (with sub-list behaving per normal (from top to bottom). In the case where the screen is too small, it will revert to stacking (top to bottom). The helper class must be put in the YAML (frontmatter) section and will apply to all first level list in the note.
 
 <img src="https://user-images.githubusercontent.com/42369515/163700640-245e4275-f329-4cb2-9138-07cb276354cc.png" height="350px">
 
