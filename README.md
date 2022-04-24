@@ -2,12 +2,12 @@
 This is a repository for modular CSS layout hack for use with [Obsidian.md](https://obsidian.md/). It's meant to complement/assist Community Theme, focusing solely on providing alternative layout to standard width and standard top-bottom block view.
 
 - TOC
-    - [Wide Views](https://github.com/efemkay/obsidian-modular-css-layout/edit/main/README.md#wide-views)
-    - [Multi Column](https://github.com/efemkay/obsidian-modular-css-layout/edit/main/README.md#multi-column)
-        - [Using Callout](https://github.com/efemkay/obsidian-modular-css-layout/edit/main/README.md#using-callout)
-        - [Using (unordered) list](https://github.com/efemkay/obsidian-modular-css-layout/edit/main/README.md#using-unordered-list)
-	- [Side Column / Floating Column](https://github.com/efemkay/obsidian-modular-css-layout/edit/main/README.md#side-column--floating-column)
-    - [Support Me](https://github.com/efemkay/obsidian-modular-css-layout/edit/main/README.md#support-me)
+    - [Wide Views](https://github.com/efemkay/obsidian-modular-css-layout#wide-views)
+    - [Multi Column](https://github.com/efemkay/obsidian-modular-css-layout#multi-column)
+        - [Using Callout](https://github.com/efemkay/obsidian-modular-css-layout#using-callout)
+        - [Using (unordered) list](https://github.com/efemkay/obsidian-modular-css-layout#using-unordered-list)
+	- [Side Column / Floating Column](https://github.com/efemkay/obsidian-modular-css-layout#side-column--floating-column)
+    - [Support Me](https://github.com/efemkay/obsidian-modular-css-layout#support-me)
 
 ## How to use / install?
 To use, download or copy the css into your `[vault]/.obsidian/snippets` folder and enable them in Settings > Appearance > CSS snippets.
