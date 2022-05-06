@@ -131,62 +131,87 @@ body{
 
 
 /* === Multi Column "DIV"'s Using Callout === */
-	/* - Main multi-column snippet using Callout */
+/* 	some issues still persists
+	(2) some theme uses transparency to affect .callout-title
+*/
 
-	/* the main placeholder, hide everything */
-	div[data-callout="multi-column"].callout { background: unset; border: unset; margin: unset; padding: unset; clear: both; }
+	/* -- Main multi-column snippet using Callout */
+
+	/* remove callout-title and make callout-content as part of main callout for box formatting */
 	div[data-callout="multi-column"].callout > .callout-title { display: none; }
-	/* make main placeholder callout-content a flex */
-	div[data-callout="multi-column"].callout > .callout-content { display: flex; flex-wrap: wrap; padding: 0; gap: var(--callout-gap);}
+	div[data-callout="multi-column"].callout > .callout-content { display: contents; }
+	/* make the main callout a flex and remove box formatting */
+	div[data-callout="multi-column"].callout
+		{ display: flex; flex-wrap: wrap; gap: var(--callout-gap); background: unset; border: unset; margin: unset; padding: unset; clear: both; }
+	/* make the subcallout in flex column to allow growing vertically */
+	div[data-callout="multi-column"].callout .callout { display: flex; flex-direction: column; }
+	div[data-callout="multi-column"].callout .callout .callout-content { flex-grow: 1}
 
 	/* this is a workaround, need to figure out how to solve div height issue, and primary box-shadow */
+	/*
 	div[data-callout="multi-column"].callout > .callout-content .callout-content { border: unset; background: unset; box-shadow: unset; }
+	*/
 	div[data-callout="multi-column"].callout > .callout-content > *:is(div,ul) { flex: 1 1 var(--callout-min-width); margin: 0;}
 	
-	/* 	some issues still persists
-		(1) some theme has background-color color set for `.callout > .callout-content` and none for `.callout > .callout-content > .callout`
-		(2) some theme uses transparency to affect .callout-title
-	*/
-
 	
 	@media (min-width: 500px) {
-		/* .is-collapsed is used to draw the border-left only when it's collapsed */
+		/* .is-collapsed is used to draw the border-left only when it's collapsed */	
 		div[data-callout="multi-column"].callout > div.callout-content .callout.is-collapsed { background-color: unset; border: unset; box-shadow: unset;}
 		div[data-callout="multi-column"].callout > div.callout-content .callout.is-collapsed .callout-title { border-left: 4px solid rgba(var(--callout-color)); border-top-left-radius: 3px;}
-	}
+ 	}
+
+	 /* "fix" for theme with negative margin & box shadow. Applicable for Prism theme */
+	div[data-callout="multi-column"].callout > .callout-content { margin-top: unset;}
+	div[data-callout="multi-column"].callout:not(.is-collapsed) { box-shadow: unset; }
 
 
-	/* - Blank Container "DIV"'s - can be used with Main Multi-Column layout above */
-	div[data-callout="blank-container"].callout,
-	div[data-callout="blank-container"].callout > .callout-content { border: 0 !important; padding-top: 0; padding-inline: 5px; background: unset !important; box-shadow: unset; }
-	div[data-callout="blank-container"].callout > .callout-title { display: none; }
+	/* -- Multi Flex. Still EXPERIMENTAL, different theme approach border and background too differently */
 
-	/* testing for another */
-	div[data-callout="multi-column-flex-height"].callout { background: unset; border: unset; margin: unset; padding: unset; }
 	div[data-callout="multi-column-flex-height"].callout > .callout-title { display: none; }
-	
-	div[data-callout="multi-column-flex-height"].callout > .callout-content { display: flex; flex-wrap: wrap; padding: 0; gap: 0.5rem;}
-	div[data-callout="multi-column-flex-height"].callout > .callout-content .callout {flex: 1 1 var(--callout-min-width); margin: 0; background: unset; border-left: unset;}
+	div[data-callout="multi-column-flex-height"].callout > .callout-content { display: contents; }
+	div[data-callout="multi-column-flex-height"].callout
+		{ display: flex; flex-wrap: wrap; gap: var(--callout-gap); background: unset; border: unset; margin: unset; padding: unset; clear: both; }
+
+	div[data-callout="multi-column-flex-height"].callout > .callout-content > *:is(div,ul) {flex: 1 1 var(--callout-min-width); margin: 0; }
+	div[data-callout="multi-column-flex-height"].callout .callout { background: unset; border: unset; box-shadow: unset; }
 	/* need to reintroduce border-left as original callout put border on the parent callout */
 	div[data-callout="multi-column-flex-height"].callout > .callout-content .callout .callout-title { border-left: 4px solid rgba(var(--callout-color)); border-top-left-radius: 3px;}
 	div[data-callout="multi-column-flex-height"].callout > .callout-content .callout .callout-content { margin: 0; border-left: 4px solid rgba(var(--callout-color)); border-bottom-left-radius: 3px; background-color: var(--background-secondary);}
 
+	 /* "fix" for theme with negative margin & box shadow. Applicable for Prism theme */
+	 div[data-callout="multi-column-flex-height"].callout > .callout-content { margin-top: unset;}
+	 div[data-callout="multi-column-flex-height"].callout:not(.is-collapsed) { box-shadow: unset; }
+ 
 
-	/* no margin */
-	.markdown-reading-view div[data-callout-metadata*="no-margin"].callout.callout {margin: 0;}
+/* === Blank Container "DIV"'s - can be used with Main Multi-Column layout above === */
+	
+	div[data-callout="blank-container"].callout > .callout-title { display: none; }
+	div[data-callout="blank-container"].callout > .callout-content {display: contents;}
+	div[data-callout="blank-container"].callout { border: 0; padding-top: 0; padding-inline: 5px; background: unset; box-shadow: unset; }
 
+	/* -- No Margin -- */
+	/* issues still persists
+	   - headers font size not same
+	*/
+	div[data-callout-metadata*="no-margin"]:is(.cm-callout, .callout.callout, .callout.callout .callout-content) {margin: 0; padding: 0;}
+	/* fix for Shimmering Focus differing font size in callout */
+	div[data-callout="blank-container"] .callout-content :is(p,ul,li) { font-size: unset; line-height: inherit; }
+	div[data-callout="blank-container"] .callout-content :is(li) { margin: unset; }
+	
 
-	/* text justify */
+/* === Text Justify === */
+
 	.text-justify :is(.markdown-preview-view p,.markdown-source-view .cm-line) {
 		text-align: justify;
 	}
 
 
 /* === Floating Callout === */
+
 	@media (min-width: 500px){	
-		.markdown-reading-view div[data-callout-metadata|="left"].callout {float: left; margin-right: 20px; }
-		.markdown-reading-view div[data-callout-metadata|="right"].callout {float: right; margin-left: 20px; }
-		div[data-callout^="blank-container"].callout:is(div[data-callout-metadata|="left"], div[data-callout-metadata|="right"]) {margin-top: 0;}
+		.markdown-reading-view div[data-callout-metadata|="left"].callout {float: left; margin-right: 15px; margin-bottom: 10px; }
+		.markdown-reading-view div[data-callout-metadata|="right"].callout {float: right; margin-left: 15px; margin-bottom: 10px; }
+		div[data-callout^="blank-container"].callout:is(div[data-callout-metadata|="left"], div[data-callout-metadata|="right"]) {margin-top: 0; margin-bottom: 0;}
 		div[data-callout-metadata*="-small"].callout {width: var(--float-small-width);}
 		div[data-callout-metadata*="-medium"].callout {width: var(--float-medium-width);}
 	}
@@ -194,6 +219,14 @@ body{
 		div[data-callout-metadata$="large"].callout {width: var(--float-large-width);}
 	}
 	.embedded-backlinks, .markdown-preview-view h2 { clear: both; }
+
+	/* fix for blockquote underlap the float layout */
+	.markdown-preview-view :is(blockquote) { overflow-x: auto; } /* fix for blockquote underlap */
+	.markdown-preview-view :is(p) { overflow: unset; } /* fix for para not wrapping around float. applicable for Willemstad */
+
+	/* fix for minimal flex layout by default. to apply per note basis */
+	.contextual-typography .minimal-float.markdown-preview-view.markdown-preview-view .markdown-preview-sizer { display: unset; }
+
 
 /* === Multi Column Lists === */
 

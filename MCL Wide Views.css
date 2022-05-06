@@ -33,7 +33,7 @@
 /* @settings
 
 name: Modular CSS Layout - Wide Views
-id: modular-css-layout
+id: modular-css-layout-wv
 settings:
 
     - 
@@ -62,17 +62,19 @@ body{
 /* === Wide Page === */
 
 	/*	Editing View -- set Readable Line Length (RLL) to wide (100%) for any css class with "wide" word
-		in it. "width:100%" added for Blue Topaz */
+		in it. / "width:100%" added for Blue Topaz / div.cm-content added to override Mado 11 */
 	div[class*="wide-"].markdown-source-view.mod-cm6 .cm-contentContainer.cm-contentContainer,
 	div[class*="wide-"].markdown-source-view.mod-cm6 .cm-contentContainer.cm-contentContainer > div,
-	div[class*="wide-"].markdown-source-view.mod-cm6 .cm-contentContainer.cm-contentContainer > div .cm-line
+	div[class*="wide-"].markdown-source-view.mod-cm6 .cm-contentContainer.cm-contentContainer > div.cm-content,
+	div[class*="wide-"].markdown-source-view.mod-cm6 .cm-contentContainer.cm-contentContainer > div .cm-line,
+	div[class*="wide-"].markdown-source-view.mod-cm6 .cm-contentContainer.cm-contentContainer > div.cm-content .cm-line
 		{ max-width: 100%; width: 100%;}
 		
 	/*	Reading View -- similar to Editing View, set the RLL to 100% for any css class with "wide" word
 		in it. "width:100%" added for Blue Topaz */
 	div[class*="wide-"].markdown-preview-view .markdown-preview-sizer.markdown-preview-sizer, /* double-up for specificity */
 	div[class*="wide-"].markdown-preview-view .markdown-preview-sizer.markdown-preview-sizer > div
-		{ max-width: 100%; margin: auto; width: 100%;} /* important is for Atom theme */
+		{ max-width: 100%; margin-inline: auto; width: 100%;} /* important is for Atom theme */
 	
 	/* special adjustment for Willemstad theme, since its table not auto margin */
 	table { margin-inline: auto; }
@@ -93,7 +95,7 @@ body{
 		expand to full-width for each selected css class (i.e. wide-dataview, wide-table and wide-backlinks) */
 	div.markdown-source-view.mod-cm6:is(.wide-dataview,.wide-table,.wide-backlinks,.wide-callout) .cm-contentContainer.cm-contentContainer > div > div,
 	div.markdown-source-view.mod-cm6:is(.wide-dataview,.wide-table,.wide-backlinks,.wide-callout) .cm-contentContainer.cm-contentContainer > div > .cm-line
-		{max-width: var(--normal-max-width); margin: auto !important;} /* important for margin needed because app.css:2842 use it */
+		{max-width: var(--normal-max-width); margin-inline: auto !important;} /* important for margin needed because app.css:2842 use it */
 	div[class*="-dataview"].markdown-source-view.mod-cm6 .cm-contentContainer.cm-contentContainer > div > div:is(.cm-preview-code-block),
 	div[class*="-table"].markdown-source-view.mod-cm6 .cm-contentContainer.cm-contentContainer > div > div:is(.HyperMD-table-row, .cm-table-widget),
 	div[class*="-callout"].markdown-source-view.mod-cm6 .cm-contentContainer.cm-contentContainer > div > div:is(.cm-callout),
@@ -104,7 +106,7 @@ body{
 	/*	Reading View -- similar to Editing View, set all divs to normal-width and then selected divs to full-width, 
 		however, for Reading View, wide-dataview and wide-table will require Contextual Typography plugin */
 	div.markdown-preview-view:is(.wide-dataview,.wide-table,.wide-backlinks,.wide-callout) .markdown-preview-sizer.markdown-preview-sizer > div
-		{ max-width: var(--normal-max-width); margin: auto; } /* important is for Atom theme */
+		{ max-width: var(--normal-max-width); margin-inline: auto; } /* important is for Atom theme */
 	div[class*="-dataview"].markdown-preview-view .markdown-preview-sizer.markdown-preview-sizer > div:is(.el-lang-dataview),
 	div[class*="-table"].markdown-preview-view .markdown-preview-sizer.markdown-preview-sizer > div:is(.el-table),
 	div[class*="-callout"].markdown-preview-view .markdown-preview-sizer.markdown-preview-sizer > div[data-callout],
