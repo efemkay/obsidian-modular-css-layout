@@ -1,13 +1,15 @@
 # Modular CSS Layout for Obsidian.md
+`v0.2.0 updated 2022-05-29`
+
 This is a repository for modular CSS layout hack for use with [Obsidian.md](https://obsidian.md/). It's meant to complement/assist Community Theme, focusing solely on providing alternative layout to standard width and standard top-bottom block view.
 
-- TOC
-    - [Wide Views](https://github.com/efemkay/obsidian-modular-css-layout#wide-views)
-    - [Multi Column](https://github.com/efemkay/obsidian-modular-css-layout#multi-column)
-        - [Using Callout](https://github.com/efemkay/obsidian-modular-css-layout#using-callout)
-        - [Using (unordered) list](https://github.com/efemkay/obsidian-modular-css-layout#using-unordered-list)
-        - [Side Column / Floating Column](https://github.com/efemkay/obsidian-modular-css-layout#side-column--floating-column)
-    - [Support Me](https://github.com/efemkay/obsidian-modular-css-layout#support-me)
+### Table of Content
+- [Wide Views](https://github.com/efemkay/obsidian-modular-css-layout#wide-views)
+- [Multi Column](https://github.com/efemkay/obsidian-modular-css-layout#multi-column)
+    - [Using Callout](https://github.com/efemkay/obsidian-modular-css-layout#using-callout)
+    - [Using (unordered) list](https://github.com/efemkay/obsidian-modular-css-layout#using-unordered-list)
+    - [Side Column / Floating Column](https://github.com/efemkay/obsidian-modular-css-layout#side-column--floating-column)
+- [Support Me](https://github.com/efemkay/obsidian-modular-css-layout#support-me)
 
 ## How to use / install?
 To use, download or copy the css into your `[vault]/.obsidian/snippets` folder and enable them in Settings > Appearance > CSS snippets.
@@ -20,6 +22,9 @@ Since I'm planning to update this snippets from time to time, you can use Mara L
 	- `wide-dataview` -- require Contextual Typography plugin
 	- `wide-table` -- require Contextual Typography plugin
 	- `wide-backlinks`
+    - `narrow-page`
+- Custom CSS class toggle available
+    - Adjustable RLL (via Style Settings plugin)
 
 This snippet allow you to use Obsidian CSS class helper to enable any of the wide views. To use it, add the helper class in the YAML (frontmatter) of your note (which must be at the top of the note) like below.
 
@@ -48,7 +53,7 @@ Once you enabled the css snippet, you use this feature by creating a custom call
 
 ~~~markdown
 > [!multi-column]
-> 
+>
 >> [!note]+ Work
 >> your notes or lists here. using markdown formatting
 >

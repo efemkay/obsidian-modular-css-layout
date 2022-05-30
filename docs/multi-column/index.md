@@ -1,5 +1,10 @@
-## Multi Column
-### Using Callout
+---
+nav_order: 4
+---
+
+# Multi Column
+
+## Using Callout
 - Custom Callout available
 	- `> [!multi-column]`
 	- `> [!blank-container]`
@@ -8,7 +13,7 @@ This layout take advantage of the new Obsidian Callout feature. Using the callou
 
 Once you enabled the css snippet, you use this feature by creating a custom callout like example below
 
-~~~markdown
+```
 > [!multi-column]
 >
 >> [!note]+ Work
@@ -19,13 +24,14 @@ Once you enabled the css snippet, you use this feature by creating a custom call
 >
 >> [!summary]+ Charity
 >> your notes or lists here. using markdown formatting
-~~~
+```
+
 > note that when you insert callout within callout, the line separating the callouts should only use single angle bracket (">")
 
 <img src="https://user-images.githubusercontent.com/42369515/163700561-c8d62aa3-0ac8-488c-a80e-8bfb3b539ca8.png" height="350px" >
 
 
-### Using (Unordered) List
+## Using (Unordered) List
 - css classes available
 	- `two-column-list`
 	- `three-column-list`
@@ -48,7 +54,7 @@ Meanwhile `{.<two|three|multi>-column-list-block}` can be applied at list-block 
 
 <img src="https://user-images.githubusercontent.com/42369515/163700640-245e4275-f329-4cb2-9138-07cb276354cc.png" height="350px">
 
-### Side Column / Floating Column
+## Side Column / Floating Column
 - Using Callout metadata
 	- `> [!{anycallout}|{left|right}-{small|medium|large}]`
 	- `> [!blank-container||{left|right}-{small|medium|large}]`

@@ -1,3 +1,9 @@
+---
+nav_order: 2
+---
+
+# Installation
+
 ## There are two ways you can install the CSS snippets
 To use, download or copy the css into your [vault]/.obsidian/snippets folder and enable them in Settings > Appearance > CSS snippets. Since I'm planning to update this snippets from time to time, you can use Mara Li's Snippet Downloader plugin to use Obsidian interface to download and update the snippets (when update is available).
 

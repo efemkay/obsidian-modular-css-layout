@@ -1,4 +1,10 @@
-## Wide Views
+---
+nav_order: 3
+---
+
+# Wide Views
+
+## How to Use
 
 - CSS snippet: `MCL Wide Views.css`
 - Custom CSS class available

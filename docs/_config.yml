@@ -1,1 +1,17 @@
 remote_theme: just-the-docs/just-the-docs
+
+# Site settings
+title: Modular CSS Layout
+description: Modular CSS Layout for Obsidian.md
+baseurl: "/obsidian-modular-css-layout" # the subpath of your site, e.g. /blog
+url: "https://efemkay.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+
+permalink: pretty
+
+# Aux links for the upper right navigation
+aux_links:
+  "MY Div Growth on GitHub":
+    - "//github.com/efemkay/obsidian-modular-css-layout"
+
+# Makes Aux links open in a new tab. Default is false
+aux_links_new_tab: false
