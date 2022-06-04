@@ -10,7 +10,7 @@ permalink: pretty
 
 # Aux links for the upper right navigation
 aux_links:
-  "MY Div Growth on GitHub":
+  "Modular CSS Layout":
     - "//github.com/efemkay/obsidian-modular-css-layout"
 
 # Makes Aux links open in a new tab. Default is false
