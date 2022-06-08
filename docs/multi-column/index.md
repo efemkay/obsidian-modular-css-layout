@@ -1,5 +1,7 @@
 ---
+title: Multi Column
 nav_order: 4
+has_children: true
 ---
 
 # Multi Column
