@@ -1,5 +1,7 @@
 ---
+title: Wide Views
 nav_order: 3
+has_children: true
 ---
 
 # Wide Views

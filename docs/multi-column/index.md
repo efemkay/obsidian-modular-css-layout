@@ -6,6 +6,17 @@ has_children: true
 
 # Multi Column
 
+## Understanding the snippet
+- CSS snippet file: [MCL Multi Column.css](https://github.com/efemkay/obsidian-modular-css-layout/blob/main/MCL%20Multi%20Column.css)
+- This snippet will provide the following features
+	- Multi column layout using custom callout `[!multi-column]`
+		- to be used with sub callout or codeblocks
+	- Invisible container using custom callout `[!blank-container]`
+		- to be used as grouping container like a dashboard
+	- Multi column bullet list at (a) note level, and (b) block level
+	- Side/Floating column using callout-metadata `<left|right>`
+
+
 ## Using Callout
 - Custom Callout available
 	- `> [!multi-column]`
@@ -56,10 +67,12 @@ Meanwhile `{.<two|three|multi>-column-list-block}` can be applied at list-block 
 
 <img src="https://user-images.githubusercontent.com/42369515/163700640-245e4275-f329-4cb2-9138-07cb276354cc.png" height="350px">
 
+> to get multi column list view in Live Preview, you can wrap it inside a `[!blank-container]` callout
+
 ## Side Column / Floating Column
 - Using Callout metadata
-	- `> [!{anycallout}|{left|right}-{small|medium|large}]`
-	- `> [!blank-container||{left|right}-{small|medium|large}]`
+	- `> [!<anycallout>|<left|right>-<small|medium|large>]`
+	- `> [!blank-container|<left|right}-<small|medium|large>]`
 
 example
 `> [!warning|right-small]`
