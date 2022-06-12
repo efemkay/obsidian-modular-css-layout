@@ -5,6 +5,10 @@ has_children: true
 ---
 
 # Gallery Cards
+{: .no_toc }
+
+- TOC
+  {:toc}
 
 ## Understanding the snippet
 - CSS snippet file: [MCL Gallery Cards.css](https://github.com/efemkay/obsidian-modular-css-layout/blob/main/MCL%20Gallery%20Cards.css)
@@ -26,7 +30,12 @@ has_children: true
 > ![[path/to/pic3.png]]
 > ![[path/to/pic4.png]]
 > ![[path/to/pic5.png]]
+
 ```
+
+#### Example
+![](https://raw.githubusercontent.com/efemkay/obsidian-modular-css-layout/main/docs/assets/gallery-callout-langkawi.png)
+
 
 ## Image Gallery Using YAML `cssClass: image-gallery`
 - Specify the following frontmatter at the very top of your markdown notes
@@ -47,8 +56,19 @@ cssClass: image-gallery
 
 ```
 
+#### Example
+![](https://raw.githubusercontent.com/efemkay/obsidian-modular-css-layout/main/docs/assets/gallery-cssclass-langkawi.png)
+
 ## Dimension control for images in bullet list
 - By default, this feature is **enabled** when you apply the snippet. To disable, go to Style Settings and under `Modular CSS Layout - Gallery Cards > Image and Gallery Settings` enable the "Disable Image Control in Lists"
 
 ## Image Zoom
 - To enable this feature, go to Style Settings and under `Modular CSS Layout - Gallery Cards > Image and Gallery Settings` enable the "Enable Image Zoom via CSS in Lists"
+
+## Credits
+- Pictures in Gallery example are from Unsplash
+	- [@ryaneof](https://unsplash.com/photos/Jh_Xk8RQtG0)
+	- [@manish_tulaskar](https://unsplash.com/photos/o0TRwfgXhdw)
+	- [@izuddinhelmi](https://unsplash.com/photos/dIArrAUjQV0)
+	- [@jaysithutun](https://unsplash.com/photos/0dF2fJjTHCw)
+	- [@ramzigraphy](https://unsplash.com/photos/WeiERYmWIT4)
