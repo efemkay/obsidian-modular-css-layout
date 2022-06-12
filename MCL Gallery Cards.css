@@ -1,28 +1,204 @@
 /* === README ===
-	Updated: 2022-04-17 (version: 0.0.5)
-	- version 0.1.0 for list-based, 0.0.5 for callout based
-	Author: Faiz Khuzaimah (@faizkhuzaimah)
-	
-	What is this snippet for?
-	- to allow Obsidian users to change the layout with preset css by just specifying
-	  the cssClass in the frontmatter (YAML) or naming the Callout block
-	- available cssClass
-		- cssClass: image-gallery
-	- available Callout format
-		- [!image gallery container]
+	Author: Faiz Khuzaimah / twitter: @faizkhuzaimah / github: https://github.com/efemkay
+	Updated: 2022-06-12 (version: 0.3.0)
+	- completed callout and paragraph-based image gallery
+	- added dimension control for images in lists
+
+	This snippet is part of MCL collection of snippets for customising layout, and it provides the following
+	- "gallery" callout-metadata i.e. [!<any-callout>|gallery] for flex/grid layout
+		- use together with MCL Multi Column [!blank-container] for invisible container
+	- YAML `cssClass: image-gallery` to achieve similar to callout but using only Contextual Typography plugin & <p>
+	- Image Zoom via css
+	- Dimension control for images in lists <ul>
+
+	Credits to @kepano Minimal Theme and @SlRvb ITS Theme for inspiration
+*/
+/* === Master Setting === */
+
+	/* set the defaults */
+	body{
+		--img-border-radius: 15px;
+		--img-max-height: 300px;
+		--img-max-width: 350px;
+		--img-max-height-list: 270px;
+		--img-max-width-list: 300px;
+		--callout-gallery-gap: 5px;
+	}
+
+	img {border-radius: var(--img-border-radius);}
+
+/* === Image Gallery using <p> and Callout === */
+
+	/* Editing and Reading View - Gallery using <p> and Callout
+		using <p> (in Reading View) to contain and format as gallery view
+		using metadata="gallery" to contain and format as gallery view */
+	.image-gallery div[data-embed-type="image"] > p,
+	div[data-callout-metadata*="gallery"].callout > .callout-content > p
+		{ display: flex; gap: var(--callout-gallery-gap); margin-top: calc( var(--callout-gallery-gap) + 1px ); margin-bottom: 0;}
+	.image-gallery div[data-embed-type="image"] > p img,
+	div[data-callout-metadata*="gallery"].callout > .callout-content > p img
+		{ max-height: var(--img-max-height); border: 1px solid var(--background-modifier-border); object-fit: cover; display: block;}
+	/* display: block for img is important to control the hidden margin-bottom
+		but for Minimal, it uses display: flex for top level divs which pose another "margin" issues
+		no plan to solve yet as this is not critical */
+
+	/* Reading View - Special Adjustment for Shimmering Focus, overriding max-width */
+	body:not(.is-mobile) .app-container.app-container .image-gallery p img[src],
+	body:not(.is-mobile) .app-container.app-container div[data-callout-metadata*="gallery"].callout img[src]
+		{ max-width: 100%; width: unset; margin-block: unset;}
+
+	/* Editing View - as alternate to <p> in Reading View
+		since there's no natural container in Editing View using <p> */
+	.image-gallery div:not(.cm-callout):not(.HyperMD-list-line).image-embed img
+		{ max-height: var(--img-max-height); display: unset; object-fit: cover;}
+		/* previously i have max-width: 50% */
+
+	/* Editing Live Preview - Special Adjustment - for minimal left margin */
+	.markdown-source-view.mod-cm6.is-readable-line-width .internal-embed
+		{ margin-left: 0 !important; width: unset;}
+
+
+/* === Images in Lists === */
+	body:not(.list-image-control-off) :is(.HyperMD-list-line,ul) .image-embed.image-embed img:not([width])
+		{ max-height: var(--img-max-height-list); max-width: var(--img-max-width-list); margin-inline: 0; display: unset; object-fit: cover;}
+
+
+	/*
+	div:not(.cm-callout).image-embed img { max-height: 200px; max-width: 300px; height: 200px; object-fit: cover;}
+	*/
+
+/* === Image Zoom === */
+/* must check "Enable Image Zoom via CSS" via Style Settings */
+
+	.image-zoom .view-content :is(.cm-editor, .markdown-preview-view) img
+		{ max-width: 100%; cursor: zoom-in; }
+
+	body.image-zoom:not(.is-mobile) .view-content :is(.cm-editor,.markdown-preview-view) img:active,
+	body.image-zoom:not(.is-mobile) .view-content .image-embed:active,
+	.image-zoom :is(.HyperMD-list-line,ul) .image-embed.image-embed img:active {
+		cursor: zoom-out;
+		display: block;
+
+		max-height: calc(100% + 1px); max-width: calc(100% - 20px); height: calc(100% + 1px); width: 100%;
+
+		object-fit: contain;
+		margin: -0.5px auto 0; padding: 0;
+		text-align: center;
+		z-index: 100;
+		position: fixed;
+		left: 0; right: 0; bottom: 0;
+		background: rgba(0,0,0,0.5);
+	}
+
+
+/* === ALPHA VERSION table-card === */
+	/* setting the borders */
+	table > tbody > tr,
+	.markdown-source-view.mod-cm6 .dataview.table-view-table .table-view-tbody tr {border: 1px solid black; border-radius: 0.5em;}
+	.markdown-source-view.mod-cm6 .dataview.table-view-table .table-view-tbody td {border-right: unset;}
+
+	:is(.theme-light, .theme-dark) table,
+	:is(*,.is-live-preview.is-live-preview) table :is(td,tr) {background-color: unset;}
+	.dataview.table-view-table.dataview.table-view-table {border: unset;} /* for primary */
+	table tbody {	display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 0.5em; clear: both;}
+	table > tbody > tr {display: flex; flex-direction: column; padding-inline: 0.5em;}
+
+	:is(*,.is-live-preview) table.table-view-table > tbody > tr > td:not(:first-child) {border-top: 1px solid gray; }
+	table.table-view-table > tbody > tr {margin: unset;}
+
+	/* thead adjustment */
+	/* table > thead {display: flex; } */
+	table > thead {float: right;}
+	table.table-view-table > thead > tr {margin: unset;}
+	table.table-view-table > thead > tr > th {border: unset;}
+	.dataview.table-view-table.dataview.table-view-table :is(thead, th) {padding-block: unset;}
+
+
+/* === ALPHA VERSION testing Timeline in lists === */
+/*
+    .tag-mcltimeline > ul > li > *:not(ul) { text-align: center; align-self: baseline; }
+    .tag-mcltimeline > ul > li {
+        display: grid;
+        grid-template-columns: 0 3fr 7fr;
+        grid-template-rows: auto;
+        grid-template-areas:
+            "indicator timeline details"
+            "indicator . details";
+        grid-column-gap: 1em;
+
+    }
+    .tag-mcltimeline > ul > li > ul { grid-area: details; text-align: left; }
+    .tag-mcltimeline > ul > li > .collapse-indicator { grid-area: indicator; }
+    .tag-mcltimeline > ul ul { margin-left: 0.5em; }
 */
 
-/* === Image Gallery direct in note === */
-	.image-gallery div[data-embed-type="image"] > p { display: flex; gap: 5px; margin-block: 5px; }
-	.image-gallery div[data-embed-type="image"] img { max-height: 350px; border-radius: 15px; border: 1px solid var(--background-modifier-border); }
 
-/* === Image Gallery with Callout === */
-	
-	/* - Blank Container "DIV"'s - can be used with Main Multi-Column layout above */
-	div[data-callout*="container"].callout,
-	div[data-callout*="container"].callout > .callout-content { border: 0 !important; padding-top: 0; background: unset !important; }
-	div[data-callout*="container"].callout > .callout-title { display: none; }
-	
-	/* - to use add callout with [!image gallery container] */
-	div[data-callout*="image"].callout > .callout-content > p { display: flex; margin-block:5px; gap: 5px; }
-	div[data-callout*="image"].callout > .callout-content > p img { border-radius: 15px; max-height: 350px; border: 1px solid var(--background-modifier-border) }
+
+
+/* @settings
+
+name: Modular CSS Layout - Gallery Cards
+id: modular-css-layout-gc
+settings:
+
+	-
+		id: gc-general-title
+		title: General Image Settings
+		type: heading
+		level: 2
+		collapsed: true
+	-
+        id: image-zoom
+        title: Enable Image Zoom via CSS
+        type: class-toggle
+	-
+		id: img-border-radius
+		title: Image Border Radius (any unit, no space)
+		type: variable-text
+		default: 15px
+
+    -
+        id: gc-callout-title
+        title: Image Gallery Settings
+		description: For image gallery using `gallery` callout-metadata and `image-gallery` YAML
+        type: heading
+        level: 2
+		collapsed: true
+	-
+		id: callout-gallery-gap
+		title: Gallery Callout Gap (any unit, no space)
+		type: variable-text
+		default: 5px
+    -
+        id: img-max-height
+        title: Max Height for Images (any unit, no space)
+        type: variable-text
+        default: 300px
+	-
+		id: img-max-width
+		title: Max Width for Images (any unit, no space)
+		type: variable-text
+		default: 350px
+
+	-
+		id: gc-list-title
+	    title: Image in List Settings
+	    type: heading
+	    level: 2
+		collapsed: true
+	-
+        id: list-image-control-off
+        title: Disable Control for Image in List
+		description: Disabling will revert image dimension to Obsidian default behaviour
+        type: class-toggle
+	-
+	    id: img-max-height-list
+		title: Max Height for Images (any unit, no space)
+	    type: variable-text
+	    default: 270px
+	-
+		id: img-max-width-list
+		title: Max Width for Images (any unit, no space)
+		type: variable-text
+		default: 300px
+*/

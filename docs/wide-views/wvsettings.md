@@ -4,7 +4,7 @@ parent: Wide Views
 nav_order: 3
 ---
 
-# Wide Views Style Settings
+# Style Settings
 
 ## Adjustable RLL Settings
 

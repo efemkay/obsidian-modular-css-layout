@@ -41,8 +41,11 @@ Once you enabled the css snippet, you use this feature by creating a custom call
 
 > note that when you insert callout within callout, the line separating the callouts should only use single angle bracket (">")
 
-<img src="https://user-images.githubusercontent.com/42369515/163700561-c8d62aa3-0ac8-488c-a80e-8bfb3b539ca8.png" height="350px" >
+#### Example Screenshot
+<img src="https://user-images.githubusercontent.com/42369515/163700561-c8d62aa3-0ac8-488c-a80e-8bfb3b539ca8.png" height="350px" />
 
+#### Example GIF
+<img src="https://raw.githubusercontent.com/efemkay/obsidian-modular-css-layout/main/docs/assets/how%20to%20install%20and%20enable%20MCL.gif" height="350px" />
 
 ## Using (Unordered) List
 - css classes available
