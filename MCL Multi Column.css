@@ -1,7 +1,7 @@
 /* === README ===
 	Author: Faiz Khuzaimah / twitter: @faizkhuzaimah / github: https://github.com/efemkay
-	Updated: 2022-05-29 (version: 0.2.0)
-	- fixes for GH issues #8 (mostly accomodated by kepano)
+	Updated: 2022-07-03 (version: 0.4.0)
+	- added width control for sub-callouts within multi-column callout
 
 	What is this snippet for?
 	- to allow Obsidian users to change the layout with preset css by just specifying
@@ -156,6 +156,13 @@ body{
 	div[data-callout="multi-column"].callout .callout .callout-content { flex-grow: 1}
 
 	div[data-callout="multi-column"].callout > .callout-content > *:is(div,ul) { flex: 1 1 var(--callout-min-width); margin: 0;}
+
+	/* metadata "wide-x" to control subcallout flexible max width. only discrete 2,4,8,16 */
+	div[data-callout="multi-column"].callout > .callout-content > div[data-callout-metadata*="min-0"] { flex-basis: 0; }
+	div[data-callout="multi-column"].callout > .callout-content > div[data-callout-metadata*="wide-2"] { flex-grow: 2; }
+	div[data-callout="multi-column"].callout > .callout-content > div[data-callout-metadata*="wide-3"] { flex-grow: 3; }
+	div[data-callout="multi-column"].callout > .callout-content > div[data-callout-metadata*="wide-4"] { flex-grow: 4; }
+	div[data-callout="multi-column"].callout > .callout-content > div[data-callout-metadata*="wide-5"] { flex-grow: 5; }
 
 
 	@media (min-width: 500px) {
