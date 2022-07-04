@@ -1,14 +1,12 @@
 # Modular CSS Layout for Obsidian.md
-`v0.3.0 updated 2022-06-12`
+`v0.4.0 updated 2022-07-03`
 
 This is a repository for modular CSS layout hack for use with [Obsidian.md](https://obsidian.md/). It's meant to complement/assist Community Theme, focusing solely on providing alternative layout to standard width and standard top-bottom block view.
 
 ### Table of Content
+- [Install/Download](https://github.com/efemkay/obsidian-modular-css-layout#installation--download-and-enable)
 - [Wide Views](https://github.com/efemkay/obsidian-modular-css-layout#wide-views)
 - [Multi Column](https://github.com/efemkay/obsidian-modular-css-layout#multi-column)
-    - [Using Callout](https://github.com/efemkay/obsidian-modular-css-layout#using-callout)
-    - [Using (unordered) list](https://github.com/efemkay/obsidian-modular-css-layout#using-unordered-list)
-    - [Side Column / Floating Column](https://github.com/efemkay/obsidian-modular-css-layout#side-column--floating-column)
 - [Gallery Cards](https://github.com/efemkay/obsidian-modular-css-layout#gallery-cards)
 - [Support Me](https://github.com/efemkay/obsidian-modular-css-layout#support-me)
 
