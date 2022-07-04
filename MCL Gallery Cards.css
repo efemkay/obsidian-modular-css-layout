@@ -1,6 +1,7 @@
 /* === README ===
 	Author: Faiz Khuzaimah / twitter: @faizkhuzaimah / github: https://github.com/efemkay
-	Updated: 2022-06-12 (version: 0.3.0)
+	Updated: 2022-06-26 (version: 0.3.1)
+	- fix table mis-formatting
 	- completed callout and paragraph-based image gallery
 	- added dimension control for images in lists
 
@@ -93,25 +94,25 @@
 
 /* === ALPHA VERSION table-card === */
 	/* setting the borders */
-	table > tbody > tr,
-	.markdown-source-view.mod-cm6 .dataview.table-view-table .table-view-tbody tr {border: 1px solid black; border-radius: 0.5em;}
-	.markdown-source-view.mod-cm6 .dataview.table-view-table .table-view-tbody td {border-right: unset;}
+	.table-card table > tbody > tr,
+	.table-card.markdown-source-view.mod-cm6 .dataview.table-view-table .table-view-tbody tr {border: 1px solid black; border-radius: 0.5em;}
+	.table-card.markdown-source-view.mod-cm6 .dataview.table-view-table .table-view-tbody td {border-right: unset;}
 
-	:is(.theme-light, .theme-dark) table,
-	:is(*,.is-live-preview.is-live-preview) table :is(td,tr) {background-color: unset;}
-	.dataview.table-view-table.dataview.table-view-table {border: unset;} /* for primary */
-	table tbody {	display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 0.5em; clear: both;}
-	table > tbody > tr {display: flex; flex-direction: column; padding-inline: 0.5em;}
+	:is(.theme-light, .theme-dark) .table-card table,
+	.table-card:is(*,.is-live-preview.is-live-preview) table :is(td,tr) {background-color: unset;}
+	.table-card .dataview.table-view-table.dataview.table-view-table {border: unset;} /* for primary */
+	.table-card table tbody {	display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 0.5em; clear: both;}
+	.table-card table > tbody > tr {display: flex; flex-direction: column; padding-inline: 0.5em;}
 
-	:is(*,.is-live-preview) table.table-view-table > tbody > tr > td:not(:first-child) {border-top: 1px solid gray; }
-	table.table-view-table > tbody > tr {margin: unset;}
+	.table-card:is(*,.is-live-preview) table.table-view-table > tbody > tr > td:not(:first-child) {border-top: 1px solid gray; }
+	.table-card table.table-view-table > tbody > tr {margin: unset;}
 
 	/* thead adjustment */
 	/* table > thead {display: flex; } */
-	table > thead {float: right;}
-	table.table-view-table > thead > tr {margin: unset;}
-	table.table-view-table > thead > tr > th {border: unset;}
-	.dataview.table-view-table.dataview.table-view-table :is(thead, th) {padding-block: unset;}
+	.table-card table > thead {float: right;}
+	.table-card table.table-view-table > thead > tr {margin: unset;}
+	.table-card table.table-view-table > thead > tr > th {border: unset;}
+	.table-card .dataview.table-view-table.dataview.table-view-table :is(thead, th) {padding-block: unset;}
 
 
 /* === ALPHA VERSION testing Timeline in lists === */
