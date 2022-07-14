@@ -1,6 +1,7 @@
 /* === README ===
 	Author: Faiz Khuzaimah / twitter: @faizkhuzaimah / github: https://github.com/efemkay
-	Updated: 2022-07-05 (version: 0.4.1)
+	Updated: 2022-07-14 (version: 0.4.2)
+	- fix for callout width become full-width even without Wide Views module
 	- fix issue #17 (dataview list width too wide, forcing it almost like single column)
 	- added width control for sub-callouts within multi-column callout
 
@@ -176,7 +177,7 @@ body{
 	div[data-callout="multi-column"].callout > .callout-content { margin-top: unset;}
 	div[data-callout="multi-column"].callout:not(.is-collapsed) { box-shadow: unset;}
 	/* Special Adjustment -- for minimal left margin */
-	.markdown-source-view.mod-cm6.is-readable-line-width .cm-embed-block.cm-callout > div[data-callout="multi-column"].callout
+/*	.markdown-source-view.mod-cm6.is-readable-line-width .cm-embed-block.cm-callout > div[data-callout="multi-column"].callout
 		{ width: 100%; max-width: 100%; margin-inline: 0 !important; }
 	/* Special Adjustment -- for Minimal .dataview.list-view-ul width - Minimal set the width with --line-width-adaptive (40rem by default) */
 	body:not(.table-100):not(.table-max):not(.table-wide) .markdown-preview-view.is-readable-line-width:not(.table-100):not(.table-max):not(.table-wide) div[data-callout="multi-column"].callout .dataview.list-view-ul {width: auto;}

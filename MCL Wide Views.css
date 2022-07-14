@@ -1,6 +1,7 @@
 /* === README ===
 	Author: Faiz Khuzaimah / twitter: @faizkhuzaimah / github: https://github.com/efemkay
-	Updated: 2022-05-29 (version: 0.2.0)
+	Updated: 2022-07-14 (version: 0.4.2)
+	- fix for wide-page not affecting callout
 	- fixes for GH issues #9 and #11
 	- adj for Compatibility with Minimal 5.2.9
 	- add features adjustable RLL and narrow page class
@@ -93,9 +94,12 @@ body{
 		{ max-width: 100%; width: 98%;}
 
 	/* Editing View -- Special adjustment
-		- for Minimal theme where it has table also set with max-width. but table require separate line because we don't want width: 100% as that would stretch the table */
-	div[class*="wide-"].markdown-source-view.mod-cm6 .cm-contentContainer.cm-contentContainer > .cm-content table
-		{ max-width: 100% }
+		- for Minimal theme where it has table also set with max-width. but table require separate line because we don't want width: 100% as that would stretch the table
+		- but for callout, require width: auto */
+	div[class*="wide-"].markdown-source-view.mod-cm6 .cm-contentContainer.cm-contentContainer > .cm-content table { max-width: 100% }
+	div[class*="wide-"].markdown-source-view.mod-cm6.is-readable-line-width .cm-embed-block.cm-callout>.callout { max-width: 100%; width: auto;}
+		/* overriding margin-left setting to obsidian "default" */
+	div[class*="wide-"].markdown-source-view.mod-cm6.is-readable-line-width .cm-embed-block.cm-callout>.callout,
 	div[class*="wide-page"].markdown-source-view.mod-cm6 .cm-contentContainer > .embedded-backlinks,
 	div[class*="wide-page"].markdown-source-view.mod-cm6 .cm-contentContainer > .cm-content > div
 		{margin-left: 20px !important; }
