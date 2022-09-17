@@ -1,6 +1,8 @@
 /* === README ===
 	Author: Faiz Khuzaimah / twitter: @faizkhuzaimah / github: https://github.com/efemkay
-	Updated: 2022-07-14 (version: 0.4.2)
+	Updated: 2022-09-17 (version: 0.5.0)
+	- add vault-wide toggle for wide-dataview, wide-table and wide-callout (backlinks still not working). FR #19 on GH.
+	Previous version: 0.4.2 (2022-07-14)
 	- fix for wide-page not affecting callout
 	- fixes for GH issues #9 and #11
 	- adj for Compatibility with Minimal 5.2.9
@@ -50,7 +52,7 @@ settings:
 
     -
         id: wide-view-title
-        title: Wide Page Settings
+        title: Wide Page/Dataview/Table/Backlinks/Callout Settings
 		description: Control max-width block for page with cssClass `wide-page`. RLL can be enabled or disabled
         type: heading
         level: 2
@@ -60,6 +62,26 @@ settings:
         title: Max Width for Normal Width block (any unit e.g. px, em, ch)
         type: variable-text
         default: 750px
+	-
+		id: wide-dataview-global
+		title: Enable `wide-dataview` vault-wide
+		description: use `wide-dataview` in yaml to enable only for selected note/page
+		type: class-toggle
+	-
+		id: wide-table-global
+		title: Enable `wide-table` vault-wide
+		description: use `wide-table` in yaml to enable only for selected note/page
+		type: class-toggle
+	-
+		id: wide-backlinks-global
+		title: Enable `wide-backlinks` vault-wide
+		description: use `wide-backlinks` in yaml to enable only for selected note/page
+		type: class-toggle
+	-
+		id: wide-callout-global
+		title: Enable `wide-callout` vault-wide
+		description: use `wide-callout` in yaml to enable only for selected note/page
+		type: class-toggle
 
     -
         id: narrow-view-title
@@ -73,6 +95,7 @@ settings:
         title: Max Width for Narrow View page (any unit e.g. px, em, ch)
         type: variable-text
         default: 750px
+
 */
 
 body{
@@ -85,7 +108,8 @@ body{
 
 	/* Editing View -- set Readable Line Length (RLL) to wide (100%) for any css class with "wide" word in it.
 		- "width:100%" added for Blue Topaz
-		- .cm-content added to override Mado 11 */
+		- .cm-content added to override Mado 11
+		- focus to fix for v0.16.x -- .markdown-source-view.mod-cm6 .cm-sizer */
 	:is(body:not(.max-view-enabled) .mod-root) div[class*="wide-"].markdown-source-view.mod-cm6 .cm-contentContainer.cm-contentContainer,
 	:is(body:not(.max-view-enabled) .mod-root) div[class*="wide-"].markdown-source-view.mod-cm6 .cm-contentContainer.cm-contentContainer > .cm-content,
 	:is(body:not(.max-view-enabled) .mod-root) div[class*="wide-"].markdown-source-view.mod-cm6 .cm-contentContainer.cm-contentContainer > .cm-content > div,
@@ -110,10 +134,11 @@ body{
 
 
 	/* Reading View -- similar to Editing View, set the RLL to 100% for any css class with "wide" word in it
+		- :is() used for OR between global toggle and "cssClass" in yaml
 		- "width:100%" added for Blue Topaz */
-	div[class*="wide-"].markdown-preview-view .markdown-preview-sizer.markdown-preview-sizer, /* double-up for specificity */
-	div[class*="wide-"].markdown-preview-view .markdown-preview-sizer.markdown-preview-sizer > div
-		{ max-width: 100%; margin-inline: auto; width: 100%;} /* important is for Atom theme */
+	:is(.wide-dataview-global, .wide-table-global, .wide-backlinks-global, .wide-callout-global, div.markdown-preview-view:is(.wide-dataview,.wide-table,.wide-backlinks,.wide-callout)) .markdown-preview-sizer.markdown-preview-sizer, /* double-up for specificity */
+	:is(.wide-dataview-global, .wide-table-global, .wide-backlinks-global, .wide-callout-global, div.markdown-preview-view:is(.wide-dataview,.wide-table,.wide-backlinks,.wide-callout)) .markdown-preview-sizer.markdown-preview-sizer > div
+		{ max-width: 100%; margin-inline: auto; width: 100%;}
 
 	/* Reading View -- Special Adjustment
 		- for Minimal theme */
@@ -148,14 +173,15 @@ body{
 
 
 	/*	Reading View -- similar to Editing View, set all divs to normal-width and then selected divs to full-width,
-		however, for Reading View, wide-dataview and wide-table will require Contextual Typography plugin */
-	div.markdown-preview-view:is(.wide-dataview,.wide-table,.wide-backlinks,.wide-callout) .markdown-preview-sizer.markdown-preview-sizer > div
+		however, for Reading View, wide-dataview and wide-table will require Contextual Typography plugin
+		- :is() used to couple global toggle with yaml cssClass */
+	:is(.wide-dataview-global, .wide-table-global, .wide-backlinks-global, .wide-callout-global, div.markdown-preview-view:is(.wide-dataview,.wide-table,.wide-backlinks,.wide-callout)) .markdown-preview-sizer.markdown-preview-sizer > div
 		{ max-width: var(--normal-max-width); margin-inline: auto; } /* important is for Atom theme */
-	div[class*="-dataview"].markdown-preview-view .markdown-preview-sizer.markdown-preview-sizer > div:is(.el-lang-dataview),
+	:is(body.wide-dataview-global, div[class*="-dataview"].markdown-preview-view) .markdown-preview-sizer.markdown-preview-sizer > div:is(.el-lang-dataview),
 	div[class*="-dataview"].markdown-preview-view .markdown-preview-sizer.markdown-preview-sizer > div:is(.el-lang-dataview) table, /* for minimal */
-	div[class*="-table"].markdown-preview-view .markdown-preview-sizer.markdown-preview-sizer > div:is(.el-table),
-	div[class*="-callout"].markdown-preview-view .markdown-preview-sizer.markdown-preview-sizer > div[data-callout],
-	div[class*="-backlinks"].markdown-preview-view .markdown-preview-sizer.markdown-preview-sizer > div:is(.embedded-backlinks)
+	:is(body.wide-table-global, div[class*="-table"].markdown-preview-view) .markdown-preview-sizer.markdown-preview-sizer > div:is(.el-table),
+	:is(body.wide-callout-global, div[class*="-callout"].markdown-preview-view) .markdown-preview-sizer.markdown-preview-sizer > div[data-callout],
+	:is(body.wide-backlinks-global, div[class*="-backlinks"].markdown-preview-view) .markdown-preview-sizer.markdown-preview-sizer > div:is(.embedded-backlinks)
 		{ max-width: 100%; }
 
 	/* Reading View -- Additional Notes
@@ -166,7 +192,7 @@ body{
 
 	/* Editing and Reading View -- Special Adjustment
 		- for table for all theme, since its table not auto margin */
-	div[class*="wide-table"] table { margin-inline: auto; }
+	:is(body.wide-table-global, div[class*="wide-table"]) table { margin-inline: auto; }
 
 
 /* === Narrow Page === */

@@ -1,5 +1,5 @@
 # Modular CSS Layout for Obsidian.md
-`v0.4.2 updated 2022-07-14`
+`v0.5.0 updated 2022-09-17`
 
 This is a repository for modular CSS layout hack for use with [Obsidian.md](https://obsidian.md/). It's meant to complement/assist Community Theme, focusing solely on providing alternative layout to standard width and standard top-bottom block view.
 
@@ -25,7 +25,9 @@ This snippet provides you the following features:
 	- `wide-page`
 	- `wide-dataview` -- require Contextual Typography plugin
 	- `wide-table` -- require Contextual Typography plugin
+	- `wide-callout`
 	- `wide-backlinks`
+	- vault-wide toggle for each of the above
 - Narrow width page per page/note basis for vault with RLL disabled by specifying custom `cssClass` at the frontmatter (YAML)
     - `narrow-page`
 - Adjustable RLL (custom css class toggle) applicable to entire vault
@@ -103,8 +105,10 @@ This snippet provides you the following features:
 This snippet provides you the following features:
 - Image gallery using callout by specifying the callout-metadata `gallery` e.g. `> [!NOTE|gallery]`
 - Image gallery using YAML/frontmatter .`cssClass: image-gallery`
-- Dimension control for images in bullet list
-- Image Zoom
+- Image and Mermaid Diagram Controls
+	- Dimension control for images in bullet list
+	- Image Zoom
+	- Mermaid Scale and Zoom
 
 
 ## Support Me

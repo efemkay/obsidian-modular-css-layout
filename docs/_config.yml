@@ -8,10 +8,20 @@ url: "https://efemkay.github.io" # the base hostname & protocol for your site, e
 
 permalink: pretty
 
+# Site Logo -- i don't have one (yet)
+# Site Search -- I maintained the default (which is enabled with some others like depth and so on
+
+# Mermaid diagrams -- I include this because it's an opt-in
+mermaid:
+  version: "9.1.6"   # Pick an available version from https://cdn.jsdelivr.net/npm/mermaid/
+
 # Aux links for the upper right navigation
 aux_links:
-  "Modular CSS Layout":
+  "MCL on GitHub":
     - "//github.com/efemkay/obsidian-modular-css-layout"
 
 # Makes Aux links open in a new tab. Default is false
 aux_links_new_tab: false
+
+# Color scheme currently only supports "dark", "light"/nil (default), or a custom scheme that you define
+color_scheme: dark
