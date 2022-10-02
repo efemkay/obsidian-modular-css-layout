@@ -1,7 +1,7 @@
 # Modular CSS Layout for Obsidian.md
 > there's beta branch (v0.6.0 see GH branch beta-0.16.x) for Obsidian v0.16.x support. I've updated the snippets (Wide Views and Multi Column)
 
-`v0.5.0 updated 2022-09-17`
+`v0.5.1 updated 2022-10-02`
 
 This is a repository for modular CSS layout hack for use with [Obsidian.md](https://obsidian.md/). It's meant to complement/assist Community Theme, focusing solely on providing alternative layout to standard width and standard top-bottom block view.
 

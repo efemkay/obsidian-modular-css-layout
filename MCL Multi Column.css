@@ -1,6 +1,8 @@
 /* === README ===
 	Author: Faiz Khuzaimah / twitter: @faizkhuzaimah / github: https://github.com/efemkay
-	Updated: 2022-07-14 (version: 0.4.2)
+	Version 0.5.1 (updated 2022-10-02)
+	- fix for footnote with -column-list-block created a <br> tag
+	Version 0.4.2 (updated 2022-07-14)
 	- fix for callout width become full-width even without Wide Views module
 	- fix issue #17 (dataview list width too wide, forcing it almost like single column)
 	- added width control for sub-callouts within multi-column callout
@@ -244,7 +246,7 @@ body{
 	.contextual-typography .minimal-float.markdown-preview-view.markdown-preview-view .markdown-preview-sizer { display: unset; }
 
 
-/* === Multi Column Lists === */
+/* === Multi Column Lists -- Markdown Attributes Based === */
 
 	/* - xx-column-list for first level only list, but apply anywhere */
 	/* - xx-column-list-block apply at block level - but require JV's Markdown Attributes plugin */
@@ -267,7 +269,21 @@ body{
 			{ display: grid; grid-column-gap:3em; grid-template-columns:repeat(3,1fr);}
 	}
 
+	.tag-mcllist ul:first-child,
 	.multi-column-list div > ul,
 	.multi-column-list-block {
 		column-width: var(--list-min-width); column-gap: 3rem; column-rule: var(--col-rule-width) solid var(--col-rule-color);
 	}
+
+	/* Special adjustment for footnotes applied with -colum-list-block -- obsidian creates a <br> tag at the last <li> */
+	.footnotes [class$="-column-list-block"] li:last-of-type br:last-of-type {display: none;}
+
+/* === Multi Column Lists -- Tag (Contextual Typography) Based === */
+
+	.tag-mcllist.cm-callout {padding-block: 1em;}
+	.tag-mcllist .callout:first-of-type { margin-top: 0; }
+	.tag-mcllist ul:first-of-type { margin-top: 0; }
+
+	/* hide tag in rendered view, dim it in edit mode */
+	div[class*="mcl"] a[href*="#mcl"] { display: none; }
+	span[class*="mcl"]	{ background-color: var(--background-secondary) !important; color: gray !important; }
