@@ -1,6 +1,8 @@
 /* === README ===
 	Author: Faiz Khuzaimah / twitter: @faizkhuzaimah / github: https://github.com/efemkay
-	Version: 0.6.0 (updated 2022-09-25). Version number follow overall MCL
+	Version 0.6.1 (updated 2022-10-02). Version number follow overall MCL
+	- fix for footnote with -column-list-block created a <br> tag
+	Version 0.6.0 (updated 2022-09-25)
 	- partial fix for obsidian v 0.16.x
 	Version 0.4.2 (2022-07-14)
 	- fix for callout width become full-width even without Wide Views module
@@ -284,6 +286,9 @@ body{
 	.multi-column-list-block {
 		column-width: var(--list-min-width); column-gap: 3rem; column-rule: var(--col-rule-width) solid var(--col-rule-color);
 	}
+
+	/* Special adjustment for footnotes applied with -colum-list-block -- obsidian creates a <br> tag at the last <li> */
+	.footnotes [class$="-column-list-block"] li:last-of-type br:last-of-type {display: none;}
 
 /* === mc list using tags === */
 	.tag-mcllist { columns: 3; }
