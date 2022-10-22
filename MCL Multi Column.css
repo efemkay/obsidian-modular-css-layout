@@ -255,7 +255,7 @@ body{
 	.contextual-typography .minimal-float.markdown-preview-view.markdown-preview-view .markdown-preview-sizer { display: unset; }
 
 
-/* === Multi Column Lists === */
+/* === Multi Column Lists -- Markdown Attributes Based === */
 
 	/* - xx-column-list for first level only list, but apply anywhere */
 	/* - xx-column-list-block apply at block level - but require JV's Markdown Attributes plugin */
@@ -278,6 +278,7 @@ body{
 			{ display: grid; grid-column-gap:3em; grid-template-columns:repeat(3,1fr);}
 	}
 
+	.tag-mcllist ul:first-child,
 	.multi-column-list div > ul,
 	.multi-column-list-block {
 		column-width: var(--list-min-width); column-gap: 3rem; column-rule: var(--col-rule-width) solid var(--col-rule-color);
@@ -285,6 +286,7 @@ body{
 
 	/* Special adjustment for footnotes applied with -colum-list-block -- obsidian creates a <br> tag at the last <li> */
 	.footnotes [class$="-column-list-block"] li:last-of-type br:last-of-type {display: none;}
+
 
 /* === mc list using tags === */
 	.tag-mcllist { columns: 3; }

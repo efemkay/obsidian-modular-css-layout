@@ -1,4 +1,5 @@
 # Modular CSS Layout for Obsidian.md
+
 `v0.6.2 updated 2022-10-22` -- Support for Obsidian v1.0.x
 
 This is a repository for modular CSS layout hack for use with [Obsidian.md](https://obsidian.md/). It's meant to complement/assist Community Theme, focusing solely on providing alternative layout to standard width and standard top-bottom block view.
