@@ -1,5 +1,5 @@
 # Modular CSS Layout for Obsidian.md
-> there's beta branch (v0.6.0 see GH branch beta-0.16.x) for Obsidian v0.16.x support. I've updated the snippets (Wide Views and Multi Column)
+> this is old branch to support those still want to stick to Obsidian version prior to 0.15.9
 
 `v0.5.1 updated 2022-10-02`
 
