@@ -1,16 +1,16 @@
 # Modular CSS Layout for Obsidian.md
-`v0.6.1 updated 2022-10-02` -- beta for Obsidian v0.16.x
-- fix to support Obsidian v0.16.x. Wide Views and Multi Column for now
-- fix for `-column-list-block` in footnotes
+`v0.6.2 updated 2022-10-22` -- Support for Obsidian v1.0.x
 
 This is a repository for modular CSS layout hack for use with [Obsidian.md](https://obsidian.md/). It's meant to complement/assist Community Theme, focusing solely on providing alternative layout to standard width and standard top-bottom block view.
 
+I mainly do casual test on select popular themes like ITS, Primary, Shimmering Focus, Prism, and Minimal. Need your help to let me know if there's anything not working right. Do log in [MCL GH Issue](https://github.com/efemkay/obsidian-modular-css-layout/issues) if you find anything not working properly. 
+
 ### Table of Content
-- [Install/Download](https://github.com/efemkay/obsidian-modular-css-layout#installation--download-and-enable)
-- [Wide Views](https://github.com/efemkay/obsidian-modular-css-layout#wide-views)
-- [Multi Column](https://github.com/efemkay/obsidian-modular-css-layout#multi-column)
-- [Gallery Cards](https://github.com/efemkay/obsidian-modular-css-layout#gallery-cards)
-- [Support Me](https://github.com/efemkay/obsidian-modular-css-layout#support-me)
+- [Install/Download](#installation--download-and-enable)
+- [Wide Views](#wide-views)
+- [Multi Column](#multi-column)
+- [Gallery Cards](#gallery-cards)
+- [Support Me](#support-me)
 
 ## Installation / Download and Enable
 
