@@ -1,13 +1,13 @@
 /* === README ===
-	Author: Faiz Khuzaimah / twitter: @faizkhuzaimah / github: https://github.com/efemkay
-	Updated: 2022-09-17 (version: 0.5.0)
-	- add vault-wide toggle for wide-dataview, wide-table and wide-callout (backlinks still not working). FR #19 on GH.
-	Previous version: 0.4.2 (2022-07-14)
-	- fix for wide-page not affecting callout
-	- fixes for GH issues #9 and #11
-	- adj for Compatibility with Minimal 5.2.9
-	- add features adjustable RLL and narrow page class
-	- add style settings for adj RLL width and toggle whole class
+	Snippet: MCL Wide Views / Author: Faiz Khuzaimah / twitter: @faizkhuzaimah / github: https://github.com/efemkay
+	Version 0.6.2 (updated 2022-10-22)
+	- update to support Obsidian 1.0.0
+	- Fix wide-page not renderring properly in editing view (conflict with global/vault wide settings
+	- Adjusted the variable for Adjustable RLL to make use of Obsidian default variable --file-line-width. Changes not break the settings as I mapped it to MCL own variable --adj-rll-max-width
+	- Fix for wide-table not renderring properly in editing view for Minimal theme.
+	Version 0.6.0 (updated 2022-09-25)
+	- fix to support Obsidian v0.16.x (mostly editing view and global settings)
+	- code cleanup
 
 	What is this snippet for?
 	- for any users to use with any theme to complement any missing page/block width control
@@ -73,14 +73,14 @@ settings:
 		description: use `wide-table` in yaml to enable only for selected note/page
 		type: class-toggle
 	-
-		id: wide-backlinks-global
-		title: Enable `wide-backlinks` vault-wide
-		description: use `wide-backlinks` in yaml to enable only for selected note/page
-		type: class-toggle
-	-
 		id: wide-callout-global
 		title: Enable `wide-callout` vault-wide
 		description: use `wide-callout` in yaml to enable only for selected note/page
+		type: class-toggle
+	-
+		id: wide-backlinks-global
+		title: Enable `wide-backlinks` vault-wide
+		description: use `wide-backlinks` in yaml to enable only for selected note/page
 		type: class-toggle
 
     -
@@ -99,26 +99,34 @@ settings:
 */
 
 body{
-	--normal-max-width: 750px;
-	--narrow-max-width: 750px;
+	--normal-max-width: var(--file-line-width);
+	--narrow-max-width: var(--file-line-width);
 	--adj-rll-max-width: 750px;
 }
 
 /* === Wide Page === */
 
-	/* Editing View -- set Readable Line Length (RLL) to wide (100%) for any css class with "wide" word in it.
+
+	/* --- Editing View ---
+		- set Readable Line Length (RLL) to wide (100%) for any css class with "wide" word in it.
 		- "width:100%" added for Blue Topaz
 		- .cm-content added to override Mado 11
-		- focus to fix for v0.16.x -- .markdown-source-view.mod-cm6 .cm-sizer */
-	:is(body:not(.max-view-enabled) .mod-root) div[class*="wide-"].markdown-source-view.mod-cm6 .cm-contentContainer.cm-contentContainer,
-	:is(body:not(.max-view-enabled) .mod-root) div[class*="wide-"].markdown-source-view.mod-cm6 .cm-contentContainer.cm-contentContainer > .cm-content,
-	:is(body:not(.max-view-enabled) .mod-root) div[class*="wide-"].markdown-source-view.mod-cm6 .cm-contentContainer.cm-contentContainer > .cm-content > div,
-	div[class*="wide-"].markdown-source-view.mod-cm6 .cm-contentContainer.cm-contentContainer > .embedded-backlinks,
-	div[class*="wide-"].markdown-source-view.mod-cm6 .cm-contentContainer.cm-contentContainer > .embedded-backlinks > div
+		- focus to fix for v0.16.x -- .markdown-source-view.mod-cm6 .cm-sizer
+	*/
+
+	/* - WPEV - */
+	/* Main code */
+	/* Set the containers (all relevant levels) to max-width 100%. Applicable to global and per note (cssClass) */
+	/* selector for editing container .cm-sizer */
+	:is(body[class*="wide-"], div[class*="wide-"].markdown-source-view.mod-cm6.is-readable-line-width) .cm-sizer,
+	/* selector for sub containers
+		- .cm-contentContainer, .cm-contentContainer > .cm-content, .cm-contentContainer > .cm-content > div
+		- .embedded-backlinks, .embedded-backlinks > div */
+	:is(body[class*="wide-"]:not(.max-view-enabled), div[class*="wide-"].markdown-source-view.mod-cm6) :is(.cm-contentContainer.cm-contentContainer, .cm-contentContainer.cm-contentContainer > .cm-content, .cm-contentContainer.cm-contentContainer > .cm-content > div, .embedded-backlinks, .embedded-backlinks > div)
 		{ max-width: 100%; width: 98%;}
 
-	/* Editing View -- Special adjustment
-		- for Minimal theme where it has table also set with max-width. but table require separate line because we don't want width: 100% as that would stretch the table
+	/* Special adjustment - for Minimal
+		- it has table also set with max-width. but table require separate line because we don't want width: 100% as that would stretch the table
 		- but for callout, require width: auto */
 	div[class*="wide-"].markdown-source-view.mod-cm6 .cm-contentContainer.cm-contentContainer > .cm-content table { max-width: 100% }
 	div[class*="wide-"].markdown-source-view.mod-cm6.is-readable-line-width .cm-embed-block.cm-callout>.callout { max-width: 100%; width: auto;}
@@ -127,21 +135,27 @@ body{
 	div[class*="wide-page"].markdown-source-view.mod-cm6 .cm-contentContainer > .embedded-backlinks,
 	div[class*="wide-page"].markdown-source-view.mod-cm6 .cm-contentContainer > .cm-content > div
 		{margin-left: 20px !important; }
+	div[class*="wide-page"].markdown-source-view.mod-cm6.is-readable-line-width table
+		{margin-left: unset !important; }
 
-	/* Editing View -- Additional Note
+	/* Additional Note
 		- Yin Yang uses .markdown-source-view.mod-cm6 { width: !important;}. I'm skipping fixes for this until there's user request
 		- added :is(body:not(.max-view-enabled) .mod-root) to accomodate for Shimmering Focus, does not affect other themes */
 
 
-	/* Reading View -- similar to Editing View, set the RLL to 100% for any css class with "wide" word in it
+	/* --- Reading View --- */
+	/* -- similar to Editing View (WPEV), set the RLL to 100% for any css class with "wide" word in it
 		- :is() used for OR between global toggle and "cssClass" in yaml
 		- "width:100%" added for Blue Topaz */
-	:is(.wide-dataview-global, .wide-table-global, .wide-backlinks-global, .wide-callout-global, div.markdown-preview-view:is(.wide-dataview,.wide-table,.wide-backlinks,.wide-callout)) .markdown-preview-sizer.markdown-preview-sizer, /* double-up for specificity */
-	:is(.wide-dataview-global, .wide-table-global, .wide-backlinks-global, .wide-callout-global, div.markdown-preview-view:is(.wide-dataview,.wide-table,.wide-backlinks,.wide-callout)) .markdown-preview-sizer.markdown-preview-sizer > div
+
+	/* - WPRV - */
+	/* Main code */
+	/* Set the containers (all relevant levels) to max-width 100%. Applicable to global and per note (cssClass) */
+	body[class*="wide-"] :is(.markdown-preview-sizer.markdown-preview-sizer, .markdown-preview-sizer.markdown-preview-sizer > div),
+	div[class*="wide-"].markdown-preview-view :is(.markdown-preview-sizer.markdown-preview-sizer, .markdown-preview-sizer.markdown-preview-sizer > div)
 		{ max-width: 100%; margin-inline: auto; width: 100%;}
 
-	/* Reading View -- Special Adjustment
-		- for Minimal theme */
+	/* Special adjustment - for Minimal theme */
 	div[class*="wide-"].markdown-preview-view {padding-inline: 30px;}
 
 	/* special line just for Atom theme -- commented out for now */
@@ -151,40 +165,74 @@ body{
 		{ max-width: 100% !important; } */
 
 
-/* === Wide Dataview, Table & Backlink === */
+/* === Wide Blocks (i.e. Dataview, Table, Callout & Backlink) === */
 
-	/*	Editing View -- set all divs back to normal width (ensuring specificity rule over some theme), then
-		expand to full-width for each selected css class (i.e. wide-dataview, wide-table and wide-backlinks) */
 
-	:is(body:not(.max-view-enabled) .mod-root) div.markdown-source-view.mod-cm6:is(.wide-dataview,.wide-table,.wide-backlinks,.wide-callout) .cm-contentContainer.cm-contentContainer > .cm-content > div,
-	:is(body:not(.max-view-enabled) .mod-root) div.markdown-source-view.mod-cm6:is(.wide-dataview,.wide-table,.wide-backlinks,.wide-callout) .cm-contentContainer.cm-contentContainer > .embedded-backlinks > div
-		{max-width: var(--normal-max-width); margin-inline: auto !important;} /* important for margin needed because app.css:2842 use it */
-	:is(body:not(.max-view-enabled) .mod-root) div[class*="-dataview"].markdown-source-view.mod-cm6 .cm-contentContainer.cm-contentContainer > div > div:is(.cm-preview-code-block),
-	:is(body:not(.max-view-enabled) .mod-root) div[class*="-table"].markdown-source-view.mod-cm6 .cm-contentContainer.cm-contentContainer > div > div:is(.HyperMD-table-row, .cm-table-widget),
-	:is(body:not(.max-view-enabled) .mod-root) div[class*="-callout"].markdown-source-view.mod-cm6 .cm-contentContainer.cm-contentContainer > div > div:is(.cm-callout),
-	:is(body:not(.max-view-enabled) .mod-root) div[class*="-backlinks"].markdown-source-view.mod-cm6 .cm-contentContainer.cm-contentContainer > div:is(.embedded-backlinks) > div
+	/* --- Editing View ---
+	   - For Editing View, the approach is slightly different. After "wide-page" set all max-width to 100%, I adjust the .cm-content > * blocks to normal width and then selectively target blocks for wide width
+	   - must note to ensure specificity rule over some theme), then
+	   - global settings selector need to be separated to ensure it is not conditional to cssClass yaml
+	   - `body[class*="wide-"]` used for global settings, `div[class*="wide-"].markdown-preview-view` used for per note cssClass
+	*/
+
+	/* - WBEV - */
+	/* Main code */
+	/* Generally set all blocks to normal width, no need (yet) for global settings as I didn't adjust it Wide Page above */
+	/* set .cm-sizer > .inline-title to normal width. has to be separated because i don't want margin auto */
+	:is(body[class*="wide-"]:not(.max-view-enabled) .mod-root .markdown-source-view.mod-cm6:not(.wide-page), div.markdown-source-view.mod-cm6:is(.wide-dataview,.wide-table,.wide-backlinks,.wide-callout)) .cm-sizer > .inline-title
+		{ max-width: var(--normal-max-width); width: 100%; margin-inline: auto; }
+	/* set normal width to `.cm-content > div` and `.embedded-links` only (override the WPEV) */
+	:is(body[class*="wide-"]:not(.max-view-enabled) .markdown-source-view.mod-cm6:not(.wide-page), div[class*="wide-"].markdown-source-view.mod-cm6:not(.wide-page)) :is(.cm-contentContainer.cm-contentContainer > .cm-content > div, .cm-sizer > .embedded-backlinks)
+		{ max-width: var(--normal-max-width); margin-inline: auto !important; } /* important for margin needed because app.css:1473 use it for .cm-contentContainer > .cm-content > * */
+
+	/* selectors to set dataview, table, callout and/or backlinks to wide */
+	:is(body.wide-dataview-global:not(.max-view-enabled) .mod-root .markdown-source-view.mod-cm6, div[class*="-dataview"].markdown-source-view.mod-cm6) .cm-contentContainer.cm-contentContainer > div > div:is(.cm-preview-code-block),
+	:is(body.wide-table-global:not(.max-view-enabled) .mod-root .markdown-source-view.mod-cm6, div[class*="-table"].markdown-source-view.mod-cm6) .cm-contentContainer.cm-contentContainer > div > div:is(.HyperMD-table-row, .cm-table-widget),
+	:is(body.wide-callout-global:not(.max-view-enabled) .mod-root .markdown-source-view.mod-cm6, div[class*="-callout"].markdown-source-view.mod-cm6) .cm-contentContainer.cm-contentContainer > div > div:is(.cm-callout),
+	/* selectors to set backlinks to wide -- not fix yet for 0.16.x */
+	:is(body.wide-backlinks-global:not(.max-view-enabled) .mod-root .markdown-source-view.mod-cm6, div[class*="-backlinks"].markdown-source-view.mod-cm6) .cm-sizer > div:is(.embedded-backlinks)
 		{ max-width: 100%; }
-	:is(body:not(.max-view-enabled) .mod-root) div[class*="-dataview"].markdown-source-view.mod-cm6 .cm-contentContainer.cm-contentContainer > div > div:is(.cm-preview-code-block) > div /* for minimal */
-		{ width: unset;}
 
-	/* Editing View -- Additional Notes
+
+	/* Special adjustment - for Minimal */
+	:is(body:not(.max-view-enabled) .mod-root) div[class*="-dataview"].markdown-source-view.mod-cm6 .cm-contentContainer.cm-contentContainer > div > div:is(.cm-preview-code-block) > div
+		{ width: unset;}
+	/* Special adjustment - for Minimal - to override custom margin-left that uses !important */
+	.wide-table.markdown-source-view.mod-cm6.is-readable-line-width table {margin-left: auto !important; }
+
+	/* Additional Notes
 		- Minimal removes inline padding for .markdown-source-view.mod-cm6 .cm-scroller so it is flushed to the very edges (no way to adjust currently)
 		- added :is(body:not(.max-view-enabled) .mod-root) to accomodate for Shimmering Focus, does not affect other themes */
 
 
-	/*	Reading View -- similar to Editing View, set all divs to normal-width and then selected divs to full-width,
-		however, for Reading View, wide-dataview and wide-table will require Contextual Typography plugin
-		- :is() used to couple global toggle with yaml cssClass */
-	:is(.wide-dataview-global, .wide-table-global, .wide-backlinks-global, .wide-callout-global, div.markdown-preview-view:is(.wide-dataview,.wide-table,.wide-backlinks,.wide-callout)) .markdown-preview-sizer.markdown-preview-sizer > div
+	/* --- Reading View ---
+		- Similar to WBEV, the approach is to leverage on WPRV setting all blocks to wide, set `.markdown-preview-sizer > div` to normal and set related block to wide again
+		- For Reading View, wide-dataview and wide-table will require Contextual Typography plugin
+		- :is() used to couple global toggle with yaml cssClass
+		- wide backlinks still cannot be implemented in 0.16.x as the it is located one div deeper than `.markdown-preview-sizer > div` which means I need to do "look-back", achievable only with :has()
+	*/
+
+	/* - WBRV - */
+	/* Main code */
+	/* set the containers to normal width */
+	:is(body[class*="wide-"] .markdown-preview-view:not(.wide-page), div[class*="wide-"].markdown-preview-view:not(.wide-page)) .markdown-preview-sizer.markdown-preview-sizer > div
 		{ max-width: var(--normal-max-width); margin-inline: auto; } /* important is for Atom theme */
+	/* set the related blocks to wide width */
 	:is(body.wide-dataview-global, div[class*="-dataview"].markdown-preview-view) .markdown-preview-sizer.markdown-preview-sizer > div:is(.el-lang-dataview),
-	div[class*="-dataview"].markdown-preview-view .markdown-preview-sizer.markdown-preview-sizer > div:is(.el-lang-dataview) table, /* for minimal */
 	:is(body.wide-table-global, div[class*="-table"].markdown-preview-view) .markdown-preview-sizer.markdown-preview-sizer > div:is(.el-table),
 	:is(body.wide-callout-global, div[class*="-callout"].markdown-preview-view) .markdown-preview-sizer.markdown-preview-sizer > div[data-callout],
+	/* comment out wide backlinks as no possible fix (yet) for 0.16.x due to notes above *//*
 	:is(body.wide-backlinks-global, div[class*="-backlinks"].markdown-preview-view) .markdown-preview-sizer.markdown-preview-sizer > div:is(.embedded-backlinks)
 		{ max-width: 100%; }
+	*/
 
-	/* Reading View -- Additional Notes
+	/* Special adjustment - for Minimal - it also somehow set the table width within dataview block */
+	:is(body.wide-dataview-global, div[class*="-dataview"].markdown-preview-view) .markdown-preview-sizer.markdown-preview-sizer > div:is(.el-lang-dataview) table
+		{ max-width: 100%; }
+	/* Special adjustment - for Minimal - to override Minimal custom width */
+	body[class*="global"].contextual-typography .markdown-preview-view.is-readable-line-width .markdown-preview-sizer > div { width: 100%; }
+
+	/* Additional Notes
 		- .markdown-preview-section is same div as .markdown-preview-sizer
 		- Atom uses !important for .markdown-preview-view.is-readable-line-width .markdown-preview-section {...}
 			- cannot adjust this at the moment without disrupting other theme's layout */
@@ -198,8 +246,14 @@ body{
 /* === Narrow Page === */
 /* cssClass YAML to allow users with disabled RLL to introduce RLL per page/note basis */
 
-	/* Editing View -- set Readable Line Length (RLL) to wide (100%) for any css class with "wide" word in it
-		- "width:100%" added for Blue Topaz / div.cm-content added to override Mado 11 */
+
+	/* --- Editing View ---
+		- Set Readable Line Length (RLL) to wide (100%) for any css class with "wide" word in it
+	*/
+
+	/* - NPEV - */
+	/* Main code */
+	/* set the containers to narrow width. `div.cm-content` added to override Mado 11 */
  	div[class*="narrow-"].markdown-source-view.mod-cm6 .cm-contentContainer.cm-contentContainer,
  	div[class*="narrow-"].markdown-source-view.mod-cm6 .cm-contentContainer.cm-contentContainer > .cm-content,
  	div[class*="narrow-"].markdown-source-view.mod-cm6 .cm-contentContainer.cm-contentContainer > .cm-content > div,
@@ -207,41 +261,62 @@ body{
  	div[class*="narrow-"].markdown-source-view.mod-cm6 .cm-contentContainer.cm-contentContainer > .embedded-backlinks > div
  		{ max-width: var(--narrow-max-width); margin-inline: auto; }
 
-	/* Editing View -- Special Adjustment */
-	/* - for Minimal theme where it has table also set with max-width. but table require separate line because we don't want margin: auto that would center the table relative to other elements like para */
-	div[class*="narrow-"].markdown-source-view.mod-cm6 .cm-contentContainer.cm-contentContainer > .cm-content table, /* for minimal */
+	/* Special adjustment - for Minimal */
+	/* it has table also set with max-width. but table require separate line because we don't want margin: auto that would center the table relative to other elements like para */
+	div[class*="narrow-"].markdown-source-view.mod-cm6 .cm-contentContainer.cm-contentContainer > .cm-content table
 		{ max-width: var(--narrow-max-width); }
- 	/* - for Minimal theme but affecting all theme. Minimal apparently uses !important to control margin the adjustment is still safe because for narrow-page you would want margin: auto anyway */
+ 	/* for Minimal theme but affecting all theme. Minimal apparently uses !important to control margin the adjustment is still safe because for narrow-page you would want margin: auto anyway */
 	div[class*="narrow-"].markdown-source-view.mod-cm6:not(.is-readable-line-width) .cm-contentContainer
 		{ margin-inline: auto !important; }
 
 
- 	/* Reading View -- similar to Editing View, set the RLL to 100% for any css class with "wide" word in it.
-		- "width:100%" added for Blue Topaz */
+	/* --- Reading View ---
+		- Similar to Editing View, set the RLL to 100% for any css class with "wide" word in it.
+	*/
+
+	/* - NPRV - */
+	/* Main code */
+ 	/* set the note with cssClass: narrow- to max-width of the narrow width */
  	div[class*="narrow-"].markdown-preview-view .markdown-preview-sizer.markdown-preview-sizer, /* double-up for specificity */
  	div[class*="narrow-"].markdown-preview-view .markdown-preview-sizer.markdown-preview-sizer > div
  		{ max-width: var(--narrow-max-width); margin-inline: auto;}
 
- 	/* Reading View -- Special Adjustment
-		- for Minimal theme */
+ 	/* Special adjustment - for Minimal theme */
  	div[class*="narrow-"].markdown-preview-view {padding-inline: 30px;}
 
 
 /* === Adjustable RLL === */
 /* cssClass toggle to allow users to adjust the RLL via Style Settings */
+/* Obsidian v1.0.0 makes it easier to do adjustable RLL -- just single line css ;) */
 
-	/* Editing View -- set Readable Line Length (RLL) to wide (100%) for any css class with "wide" word in it.
-		- "width:100%" added for Blue Topaz / div.cm-content added to override Mado 11 */
-    .is-adj-rll .markdown-source-view.mod-cm6 .cm-contentContainer.cm-contentContainer,
-	.is-adj-rll .markdown-source-view.mod-cm6 .cm-contentContainer.cm-contentContainer > .cm-content,
-	.is-adj-rll .markdown-source-view.mod-cm6 .cm-contentContainer.cm-contentContainer > .cm-content table, /* for minimal */
-	.is-adj-rll .markdown-source-view.mod-cm6 .cm-contentContainer.cm-contentContainer > .cm-content > div,
-	.is-adj-rll .markdown-source-view.mod-cm6 .cm-contentContainer.cm-contentContainer > .embedded-backlinks,
-	.is-adj-rll .markdown-source-view.mod-cm6 .cm-contentContainer.cm-contentContainer > .embedded-backlinks > div
-		{ max-width: var(--adj-rll-max-width); margin-inline: auto; }
+	/* --- Editing and Reading View --- */
+	/* - AREV and ARRV - */
+	body.is-adj-rll { --file-line-width: var(--adj-rll-max-width); }
 
-	/* Reading View -- similar to Editing View, set the RLL to 100% for any css class with "wide" word in it
-		- "width:100%" added for Blue Topaz */
-	.is-adj-rll .markdown-preview-view .markdown-preview-sizer.markdown-preview-sizer, /* double-up for specificity */
-	.is-adj-rll .markdown-preview-view .markdown-preview-sizer.markdown-preview-sizer > div
-		{ max-width: var(--adj-rll-max-width); margin-inline: auto;}
+	/* I still save below snippet for future references. May delete later */
+
+		/* --- Editing View ---
+			- Set Readable Line Length (RLL) to wide (100%) for any css class with "wide" word in it.
+		*/
+
+		/* - AREV - */
+		/* Main code */
+		/* set the containers to the custom adj rll width. `div.cm-content` added to override Mado 11 *//*
+	    .is-adj-rll .markdown-source-view.mod-cm6 .cm-contentContainer.cm-contentContainer,
+		.is-adj-rll .markdown-source-view.mod-cm6 .cm-contentContainer.cm-contentContainer > .cm-content,
+		.is-adj-rll .markdown-source-view.mod-cm6 .cm-contentContainer.cm-contentContainer > .cm-content table, /* for minimal *//*
+		.is-adj-rll .markdown-source-view.mod-cm6 .cm-contentContainer.cm-contentContainer > .cm-content > div,
+		.is-adj-rll .markdown-source-view.mod-cm6 .cm-contentContainer.cm-contentContainer > .embedded-backlinks,
+		.is-adj-rll .markdown-source-view.mod-cm6 .cm-contentContainer.cm-contentContainer > .embedded-backlinks > div
+			{ max-width: var(--adj-rll-max-width); margin-inline: auto; }
+
+		/* --- Reading View ---
+			- Similar to Editing View, set the RLL to 100% for any css class with "wide" word in it
+		*/
+
+		/* - ARRV - */
+		/* Main code */
+		/* set the containers to the custom adj rll width *//*
+		.is-adj-rll .markdown-preview-view .markdown-preview-sizer.markdown-preview-sizer, /* double-up for specificity *//*
+		.is-adj-rll .markdown-preview-view .markdown-preview-sizer.markdown-preview-sizer > div
+			{ max-width: var(--adj-rll-max-width); margin-inline: auto;}

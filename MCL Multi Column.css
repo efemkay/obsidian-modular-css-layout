@@ -1,11 +1,9 @@
 /* === README ===
-	Author: Faiz Khuzaimah / twitter: @faizkhuzaimah / github: https://github.com/efemkay
-	Version 0.5.1 (updated 2022-10-02)
+	Snippet: MCL Multi Column / Author: Faiz Khuzaimah / twitter: @faizkhuzaimah / github: https://github.com/efemkay
+	Version 0.6.2 (updated 2022-10-22)
+	- rollover main branch to support Obsidian 1.0.0
+	Version 0.6.1 (updated 2022-10-02). Version number follow overall MCL
 	- fix for footnote with -column-list-block created a <br> tag
-	Version 0.4.2 (updated 2022-07-14)
-	- fix for callout width become full-width even without Wide Views module
-	- fix issue #17 (dataview list width too wide, forcing it almost like single column)
-	- added width control for sub-callouts within multi-column callout
 
 	What is this snippet for?
 	- to allow Obsidian users to change the layout with preset css by just specifying
@@ -152,8 +150,9 @@ body{
 	div[data-callout="multi-column"].callout > .callout-title { display: none; }
 	div[data-callout="multi-column"].callout > .callout-content { display: contents; }
 	/* make the main callout a flex and remove box formatting */
+	/* --columns: unset to undo Sanctum's mod */
 	div[data-callout="multi-column"].callout
-		{ display: flex; flex-wrap: wrap; gap: var(--callout-gap); background: unset; border: unset; margin: unset; padding: unset; clear: both; }
+		{ display: flex; flex-wrap: wrap; gap: var(--callout-gap); background: unset; border: unset; margin: unset; padding: unset; clear: both; --columns: unset;}
 	/* make the subcallout in flex column to allow growing vertically */
 	div[data-callout="multi-column"].callout .callout { display: flex; flex-direction: column; }
 	div[data-callout="multi-column"].callout:not(.is-collapsed) .callout { margin: 0 var(--callout-margin) var(--callout-margin); } /* to allow spacing for box shadow */
@@ -171,32 +170,38 @@ body{
 
 	@media (min-width: 500px) {
 		/* .is-collapsed is used to draw the border-left only when it's collapsed */
-		div[data-callout="multi-column"].callout > div.callout-content .callout.is-collapsed { background-color: unset; border: unset; box-shadow: unset;}
-		div[data-callout="multi-column"].callout > div.callout-content .callout.is-collapsed .callout-title { border-left: 4px solid rgba(var(--callout-color)); border-top-left-radius: 3px;}
- 	}
+		/* adjusted for Obsidian 0.16.x, removed a number of previous adjustment as no longer required */
+		div[data-callout="multi-column"].callout > div.callout-content .callout.is-collapsed { box-shadow: unset; height: min-content;}
+	}
 
 	 /* Special Adjustment -- for theme with negative margin & box shadow. (e.g. Prism) */
 	div[data-callout="multi-column"].callout > .callout-content { margin-top: unset;}
 	div[data-callout="multi-column"].callout:not(.is-collapsed) { box-shadow: unset;}
-	/* Special Adjustment -- for minimal left margin */
-/*	.markdown-source-view.mod-cm6.is-readable-line-width .cm-embed-block.cm-callout > div[data-callout="multi-column"].callout
+
+	/* Special Adjustment -- for Sanctum because it has "column" callout, Obsidian v0.16.x. Not required for multi-flex as it Sanctum expects the name ends with *=column */
+	.callout[data-callout*=column] .callout-title { display: flex; }
+	.callout[data-callout*=column] .callout-content { display: unset; }
+
+	/* Special Adjustment -- for minimal left margin *//*
+	.markdown-source-view.mod-cm6.is-readable-line-width .cm-embed-block.cm-callout > div[data-callout="multi-column"].callout
 		{ width: 100%; max-width: 100%; margin-inline: 0 !important; }
 	/* Special Adjustment -- for Minimal .dataview.list-view-ul width - Minimal set the width with --line-width-adaptive (40rem by default) */
 	body:not(.table-100):not(.table-max):not(.table-wide) .markdown-preview-view.is-readable-line-width:not(.table-100):not(.table-max):not(.table-wide) div[data-callout="multi-column"].callout .dataview.list-view-ul {width: auto;}
 
+/* === Multi Column Flex "DIV"'s Using Callout === */
+	/* - Still EXPERIMENTAL, different theme approach border and background differently, but 0.16.x seems to align most */
 
-	/* -- Multi Flex. Still EXPERIMENTAL, different theme approach border and background too differently */
-
+	/* adjusted for Obsidian 0.16.x */
 	div[data-callout="multi-column-flex-height"].callout > .callout-title { display: none; }
 	div[data-callout="multi-column-flex-height"].callout > .callout-content { display: contents; }
 	div[data-callout="multi-column-flex-height"].callout
 		{ display: flex; flex-wrap: wrap; gap: var(--callout-gap); background: unset; border: unset; margin: unset; padding: unset; clear: both; }
 
 	div[data-callout="multi-column-flex-height"].callout > .callout-content > *:is(div,ul) {flex: 1 1 var(--callout-min-width); margin: 0; }
-	div[data-callout="multi-column-flex-height"].callout .callout { background: unset; border: unset; box-shadow: unset; }
+	div[data-callout="multi-column-flex-height"].callout .callout { border: unset; box-shadow: unset; }
 	/* need to reintroduce border-left as original callout put border on the parent callout */
-	div[data-callout="multi-column-flex-height"].callout > .callout-content .callout .callout-title { border-left: 4px solid rgba(var(--callout-color)); border-top-left-radius: 3px;}
-	div[data-callout="multi-column-flex-height"].callout > .callout-content .callout .callout-content { margin: 0; border-left: 4px solid rgba(var(--callout-color)); border-bottom-left-radius: 3px; background-color: var(--background-secondary);}
+	div[data-callout="multi-column-flex-height"].callout > .callout-content .callout .callout-title { border-top-left-radius: 3px;}
+	div[data-callout="multi-column-flex-height"].callout > .callout-content .callout .callout-content { margin: 0; border-bottom-left-radius: 3px; height: min-height;}
 
 	 /* "fix" for theme with negative margin & box shadow. Applicable for Prism theme */
 	 div[data-callout="multi-column-flex-height"].callout > .callout-content { margin-top: unset;}
@@ -205,6 +210,7 @@ body{
 
 /* === Blank Container "DIV"'s - can be used with Main Multi-Column layout above === */
 
+	/* "blank-container" - no bg, no border, no title, no nothing */
 	div[data-callout="blank-container"].callout > .callout-title { display: none; }
 	div[data-callout="blank-container"].callout > .callout-content {display: contents;}
 	div[data-callout="blank-container"].callout { border: 0; padding-top: 0; padding-inline: 5px; background: unset; box-shadow: unset; }
@@ -212,9 +218,11 @@ body{
 	/* -- No Margin -- */
 	/* issues still persists
 	   - headers font size not same
+	   - "no-margin" not fully workable in editing view due to wide-page override for Minimal theme
 	*/
 	div[data-callout-metadata*="no-margin"]:is(.cm-callout, .callout.callout, .callout.callout .callout-content) {margin: 0; padding: 0;}
-	/* fix for Shimmering Focus differing font size in callout */
+
+	/* Special Adjustment for Shimmering Focus. Differing font size in callout */
 	div[data-callout="blank-container"] .callout-content :is(p,ul,li) { font-size: unset; line-height: inherit; }
 	div[data-callout="blank-container"] .callout-content :is(li) { margin: unset; }
 
@@ -236,7 +244,8 @@ body{
 	@media (min-width: 750px){
 		div[data-callout-metadata$="large"].callout {width: var(--float-large-width);}
 	}
-	.embedded-backlinks, .markdown-preview-view h2 { clear: both; }
+	/* .markdown-preview-view h2, *//* remove this as it has weird spacing effect */
+	.embedded-backlinks { clear: both; }
 
 	/* fix for blockquote underlap the float layout */
 	.markdown-preview-view :is(blockquote) { overflow-x: auto; } /* fix for blockquote underlap */
@@ -278,12 +287,20 @@ body{
 	/* Special adjustment for footnotes applied with -colum-list-block -- obsidian creates a <br> tag at the last <li> */
 	.footnotes [class$="-column-list-block"] li:last-of-type br:last-of-type {display: none;}
 
-/* === Multi Column Lists -- Tag (Contextual Typography) Based === */
 
-	.tag-mcllist.cm-callout {padding-block: 1em;}
+/* === mc list using tags === */
+	.tag-mcllist { columns: 3; }
 	.tag-mcllist .callout:first-of-type { margin-top: 0; }
+	.tag-mcllist.cm-callout {padding-block: 1em;}
 	.tag-mcllist ul:first-of-type { margin-top: 0; }
+	/* */
+	/* -- MCL Grid, alpha */
+	.tag-mcllist-grid ul:first-child
+		{ display: grid; grid-template-columns: repeat(auto-fit,minmax(10rem,1fr)); padding-left: 0; }
+	.tag-mcllist-grid ul:first-child > li
+		{ margin-inline: 0.2em; padding: 0.3em 0.5em; border: px solid Gray; border-radius: 0.5em;}
+	.tag-mcllist-grid ul:first-child > li > .list-bullet::after {visibility: hidden;}
 
 	/* hide tag in rendered view, dim it in edit mode */
-	div[class*="mcl"] a[href*="#mcl"] { display: none; }
-	span[class*="mcl"]	{ background-color: var(--background-secondary) !important; color: gray !important; }
+	div[class*="mcl"] a[href*="#mcl"] {display: none;}
+	span[class*="mcl"]	{background-color: var(--background-secondary) !important; color: gray !important;}
