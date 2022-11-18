@@ -5,7 +5,7 @@ parent: Showcases
 
 #### Screenshot
 
-![](https://raw.githubusercontent.com/efemkay/obsidian-modular-css-layout/main/docs/assets/showcases/showcase-mc-callout-list-card.png)
+![](https://raw.githubusercontent.com/efemkay/obsidian-modular-css-layout/main/docs/assets/showcases/showcase-mc-callout-and-list-card.png)
 
 #### Raw Markdown
 
