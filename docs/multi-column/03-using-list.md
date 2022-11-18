@@ -45,6 +45,8 @@ Meanwhile `{.<two|three|multi>-column-list-block}` can be applied at list-block 
 	- `#mcl/list-grid` -- require Contextual Typography plugin
 	- `#mcl/list-card` -- require Contextual Typography plugin
 
+This option will allow you to create multi column lists on block basis and compatible for list with sublist (which will not work well for Markdown Attributes plugin)
+
 Place the tag anywhere in the lists (preferably in the first bullet for easy identification). If you have consecutive group of list that you actually meant to be a separate lists, ensure to properly "break" it by placing either a header, horizontal line or `<br/>` tag in between
 
 ```md

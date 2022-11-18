@@ -1,10 +1,12 @@
-# Modular CSS Layout for Obsidian.md
+# Modular CSS Layout for Obsidian
 
-`v0.6.2 updated 2022-10-22` -- Support for Obsidian v1.0.x
+`v0.7.0 updated 2022-11-18`
+- NEW: List Column/Grid/Card
+- Support for Obsidian v1.0.x
 
 This is a repository for modular CSS layout hack for use with [Obsidian.md](https://obsidian.md/). It's meant to complement/assist Community Theme, focusing solely on providing alternative layout to standard width and standard top-bottom block view.
 
-I mainly do casual test on select popular themes like ITS, Primary, Shimmering Focus, Prism, and Minimal. Need your help to let me know if there's anything not working right. Do log in [MCL GH Issue](https://github.com/efemkay/obsidian-modular-css-layout/issues) if you find anything not working properly. 
+I mainly do casual test on select popular themes like ITS, Primary, Shimmering Focus, Prism, and Minimal. Need your help to let me know if there's anything not working right. Do log in [MCL GH Issue](https://github.com/efemkay/obsidian-modular-css-layout/issues) if you find anything not working properly.
 
 ### Table of Content
 - [Install/Download](#installation--download-and-enable)
@@ -72,6 +74,10 @@ This snippet provides you the following features:
         - `three-column-grid-list`
     - it can also be done at block level (inside your note)
         - `multi-column-list-block` -- require Markdown Attributes plugin
+- Multi column layout using (Unordered) List AND tag (instead of css classes)
+	- `#mcl/list-column` -- require Contextual Typography plugin
+	- `#mcl/list-grid` -- require Contextual Typography plugin
+	- `#mcl/list-card` -- require Contextual Typography plugin
 - Side / Floating Column using Callout
     - `> [!<anycallout>|<left|right>-<small|medium|large>]`
     - `> [!blank-container||<left|right>-<small|medium|large>]`
