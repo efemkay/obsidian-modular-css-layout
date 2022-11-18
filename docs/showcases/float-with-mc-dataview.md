@@ -1,12 +1,12 @@
 ---
-title: MCL Showcase - Float with MC Dataview
+title: Float with MC Dataview
 parent: Showcases
 nav_order: 2
 ---
 
 #### Screenshot
 
-![](https://raw.githubusercontent.com/efemkay/obsidian-modular-css-layout/main/docs/assets/showcase-float-mc-dataview.png)
+![](https://raw.githubusercontent.com/efemkay/obsidian-modular-css-layout/main/docs/assets/showcases/showcase-float-mc-dataview.png)
 
 #### Raw Markdown
 

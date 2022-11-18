@@ -6,9 +6,7 @@ nav_order: 3
 
 #### Screenshot
 
-![](https://raw.githubusercontent.com/efemkay/obsidian-modular-css-layout/main/docs/assets/showcase-mc-callout-and-list.png)
-
-![](https://raw.githubusercontent.com/efemkay/obsidian-modular-css-layout/main/Showcases/Multi%20Column%20Callout%20and%20List/MCL%20Showcase%20-%20MC%20Callout%20and%20List.png)
+![](https://raw.githubusercontent.com/efemkay/obsidian-modular-css-layout/main/docs/assets/showcases/showcase-mc-callout-and-list.png)
 
 #### Raw Markdown
 
