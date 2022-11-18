@@ -1,7 +1,7 @@
 ---
-title: Multi Column Settings
+title: Style Settings for MC
 parent: Multi Column
-nav_order: 2
+nav_order: 5
 ---
 
 # Multi Column Style Settings

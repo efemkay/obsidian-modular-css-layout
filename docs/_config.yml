@@ -2,7 +2,7 @@ remote_theme: just-the-docs/just-the-docs
 
 # Site settings
 title: Modular CSS Layout
-description: Modular CSS Layout for Obsidian.md
+description: Modular CSS Layout for Obsidian
 baseurl: "/obsidian-modular-css-layout" # the subpath of your site, e.g. /blog
 url: "https://efemkay.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 

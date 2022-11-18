@@ -1,5 +1,5 @@
 ---
-title: MCL Showcase - MC Callout and List
+title: MC Callout and List
 parent: Showcases
 nav_order: 3
 ---
