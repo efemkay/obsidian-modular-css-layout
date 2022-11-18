@@ -1,5 +1,7 @@
 /* === README ===
 	Snippet: MCL Wide Views / Author: Faiz Khuzaimah / twitter: @faizkhuzaimah / github: https://github.com/efemkay
+	Version 0.6.3 (updated 2022-11-18)
+	- compatibility update to Minimal theme v6.1.9 especially multi column admonition and wide-page
 	Version 0.6.2 (updated 2022-10-22)
 	- update to support Obsidian 1.0.0
 	- Fix wide-page not renderring properly in editing view (conflict with global/vault wide settings
@@ -129,12 +131,14 @@ body{
 		- it has table also set with max-width. but table require separate line because we don't want width: 100% as that would stretch the table
 		- but for callout, require width: auto */
 	div[class*="wide-"].markdown-source-view.mod-cm6 .cm-contentContainer.cm-contentContainer > .cm-content table { max-width: 100% }
-	div[class*="wide-"].markdown-source-view.mod-cm6.is-readable-line-width .cm-embed-block.cm-callout>.callout { max-width: 100%; width: auto;}
+	div[class*="wide-"].markdown-source-view.mod-cm6.is-readable-line-width .cm-embed-block:is(.cm-callout, .admonition-parent) > .callout { max-width: 100%; width: auto;}
 		/* overriding margin-left setting to obsidian "default" */
-	div[class*="wide-"].markdown-source-view.mod-cm6.is-readable-line-width .cm-embed-block.cm-callout>.callout,
-	div[class*="wide-page"].markdown-source-view.mod-cm6 .cm-contentContainer > .embedded-backlinks,
+	div[class*="wide-page"].markdown-source-view.mod-cm6 .embedded-backlinks,
 	div[class*="wide-page"].markdown-source-view.mod-cm6 .cm-contentContainer > .cm-content > div
 		{margin-left: 20px !important; }
+	div[class*="wide-"].markdown-source-view.mod-cm6.is-readable-line-width .cm-embed-block:is(.cm-callout, .admonition-parent) > .callout
+		{ margin-left: 0 !important; }
+
 	div[class*="wide-page"].markdown-source-view.mod-cm6.is-readable-line-width table
 		{margin-left: unset !important; }
 

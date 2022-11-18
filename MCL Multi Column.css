@@ -1,5 +1,9 @@
 /* === README ===
 	Snippet: MCL Multi Column / Author: Faiz Khuzaimah / twitter: @faizkhuzaimah / github: https://github.com/efemkay
+	Version 0.7.0 (updated 2022-11-18)
+	- feature: list column, list grid and list card using tags (need Contextual Typography plugin)
+	- feature: float in live preview using float-right
+	- refine: [!blank] callout as alternative to [!blank-container]
 	Version 0.6.2 (updated 2022-10-22)
 	- rollover main branch to support Obsidian 1.0.0
 	Version 0.6.1 (updated 2022-10-02). Version number follow overall MCL
@@ -16,7 +20,7 @@
 		- cssClass: multi-column-list
 	- available Callout format
 		- [!multi-column]
-		- [!blank-container]
+		- [!blank] / [!blank-container]
 
 	Compatibility
 	- tested to work fine with the following Community Theme
@@ -95,8 +99,9 @@ settings:
 		format: px
 
     -
-        id: mc-list-title
+        id: mc-list-column-title
         title: List Column Settings
+		description: using `{.xxx-column-list-xxx}` and `#mcl/list-column`
         type: heading
         level: 2
 		collapsed: true
@@ -112,9 +117,11 @@ settings:
     -
         id: col-rule-color
         title: Column Ruler Color
-        type: variable-color
-        format: hsl-split
-        default: '#b3b3b3'
+		type: variable-themed-color
+		format: hsl
+		opacity: true
+		default-light: '#'
+		default-dark: '#'
     -
         id: col-rule-width
         title: Column Ruler Width (in px)
@@ -125,18 +132,77 @@ settings:
         step: 1
 		format: px
 
+	-
+        id: mc-list-grid-title
+        title: List Grid and List Card
+		description: using `#mcl/list-grid` and `#mcl/list-card`
+        type: heading
+        level: 2
+		collapsed: true
+	-
+        id: list-grid-min-width
+        title: Minimum Grid/Card Width (in px/em or similar)
+		type: variable-text
+		default: 250px
+	-
+		id: mcl-card-bg-color
+		title: List Card Background Color
+		type: variable-themed-color
+		format: hsl
+		opacity: true
+		default-light: '#'
+		default-dark: '#'
+	-
+        id: mcl-card-header-border-width
+        title: Bottom Border for List Card Header (in px/em or similar)
+		description: set to 0 to disable the border
+		type: variable-text
+		default: 1px
+	-
+        id: mcl-card-gap
+        title: List Card Border Width (in px/em or similar)
+		type: variable-text
+		default: 0.2em
+	-
+        id: mcl-card-border-width
+        title: List Card Border Width (in px/em or similar)
+		type: variable-text
+		default: 1px
+	-
+		id: mcl-card-border-color
+		title: List Card Border Color
+		type: variable-themed-color
+		format: hsl
+		opacity: true
+		default-light: '#'
+		default-dark: '#'
+
 */
+
 
 body{
 	--callout-min-width: 200px;
 	--callout-gap: 0.5rem;
 	--callout-margin: 5px;
-	--list-min-width: 200px;
-	--col-rule-color: #b3b3b3;
-	--col-rule-width: 1px;
 	--float-small-width: 300px;
 	--float-medium-width: 400px;
 	--float-large-width: 600px;
+	/* for list column, grid and card */
+	--list-min-width: 200px;
+	--col-rule-color: var(--background-modifier-border); /* #b3b3b3; */
+	--col-rule-width: 1px;
+	--list-grid-min-width: 250px;
+	--mcl-card-header-border-width: 1px;
+	--mcl-card-bg-color: var(--background-secondary);
+	--mcl-card-gap: 0.2em;
+	--mcl-card-border-width: 1px;
+	--mcl-card-border-color: var(--background-modifier-border);
+}
+.theme-dark {
+/*	--background-mcl-card: hsl(300, 5%, 15%); */
+}
+.theme-light {
+/*	--background-mcl-card: hsl(300, 5%, 90%); */
 }
 
 
@@ -210,10 +276,11 @@ body{
 
 /* === Blank Container "DIV"'s - can be used with Main Multi-Column layout above === */
 
-	/* "blank-container" - no bg, no border, no title, no nothing */
-	div[data-callout="blank-container"].callout > .callout-title { display: none; }
-	div[data-callout="blank-container"].callout > .callout-content {display: contents;}
-	div[data-callout="blank-container"].callout { border: 0; padding-top: 0; padding-inline: 5px; background: unset; box-shadow: unset; }
+	/* "blank-container" - no bg, no border, no title, no nothing, and remove the ligthen effect */
+	div[data-callout*="blank"].callout {--callout-blend-mode: normal;}
+	div[data-callout*="blank"].callout > .callout-title { display: none; }
+	div[data-callout*="blank"].callout > .callout-content {display: contents;}
+	div[data-callout*="blank"].callout { border: 0; padding-top: 0; padding-inline: 5px; background: unset; box-shadow: unset; }
 
 	/* -- No Margin -- */
 	/* issues still persists
@@ -223,8 +290,8 @@ body{
 	div[data-callout-metadata*="no-margin"]:is(.cm-callout, .callout.callout, .callout.callout .callout-content) {margin: 0; padding: 0;}
 
 	/* Special Adjustment for Shimmering Focus. Differing font size in callout */
-	div[data-callout="blank-container"] .callout-content :is(p,ul,li) { font-size: unset; line-height: inherit; }
-	div[data-callout="blank-container"] .callout-content :is(li) { margin: unset; }
+	div[data-callout*="blank"] .callout-content :is(p,ul,li) { font-size: unset; line-height: inherit; }
+	div[data-callout*="blank"] .callout-content :is(li) { margin: unset; }
 
 
 /* === Text Justify === */
@@ -236,12 +303,17 @@ body{
 
 	@media (min-width: 500px){
 		.markdown-reading-view div[data-callout-metadata|="left"].callout {float: left; margin-right: 15px; margin-bottom: 10px; }
-		.markdown-reading-view div[data-callout-metadata|="right"].callout {float: right; margin-left: 15px; margin-bottom: 10px; }
-		div[data-callout^="blank-container"].callout:is(div[data-callout-metadata|="left"], div[data-callout-metadata|="right"]) {margin-top: 0; margin-bottom: 0;}
+		[data-callout-metadata*="float-right"].cm-embed-block.cm-callout,
+		.markdown-reading-view div[data-callout-metadata*="right"].callout {float: right; margin-left: 15px; margin-bottom: 10px;}
+		[data-callout-metadata*="float-right"].cm-embed-block.cm-callout {width: auto !important;}
+		div[data-callout*="blank"].callout:is(div[data-callout-metadata*="left"], div[data-callout-metadata*="right"]) {margin-top: 0; margin-bottom: 0;}
+		div[class*="wide-"].markdown-source-view.mod-cm6.is-readable-line-width .cm-embed-block:is(.cm-callout, .admonition-parent) > div[data-callout-metadata*="-small"].callout,
 		div[data-callout-metadata*="-small"].callout {width: var(--float-small-width);}
+		div[class*="wide-"].markdown-source-view.mod-cm6.is-readable-line-width .cm-embed-block:is(.cm-callout, .admonition-parent) > div[data-callout-metadata*="-medium"].callout,
 		div[data-callout-metadata*="-medium"].callout {width: var(--float-medium-width);}
 	}
 	@media (min-width: 750px){
+		div[class*="wide-"].markdown-source-view.mod-cm6.is-readable-line-width .cm-embed-block:is(.cm-callout, .admonition-parent) > div[data-callout-metadata*="-large"].callout,
 		div[data-callout-metadata$="large"].callout {width: var(--float-large-width);}
 	}
 	/* .markdown-preview-view h2, *//* remove this as it has weird spacing effect */
@@ -255,7 +327,7 @@ body{
 	.contextual-typography .minimal-float.markdown-preview-view.markdown-preview-view .markdown-preview-sizer { display: unset; }
 
 
-/* === Multi Column Lists -- Markdown Attributes Based === */
+/* === Multi Column Lists (require Markdown Attributes) === */
 
 	/* - xx-column-list for first level only list, but apply anywhere */
 	/* - xx-column-list-block apply at block level - but require JV's Markdown Attributes plugin */
@@ -278,7 +350,6 @@ body{
 			{ display: grid; grid-column-gap:3em; grid-template-columns:repeat(3,1fr);}
 	}
 
-	.tag-mcllist ul:first-child,
 	.multi-column-list div > ul,
 	.multi-column-list-block {
 		column-width: var(--list-min-width); column-gap: 3rem; column-rule: var(--col-rule-width) solid var(--col-rule-color);
@@ -287,20 +358,60 @@ body{
 	/* Special adjustment for footnotes applied with -colum-list-block -- obsidian creates a <br> tag at the last <li> */
 	.footnotes [class$="-column-list-block"] li:last-of-type br:last-of-type {display: none;}
 
-
-/* === mc list using tags === */
-	.tag-mcllist { columns: 3; }
-	.tag-mcllist .callout:first-of-type { margin-top: 0; }
-	.tag-mcllist.cm-callout {padding-block: 1em;}
-	.tag-mcllist ul:first-of-type { margin-top: 0; }
-	/* */
-	/* -- MCL Grid, alpha */
-	.tag-mcllist-grid ul:first-child
-		{ display: grid; grid-template-columns: repeat(auto-fit,minmax(10rem,1fr)); padding-left: 0; }
-	.tag-mcllist-grid ul:first-child > li
-		{ margin-inline: 0.2em; padding: 0.3em 0.5em; border: px solid Gray; border-radius: 0.5em;}
-	.tag-mcllist-grid ul:first-child > li > .list-bullet::after {visibility: hidden;}
+/* ========================================================================== */
+/* === Multi Column List using Tags (require Contextual Typography) === */
 
 	/* hide tag in rendered view, dim it in edit mode */
-	div[class*="mcl"] a[href*="#mcl"] {display: none;}
-	span[class*="mcl"]	{background-color: var(--background-secondary) !important; color: gray !important;}
+	:is(div[class*="mcl"].markdown-rendered, .markdown-rendered div[class*="mcl"]) a[href*="#mcl"] {display: none;}
+	span[class*="mcl"]	{background-color: var(--background-primary) !important; color: var(--text-faint) !important;}
+
+	/* this is direct alternative to .multi-column-list and .multi-column-list-block */
+	.tag-mcllist-column > .callout[data-callout*="blank"],
+	.tag-mcllist-column > .callout > .callout-content,
+	.tag-mcllist-column:not([data-callout]) { column-width: var(--list-min-width); column-gap: 1rem; column-rule: var(--col-rule-width) solid var(--col-rule-color); }
+	.tag-mcllist-column.cm-callout {padding-block: 1em;} /* add block padding only for the one in callout */
+	.tag-mcllist-column .callout:first-of-type { margin-top: 0; }
+	.tag-mcllist-column ul:first-of-type { margin-top: 0; }
+	/* */
+	/* -- MCL Grid, alpha */
+	.tag-mcllist-grid ul:first-child { display: grid; grid-template-columns: repeat(auto-fit,minmax(var(--list-grid-min-width),1fr));}
+	.tag-mcllist-grid ul:first-child > li { border: px solid Gray; border-radius: 0.5em;}
+	.tag-mcllist-grid ul:first-child > li:not(:last-of-type) {padding-right: 1.6em;}
+
+
+	/* -- MCL Grid, alpha */
+	.tag-mcllist-card ul:first-child
+		{ display: grid; grid-template-columns: repeat(auto-fit,minmax(var(--list-grid-min-width),1fr));}
+	.tag-mcllist-card ul ul:not(ul ul ul) { padding-left: 0.1em; }
+	:is(.tag-mcllist-card, .tag-mcllist-card .callout-content) > ul { padding-left: 0; }
+	:is(.is-mobile .markdown-rendered) .tag-mcllist-card :is(ol:not(ol ol ol),  ul:not(ul ul ul)) {padding-left: 0;}
+	/* reposition the collapse indicator and hover behaviour */
+	:is(.tag-mcllist-card, .tag-mcllist-card .callout-content) > ul > li {position: relative;}
+	:is(.tag-mcllist-card, .tag-mcllist-card .callout-content) > ul > li:hover > .collapse-indicator,
+	:is(.tag-mcllist-card, .tag-mcllist-card .callout-content) > ul > li > ul > li:hover > .collapse-indicator {opacity: 1;}
+	:is(.tag-mcllist-card, .tag-mcllist-card .callout-content) > ul > li > .collapse-indicator,
+	:is(.tag-mcllist-card, .tag-mcllist-card .callout-content) > ul > li > ul > li > .collapse-indicator {position: absolute; right: 0;}
+	.tag-mcllist-card ul::before {display: none;}
+	/* decorate the first heading for cards */
+	:is(.tag-mcllist-card, .tag-mcllist-card .callout-content) > ul > li:not(.is-collapsed) > [data-heading] {border-bottom: var(--mcl-card-header-border-width) solid var(--mcl-card-border-color); margin-bottom: 0.2em;}
+	/* hide the list bullet for list-card for first and second level */
+	.tag-mcllist-card > div > div > ul > li > .list-bullet::after,
+	.tag-mcllist-card > div > div > ul > li > ul > li > .list-bullet::after,
+	.tag-mcllist-card > ul > li::before,
+	.tag-mcllist-card > ul > li > ul > li::before,
+	.tag-mcllist-card > ul > li > .list-bullet::after,
+	.tag-mcllist-card > ul > li > ul > li > .list-bullet::after {visibility: hidden;}
+	/* remove the indentation guide */
+	.tag-mcllist-card ul:not(ul ul ul ul)::before {--indentation-guide-width: 0;}
+	.markdown-rendered.show-indentation-guide .tag-mcllist-card li > ul::before,
+	.markdown-rendered.show-indentation-guide .tag-mcllist-card li > ol::before {border-right: 0;}
+	.tag-mcllist-card li {list-style: none;}
+	.tag-mcllist-card li li li {list-style: circle;}
+	.tag-mcllist-card .callout ul:not(ul ul) > li,
+	.tag-mcllist-card ul:not(ul ul) > li
+		{ margin-inline: var(--mcl-card-gap); margin-bottom: calc(var(--mcl-card-gap)*2); padding: 0.3em 0.5em; outline: var(--mcl-card-border-width) solid var(--mcl-card-border-color); border-radius: 0.5em; background-color: var(--mcl-card-bg-color);}
+	.tag-mcllist-card ul:not(ul ul) > li img {width: 100%;}
+	.tag-mcllist-card ul img {margin: 0; float: none;}
+
+	/* special adjustment for Sanctum */
+	.markdown-rendered .tag-mcllist-card ul img[alt*=right] {margin: 0;}
