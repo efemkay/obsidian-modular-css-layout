@@ -1,5 +1,8 @@
 /* === README ===
 	Snippet: MCL Multi Column / Author: Faiz Khuzaimah / twitter: @faizkhuzaimah / github: https://github.com/efemkay
+	Version 0.7.1 (updated 2022-11-24)
+	- fix margin-left for float `right`
+	- improved support for Minimal theme for live preview float-right when in normal width note
 	Version 0.7.0 (updated 2022-11-18)
 	- feature: list column, list grid and list card using tags (need Contextual Typography plugin)
 	- feature: float in live preview using float-right
@@ -303,8 +306,8 @@ body{
 
 	@media (min-width: 500px){
 		.markdown-reading-view div[data-callout-metadata|="left"].callout {float: left; margin-right: 15px; margin-bottom: 10px; }
-		[data-callout-metadata*="float-right"].cm-embed-block.cm-callout,
-		.markdown-reading-view div[data-callout-metadata*="right"].callout {float: right; margin-left: 15px; margin-bottom: 10px;}
+		.markdown-source-view [data-callout-metadata*="float-right"].cm-embed-block.cm-callout,
+		.markdown-reading-view div[data-callout-metadata*="right"].callout {float: right; margin-left: 15px !important; margin-bottom: 10px;}
 		[data-callout-metadata*="float-right"].cm-embed-block.cm-callout {width: auto !important;}
 		div[data-callout*="blank"].callout:is(div[data-callout-metadata*="left"], div[data-callout-metadata*="right"]) {margin-top: 0; margin-bottom: 0;}
 		div[class*="wide-"].markdown-source-view.mod-cm6.is-readable-line-width .cm-embed-block:is(.cm-callout, .admonition-parent) > div[data-callout-metadata*="-small"].callout,
@@ -316,16 +319,31 @@ body{
 		div[class*="wide-"].markdown-source-view.mod-cm6.is-readable-line-width .cm-embed-block:is(.cm-callout, .admonition-parent) > div[data-callout-metadata*="-large"].callout,
 		div[data-callout-metadata$="large"].callout {width: var(--float-large-width);}
 	}
-	/* .markdown-preview-view h2, *//* remove this as it has weird spacing effect */
-	.embedded-backlinks { clear: both; }
+
+	/* Introduce clear to break the float */
+		/* .markdown-preview-view h2, *//* remove this as it has weird spacing effect */
+		.embedded-backlinks { clear: both; }
 
 	/* fix for blockquote underlap the float layout */
-	.markdown-preview-view :is(blockquote) { overflow-x: auto; } /* fix for blockquote underlap */
-	.markdown-preview-view :is(p) { overflow: unset; } /* fix for para not wrapping around float. applicable for Willemstad */
+		.markdown-preview-view :is(blockquote) { overflow-x: auto; } /* fix for blockquote underlap */
+		.markdown-preview-view :is(p) { overflow: unset; } /* fix for para not wrapping around float. applicable for Willemstad */
 
-	/* fix for minimal flex layout by default. to apply per note basis */
-	.contextual-typography .minimal-float.markdown-preview-view.markdown-preview-view .markdown-preview-sizer { display: unset; }
 
+	/* Special Adjustment for Minimal theme. To override (have higher specificity) the width param. Can be merged to main code later on */
+	@media (min-width: 500px){
+		.markdown-source-view.mod-cm6.is-readable-line-width .cm-embed-block.cm-callout > div[data-callout-metadata$="medium"].callout { width: var(--float-medium-width); margin-left: 0 !important; }
+		.markdown-source-view.mod-cm6.is-readable-line-width .cm-embed-block.cm-callout > div[data-callout-metadata$="small"].callout { width: var(--float-small-width); margin-left: 0 !important; }
+	}
+	@media (min-width: 750px){
+		.markdown-source-view.mod-cm6.is-readable-line-width .cm-embed-block.cm-callout > div[data-callout-metadata$="large"].callout { width: var(--float-large-width); margin-left: 0 !important; }
+	}
+
+	/* Special Adjustment for Minimal theme. Undo the theme flex layout by default. To apply per note basis */
+		.contextual-typography .minimal-float.markdown-preview-view.markdown-preview-view .markdown-preview-sizer { display: unset; }
+	/* Special Adjustment for Minimal theme Live Preview float support. Need to revert cm-content width to default theme but cm-embed to auto */
+		.minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6.is-readable-line-width .cm-contentContainer { width: calc(var(--line-width-adaptive) - var(--folding-offset)); max-width: calc(var(--max-width) - var(--folding-offset)); margin-right: auto; margin-left: max(calc(50% + var(--folding-offset) - var(--line-width-adaptive)/ 2), calc(50% + var(--folding-offset) - var(--max-width)/ 2))!important; }
+		.minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6.is-readable-line-width .cm-line { width: 100%; max-width: 100%; margin-left: 0 !important; }
+		.minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6.is-readable-line-width .cm-embed-block.cm-callout>.callout[data-callout-metadata*="right"] { width: auto; max-width: 98%; }
 
 /* === Multi Column Lists (require Markdown Attributes) === */
 
