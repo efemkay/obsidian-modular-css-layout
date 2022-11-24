@@ -1,6 +1,6 @@
 # Modular CSS Layout for Obsidian
 
-> `v0.7.1 updated 2022-11-18`
+> `v0.7.2 updated 2022-11-24`
 - NEW: List Column/Grid/Card
 - Support for Obsidian v1.0.x + bug fixes
 
