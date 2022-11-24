@@ -1,6 +1,6 @@
 /* === README ===
 	Snippet: MCL Multi Column / Author: Faiz Khuzaimah / twitter: @faizkhuzaimah / github: https://github.com/efemkay
-	Version 0.7.1 (updated 2022-11-24)
+	Version 0.7.2 (updated 2022-11-24)
 	- fix margin-left for float `right`
 	- improved support for Minimal theme for live preview float-right when in normal width note
 	Version 0.7.0 (updated 2022-11-18)
@@ -304,10 +304,17 @@ body{
 
 /* === Floating Callout === */
 
+	/* use media query so that floats only works when there's enough width */
 	@media (min-width: 500px){
-		.markdown-reading-view div[data-callout-metadata|="left"].callout {float: left; margin-right: 15px; margin-bottom: 10px; }
+		.markdown-source-view [data-callout-metadata*="float-left"].cm-embed-block.cm-callout {padding-top: 0.8em;}
+		.markdown-source-view [data-callout-metadata*="float-left"].cm-embed-block.cm-callout,
+		.markdown-reading-view div[data-callout-metadata*="left"].callout {float: left; margin-right: 15px !important; margin-bottom: 10px; }
+		.markdown-source-view [data-callout-metadata*="float-right"].cm-embed-block.cm-callout {padding-top: 0.8em;}
 		.markdown-source-view [data-callout-metadata*="float-right"].cm-embed-block.cm-callout,
 		.markdown-reading-view div[data-callout-metadata*="right"].callout {float: right; margin-left: 15px !important; margin-bottom: 10px;}
+
+		.markdown-source-view.mod-cm6 .cm-embed-block.cm-callout :is(.callout[data-callout-metadata*="left"], .callout[data-callout-metadata*="right"]) .callout-content > p:last-of-type { margin-bottom: auto;}
+
 		[data-callout-metadata*="float-right"].cm-embed-block.cm-callout {width: auto !important;}
 		div[data-callout*="blank"].callout:is(div[data-callout-metadata*="left"], div[data-callout-metadata*="right"]) {margin-top: 0; margin-bottom: 0;}
 		div[class*="wide-"].markdown-source-view.mod-cm6.is-readable-line-width .cm-embed-block:is(.cm-callout, .admonition-parent) > div[data-callout-metadata*="-small"].callout,
@@ -342,8 +349,12 @@ body{
 		.contextual-typography .minimal-float.markdown-preview-view.markdown-preview-view .markdown-preview-sizer { display: unset; }
 	/* Special Adjustment for Minimal theme Live Preview float support. Need to revert cm-content width to default theme but cm-embed to auto */
 		.minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6.is-readable-line-width .cm-contentContainer { width: calc(var(--line-width-adaptive) - var(--folding-offset)); max-width: calc(var(--max-width) - var(--folding-offset)); margin-right: auto; margin-left: max(calc(50% + var(--folding-offset) - var(--line-width-adaptive)/ 2), calc(50% + var(--folding-offset) - var(--max-width)/ 2))!important; }
-		.minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6.is-readable-line-width .cm-line { width: 100%; max-width: 100%; margin-left: 0 !important; }
-		.minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6.is-readable-line-width .cm-embed-block.cm-callout>.callout[data-callout-metadata*="right"] { width: auto; max-width: 98%; }
+		.minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6.is-readable-line-width .cm-line { width: auto; max-width: 100%; margin-left: 0 !important; }
+		.minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6.is-readable-line-width .cm-embed-block.cm-callout> :is(.callout[data-callout-metadata*="left"], .callout[data-callout-metadata*="right"]) { max-width: 98%; }
+		.minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6 .cm-embed-block.cm-callout > .callout { width: auto; }
+	/* Special Adjustment for Minimal theme Live Preview float support. Undo margin-left for Image */
+		.minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6 .cm-embed-block.cm-callout :is(.callout[data-callout-metadata*="left"], .callout[data-callout-metadata*="right"]) .internal-embed.image-embed { margin-left: auto !important; }
+
 
 /* === Multi Column Lists (require Markdown Attributes) === */
 
