@@ -52,6 +52,13 @@ You can control sub-callout (within Multi-Column callout) on per callout and per
 > - `> [!<callout-type>]` e.g. `> [!Summary]`
 > - `> [!<callout-type>|<callout-metadata>]` e.g. `> [!Summary|wide-2]`
 
+## No Wrap Control
+Additional feature to create a "fixed" multi column callout despite of the note or window size. Instead of wrapping and flowing to next line, this will instead have horizontal scrollbar.
+
+To create no wrap multi column, use the following syntax i.e. `[!multi-column|no-wrap]`
+
+> #### Limitation on No-Wrap Multi Column
+> Width Control (different width for sub-callout) for now is not valid for No-Wrap Multi Column. Columns will be mostly follow the minimum width -- it has separate minimum width than the Wrapped Multi Column
 
 ## Examples
 

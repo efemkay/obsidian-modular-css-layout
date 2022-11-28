@@ -1,5 +1,8 @@
 /* === README ===
 	Snippet: MCL Gallery Cards / Author: Faiz Khuzaimah / twitter: @faizkhuzaimah / github: https://github.com/efemkay
+	Version 0.8.0 (updated 2022-11-28)
+	- adjustment for SNW plugin indicators in image gallery. Option to hide (default) or show.
+	- fix gap between the images in image gallery (especially the vertical vs horizontal gap)
 	Version 0.6.2 (updated 2022-10-22)
 	- rollover main branch to support Obsidian 1.0.0
 	Version 0.5.0 (updated 2022-09-17)
@@ -28,35 +31,51 @@
 		--img-max-height-list: 270px;
 		--img-max-width-list: 300px;
 		--callout-gallery-gap: 5px;
+		--gallery-snw-display: none;
 	}
 
 	img {border-radius: var(--img-border-radius);}
 
+	img[alt*="right"] {float: right; margin-left: 0.5em; }
+
+
 /* === Image Gallery using <p> and Callout === */
 
 	/* Editing and Reading View - Gallery using <p> and Callout. Using <p> (in Reading View) to contain and format as gallery view using metadata="gallery" to contain and format as gallery view */
-	.image-gallery div[data-embed-type="image"] > p,
-	div[data-callout-metadata*="gallery"].callout > .callout-content > p
-		{ display: flex; gap: var(--callout-gallery-gap); margin-top: calc( var(--callout-gallery-gap) + 1px ); margin-bottom: 0;}
-	.image-gallery div[data-embed-type="image"] > p img,
-	div[data-callout-metadata*="gallery"].callout > .callout-content > p img
-		{ max-height: var(--img-max-height); border: 1px solid var(--background-modifier-border); object-fit: cover; display: block;}
-	/* display: block for img is important to control the hidden margin-bottom but for Minimal, it uses display: flex for top level divs which pose another "margin" issues no plan to solve yet as this is not critical */
+		/* Create display: flex and key adjustment on margin and gap */
+		.image-gallery div[data-embed-type="image"] > p,
+		div[data-callout-metadata*="gallery"].callout > .callout-content > p
+			{ display: flex; gap: var(--callout-gallery-gap); margin-top: calc( var(--callout-gallery-gap) ); margin-bottom: 0; }
+		.image-gallery div[data-embed-type="image"].el-embed-image.el-p { margin-top: var(--callout-gallery-gap); }
+		div[data-callout-metadata*="gallery"].callout > .callout-content { --callout-content-padding: 0.5rem 0 0 0; }
+		/* Introduce subtle border and make the gallery as object-fit: cover */
+		.image-gallery div[data-embed-type="image"] > p img,
+		div[data-callout-metadata*="gallery"].callout > .callout-content > p img
+			{ max-height: var(--img-max-height); border: 1px solid var(--background-modifier-border); object-fit: cover; display: block;}
+		/* display: block for img is important to control the hidden margin-bottom but for Minimal, it uses display: flex for top level divs which pose another "margin" issues no plan to solve yet as this is not critical */
 
-	/* Reading View - Special Adjustment for Shimmering Focus, overriding max-width */
-	body:not(.is-mobile) .app-container.app-container .image-gallery p img[src],
-	body:not(.is-mobile) .app-container.app-container div[data-callout-metadata*="gallery"].callout img[src]
-		{ max-width: 100%; width: unset; margin-block: unset;}
-
-	/* Editing View - as alternate to <p> in Reading View since there's no natural container in Editing View using <p> */
-	.image-gallery div:not(.cm-callout):not(.HyperMD-list-line).image-embed img
-		{ max-height: var(--img-max-height); display: unset; object-fit: cover;}
+		/* Editing View - as alternate to <p> in Reading View since there's no natural container in Editing View using <p> */
+		.image-gallery div:not(.cm-callout):not(.HyperMD-list-line).image-embed img
+			{ max-height: calc(var(--img-max-height)/1.5); display: unset; object-fit: cover; margin-right: var(--callout-gallery-gap); }
 		/* previously i have max-width: 50% */
 
-	/* Editing Live Preview - Special Adjustment - for minimal left margin */
+	/* Special Adjustment for Shimmering Focus. Reading View. Overriding max-width */
+		body:not(.is-mobile) .app-container.app-container .image-gallery p img[src],
+		body:not(.is-mobile) .app-container.app-container div[data-callout-metadata*="gallery"].callout img[src]
+			{ max-width: 100%; width: unset; margin-block: unset;}
+
+	/* Special Adjustment for Minimal theme. Left margin. Editing Live Preview. */
 	.markdown-source-view.mod-cm6.is-readable-line-width .internal-embed
 		{ margin-left: 0 !important; width: unset;}
+	/* Special Adjustment for Minimal theme. Override width: 100% */
+		.full-width-media .image-gallery .image-embed img:not(.emoji):not([width]) { width: unset; }
 
+	/* Special Adjustment - for SNW plugin */
+		.image-gallery div[data-embed-type="image"] > p .snw-embed-preview,
+		.image-gallery .internal-embed.image-embed ~ .snw-reference.snw-embed,
+		div[data-callout-metadata*="gallery"].callout > .callout-content > p .snw-embed-preview
+			{ display: var(--gallery-snw-display); width: min-content; height: min-content; }
+		div[data-callout-metadata*="gallery"].callout > .callout-content > p .internal-embed.image-embed ~ br {display: none;}
 
 /* === Images in Lists === */
 	/* limit the width when in a list (ul only) */
@@ -168,6 +187,7 @@ settings:
 		type: variable-text
 		default: 15px
 
+
     -
         id: gc-callout-title
         title: Image Gallery Settings
@@ -175,6 +195,18 @@ settings:
         type: heading
         level: 2
 		collapsed: true
+	-
+		id: gallery-snw-display
+		title: Hide Strange New World Indicators in Image Gallery
+		type: variable-select
+		default: none
+		options:
+			-
+				label: Show
+				value: inline-block
+			-
+				label: Hide
+				value: none
 	-
 		id: callout-gallery-gap
 		title: Gallery Callout Gap (any unit, no space)
@@ -190,6 +222,7 @@ settings:
 		title: Max Width for Images (any unit, no space)
 		type: variable-text
 		default: 350px
+
 
 	-
 		id: gc-list-title

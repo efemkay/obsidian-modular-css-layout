@@ -6,10 +6,7 @@ has_children: true
 
 # Multi Column
 
-{: .note-title }
-> CSS snippet file for Multi Column
->
-> [MCL Multi Column.css](https://github.com/efemkay/obsidian-modular-css-layout/blob/main/MCL%20Multi%20Column.css)
+> CSS snippet file: [MCL Multi Column.css](https://github.com/efemkay/obsidian-modular-css-layout/blob/main/MCL%20Multi%20Column.css)
 
 This snippet will allow you to re-shape the either callout or (unordered) list and position them side by side. See each subsection for more details on how to control that. In summary this snippet has the following features
 - Multi column layout using custom callout `[!multi-column]`

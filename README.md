@@ -1,8 +1,8 @@
 # Modular CSS Layout for Obsidian
 
-> `v0.7.2 updated 2022-11-24`
-- NEW: List Column/Grid/Card
-- Support for Obsidian v1.0.x + bug fixes
+> `v0.8.0 updated 2022-11-28`
+> - NEW: No-Wrap Multi Column
+> - Fixes for Gallery Cards
 
 This is a repository for modular CSS layout hack for use with [Obsidian.md](https://obsidian.md/). It's meant to complement/assist Community Theme, focusing solely on providing alternative layout to standard width and standard top-bottom block view.
 

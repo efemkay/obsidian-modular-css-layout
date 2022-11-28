@@ -1,5 +1,7 @@
 /* === README ===
 	Snippet: MCL Multi Column / Author: Faiz Khuzaimah / twitter: @faizkhuzaimah / github: https://github.com/efemkay
+	Version 0.8.0 (updated 2022-11-26)
+	- feature: `no-wrap` option for `[!multi-column]` using callout-metadata
 	Version 0.7.2 (updated 2022-11-24)
 	- fix margin-left for float `right`
 	- improved support for Minimal theme for live preview float-right when in normal width note
@@ -57,6 +59,16 @@ settings:
         description: for sub-callout in [!multi-column]. in px units
         type: variable-number-slider
         default: 200
+        min: 100
+        max: 500
+        step: 50
+		format: px
+	-
+        id: callout-nowrap-min-width
+        title: Minimum NO-WRAP Sub-Callout Width
+        description: for sub-callout in [!multi-column|no-wrap]. in px units
+        type: variable-number-slider
+        default: 250
         min: 100
         max: 500
         step: 50
@@ -185,6 +197,7 @@ settings:
 
 body{
 	--callout-min-width: 200px;
+	--callout-nowrap-min-width: 250px;
 	--callout-gap: 0.5rem;
 	--callout-margin: 5px;
 	--float-small-width: 300px;
@@ -256,6 +269,12 @@ body{
 		{ width: 100%; max-width: 100%; margin-inline: 0 !important; }
 	/* Special Adjustment -- for Minimal .dataview.list-view-ul width - Minimal set the width with --line-width-adaptive (40rem by default) */
 	body:not(.table-100):not(.table-max):not(.table-wide) .markdown-preview-view.is-readable-line-width:not(.table-100):not(.table-max):not(.table-wide) div[data-callout="multi-column"].callout .dataview.list-view-ul {width: auto;}
+
+
+/* === Multi Column "DIV"'s Using Callout -- No-Wrap Option === */
+		div[data-callout="multi-column"][data-callout-metadata*="no-wrap"].callout {flex-wrap: nowrap; overflow-x: scroll;}
+		div[data-callout="multi-column"][data-callout-metadata*="no-wrap"].callout > .callout-content > *:is(div,ul) { flex-shrink: 0; flex-basis: var(--callout-nowrap-min-width) }
+
 
 /* === Multi Column Flex "DIV"'s Using Callout === */
 	/* - Still EXPERIMENTAL, different theme approach border and background differently, but 0.16.x seems to align most */
