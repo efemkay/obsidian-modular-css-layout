@@ -16,6 +16,11 @@ Snippet Downloader is an Obsidian community plugin by Mara Li. Since I'm plannin
 - Open Command Pallete (`Ctrl/Cmd + P`), select Snippet Downloader: Add new snippet
 - In the Repo Link area paste the following link `https://github.com/efemkay/obsidian-modular-css-layout`
 
+{: .note-title }
+> Example on how to install using Snippets Downloader
+>
+> ![](https://raw.githubusercontent.com/efemkay/obsidian-modular-css-layout/main/docs/assets/how-to-install-mcl.gif)
+
 ### Manually Saving from GH
 
 - Open your browser and go to MCL's GH [landing page](https://github.com/efemkay/obsidian-modular-css-layout)

@@ -16,6 +16,7 @@ For the initiated, applying CSS snippets in Obsidian is quite a breeze. But the 
 So far, there are three (3) modules for MCL snippets. Check out each module's documentation to know what are the available features and the corresponding CSS file
 - [Wide Views](https://efemkay.github.io/obsidian-modular-css-layout/wide-views/)
 - [Multi Column](https://efemkay.github.io/obsidian-modular-css-layout/multi-column/)
+- [Gallery Cards](https://efemkay.github.io/obsidian-modular-css-layout/gallery-cards/)
 
 > Note that the CSS snippets are meant to be modular. You don't have to install all of it.
 > I use the word install and installation loosely here, since they are just single `.css` file that you can just "Save As..." to  your `[vault]/.obsidian/snippets` folder

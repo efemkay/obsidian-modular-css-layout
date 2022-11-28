@@ -1,5 +1,5 @@
 ---
-title: Blank Callout and Float (Aside)
+title: Blank Callout and Float
 parent: Multi Column
 nav_order: 4
 ---
