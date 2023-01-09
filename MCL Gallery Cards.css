@@ -1,16 +1,15 @@
 /* === README ===
 	Snippet: MCL Gallery Cards / Author: Faiz Khuzaimah / twitter: @faizkhuzaimah / github: https://github.com/efemkay
+	Version 0.9.0 (updated 2023-xx-xx) (not official yet)
+	- image float
+	Version 0.8.1 (updated 2022-12-10)
+	- fix gallery margin-left for minimal to be more targetted (fix issue with note embed issue)
+	- fix issue with Breadcrumbs plugin and minimal-float where the plugin "banner" flushed to left
 	Version 0.8.0 (updated 2022-11-28)
 	- adjustment for SNW plugin indicators in image gallery. Option to hide (default) or show.
 	- fix gap between the images in image gallery (especially the vertical vs horizontal gap)
 	Version 0.6.2 (updated 2022-10-22)
 	- rollover main branch to support Obsidian 1.0.0
-	Version 0.5.0 (updated 2022-09-17)
-	- added mermaid scale and zoom feature. FR #19 on GH.
-	version 0.3.1 (2022-06-26)
-	- fix table mis-formatting
-	- completed callout and paragraph-based image gallery
-	- added dimension control for images in lists
 
 	This snippet is part of MCL collection of snippets for customising layout, and it provides the following
 	- "gallery" callout-metadata i.e. [!<any-callout>|gallery] for flex/grid layout
@@ -36,7 +35,6 @@
 
 	img {border-radius: var(--img-border-radius);}
 
-	img[alt*="right"] {float: right; margin-left: 0.5em; }
 
 
 /* === Image Gallery using <p> and Callout === */
@@ -65,7 +63,7 @@
 			{ max-width: 100%; width: unset; margin-block: unset;}
 
 	/* Special Adjustment for Minimal theme. Left margin. Editing Live Preview. */
-	.markdown-source-view.mod-cm6.is-readable-line-width .internal-embed
+	.markdown-source-view.mod-cm6 div[data-callout-metadata*="gallery"] .internal-embed.image-embed
 		{ margin-left: 0 !important; width: unset;}
 	/* Special Adjustment for Minimal theme. Override width: 100% */
 		.full-width-media .image-gallery .image-embed img:not(.emoji):not([width]) { width: unset; }
@@ -76,6 +74,7 @@
 		div[data-callout-metadata*="gallery"].callout > .callout-content > p .snw-embed-preview
 			{ display: var(--gallery-snw-display); width: min-content; height: min-content; }
 		div[data-callout-metadata*="gallery"].callout > .callout-content > p .internal-embed.image-embed ~ br {display: none;}
+
 
 /* === Images in Lists === */
 	/* limit the width when in a list (ul only) */
@@ -89,6 +88,50 @@
 	/*
 	div:not(.cm-callout).image-embed img { max-height: 200px; max-width: 300px; height: 200px; object-fit: cover;}
 	*/
+
+
+/* === Image Float === */
+	/* variables */
+	body {
+		--float-left-margin: 4px 12px 4px 0;
+		--float-right-margin: 4px 0 4px 12px;
+		--float-snw-display: none;
+	}
+
+	/* float in both Live Preview and Reading View */
+	img[alt*="left"], .internal-embed.image-embed[alt*="float-left"] {float: left }
+	img[alt*="right"], .internal-embed.image-embed[alt*="float-right"] {float: right; }
+	img[alt*="left"] { margin: var(--float-left-margin); }
+	img[alt*="right"] { margin: var(--float-right-margin); }
+
+	div.no-float {clear: both; display: inline-grid; height: 10px; width: 100%; background-color: blue;}
+
+	/* Special Adjustment for SNW plugin */
+	.internal-embed.image-embed:is([alt="left"],[alt*="|left"],[alt*="left|"],[alt*="float-left"],[alt="right"],[alt*="|right"],[alt*="right|"],[alt*="float-right"]) + .snw-reference.snw-embed { display: var(--float-snw-display); }
+	.internal-embed.image-embed:is([alt="left"],[alt*="|left"],[alt*="left|"],[alt*="float-left"],[alt="right"],[alt*="|right"],[alt*="right|"],[alt*="float-right"]) + .snw-reference.snw-embed + br { display: none;}
+
+	/* Special Adjustment for Themes */
+		/* Blue Topaz. uses body[class*="notebook-liked-markdown-page"] as identifier */
+		body[class*="notebook-liked-markdown-page"] .view-content .internal-embed.is-loaded img[alt*="left"]:not([class*="emoji"]) { margin: var(--float-left-margin) !important; }
+		body[class*="notebook-liked-markdown-page"] .view-content .internal-embed.is-loaded img[alt*="right"]:not([class*="emoji"]) { margin: var(--float-right-margin) !important; }
+
+		/* Minimal. Uses body[class*="minimal-tab-title"] as identifier */
+		body[class*="minimal-tab-title"] .markdown-source-view.mod-cm6 .internal-embed.image-embed {width: auto; max-width: unset; margin-left: 0 !important;}
+
+		/* Duplicate from Multi Column, in case users don't enable that snippet (row 426-437) */
+		/* Special Adjustment for Minimal theme. Undo the theme flex layout by default. To apply per note basis */
+			.contextual-typography .minimal-float.markdown-preview-view.markdown-preview-view .markdown-preview-sizer { display: unset; }
+		/* Special Adjustment for Minimal theme Live Preview float support. Need to revert cm-content width to default theme but cm-embed to auto */
+			.minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6.is-readable-line-width .cm-contentContainer { width: calc(var(--line-width-adaptive) - var(--folding-offset)); max-width: calc(var(--max-width) - var(--folding-offset)); margin-right: auto; margin-left: max(calc(50% + var(--folding-offset) - var(--line-width-adaptive)/ 2), calc(50% + var(--folding-offset) - var(--max-width)/ 2))!important; }
+			.minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6.is-readable-line-width .cm-line { width: auto; max-width: 100%; margin-left: 0 !important; }
+			.minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6.is-readable-line-width .cm-embed-block.cm-callout> :is(.callout[data-callout-metadata*="left"], .callout[data-callout-metadata*="right"]) { max-width: 98%; }
+			.minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6 .cm-embed-block.cm-callout > .callout { width: auto; }
+		/* Special Adjustment for Minimal theme Live Preview float support. Undo margin-left for Image */
+			.minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6 .cm-embed-block.cm-callout :is(.callout[data-callout-metadata*="left"], .callout[data-callout-metadata*="right"]) .internal-embed.image-embed { margin-left: auto !important; }
+
+			/* fix to support Breadcrumbs plugin */
+			body[class*="minimal-tab-title"].contextual-typography .minimal-float.markdown-preview-view.markdown-preview-view .BC-trail.markdown-preview-sizer { display: flex; }
+
 
 /* === Image Zoom === */
 /* must check "Enable Image Zoom via CSS" via Style Settings */
@@ -222,6 +265,40 @@ settings:
 		title: Max Width for Images (any unit, no space)
 		type: variable-text
 		default: 350px
+
+
+
+	-
+		id: gc-float-title
+	    title: Image Float / Aside
+	    type: heading
+	    level: 2
+		collapsed: true
+	-
+	    id: float-left-margin
+		title: Max Height for Images (any unit, no space)
+		description: Enter in following order - "top right bottom left"
+	    type: variable-text
+	    default: 4px 12px 4px 0px
+	-
+	    id: float-right-margin
+		title: Max Height for Images (any unit, no space)
+		description: Enter in following order - "top right bottom left"
+	    type: variable-text
+	    default: 4px 0px 4px 12px
+	-
+		id: float-snw-display
+		title: Hide SNW indicator in Image Float / Aside
+		type: variable-select
+		default: none
+		options:
+			-
+				label: Show
+				value: inline-block
+			-
+				label: Hide
+				value: none
+
 
 
 	-

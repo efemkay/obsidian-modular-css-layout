@@ -1,5 +1,7 @@
 /* === README ===
 	Snippet: MCL Multi Column / Author: Faiz Khuzaimah / twitter: @faizkhuzaimah / github: https://github.com/efemkay
+	Version 0.8.1 (updated 2023-01-10)
+	- fix issue with Breadcrumbs plugin and minimal-float where the plugin "banner" flushed to left
 	Version 0.8.0 (updated 2022-11-26)
 	- feature: `no-wrap` option for `[!multi-column]` using callout-metadata
 	Version 0.7.2 (updated 2022-11-24)
@@ -85,6 +87,21 @@ settings:
 		description: to allow some spacing for box-shadow
 		type: variable-text
 		default: 5px
+
+
+
+	-
+        id: float-callout-title
+        title: Float Callout Settings
+        type: heading
+        level: 1
+		collapsed: true
+	-
+        id: float-width-title
+        title: Float Width Settings
+        type: heading
+        level: 2
+		collapsed: false
     -
         id: float-small-width
         title: Floating Callout Width - Small (in px)
@@ -113,12 +130,46 @@ settings:
         step: 50
 		format: px
 
+	-
+        id: float-gap-title
+        title: Float Gap Settings
+        type: heading
+        level: 2
+		collapsed: false
+	-
+	    id: float-left-callout-margin
+		title: Gap for Float Left (any unit)
+		description: Enter in following order - "top right bottom left"
+	    type: variable-text
+	    default: 0px 15px 0px 0px
+	-
+	    id: float-right-callout-margin
+		title: Gap for Float Right (any unit)
+		description: Enter in following order - "top right bottom left"
+	    type: variable-text
+	    default: 0px 0px 0px 15px
+
+	-
+		id: float-callout-snw-display
+		title: Hide SNW indicator in Callout Float / Aside
+		type: variable-select
+		default: none
+		options:
+			-
+				label: Show
+				value: inline-block
+			-
+				label: Hide
+				value: none
+
+
+
     -
         id: mc-list-column-title
         title: List Column Settings
 		description: using `{.xxx-column-list-xxx}` and `#mcl/list-column`
         type: heading
-        level: 2
+        level: 1
 		collapsed: true
     -
         id: list-min-width
@@ -152,7 +203,7 @@ settings:
         title: List Grid and List Card
 		description: using `#mcl/list-grid` and `#mcl/list-card`
         type: heading
-        level: 2
+        level: 1
 		collapsed: true
 	-
         id: list-grid-min-width
@@ -311,9 +362,14 @@ body{
 	*/
 	div[data-callout-metadata*="no-margin"]:is(.cm-callout, .callout.callout, .callout.callout .callout-content) {margin: 0; padding: 0;}
 
-	/* Special Adjustment for Shimmering Focus. Differing font size in callout */
-	div[data-callout*="blank"] .callout-content :is(p,ul,li) { font-size: unset; line-height: inherit; }
-	div[data-callout*="blank"] .callout-content :is(li) { margin: unset; }
+	/* Special Adjustment for Themes */
+
+		/* Shimmering Focus. Differing font size in callout *//* no longer required as of v3.272
+		div[data-callout*="blank"] .callout-content :is(p,ul,li) { font-size: unset; line-height: inherit; }
+		div[data-callout*="blank"] .callout-content :is(li) { margin: unset; }
+
+		/* Mado. Remove  theme's pseudo left border */
+		div[data-callout*="blank"] .callout-content::before { display: none; }
 
 
 /* === Text Justify === */
@@ -321,21 +377,74 @@ body{
 	.text-justify :is(.markdown-preview-view p,.markdown-source-view .cm-line) { text-align: justify; }
 
 
-/* === Floating Callout === */
+/* === Floating Callout - Base === */
+	/* variables */
+	body {
+		--float-left-callout-margin: 0 15px 0 0;
+		--float-right-callout-margin: 0 0 0 15px;
+		--float-callout-snw-display: none;
+	}
 
 	/* use media query so that floats only works when there's enough width */
 	@media (min-width: 500px){
-		.markdown-source-view [data-callout-metadata*="float-left"].cm-embed-block.cm-callout {padding-top: 0.8em;}
-		.markdown-source-view [data-callout-metadata*="float-left"].cm-embed-block.cm-callout,
-		.markdown-reading-view div[data-callout-metadata*="left"].callout {float: left; margin-right: 15px !important; margin-bottom: 10px; }
-		.markdown-source-view [data-callout-metadata*="float-right"].cm-embed-block.cm-callout {padding-top: 0.8em;}
-		.markdown-source-view [data-callout-metadata*="float-right"].cm-embed-block.cm-callout,
-		.markdown-reading-view div[data-callout-metadata*="right"].callout {float: right; margin-left: 15px !important; margin-bottom: 10px;}
+		.markdown-source-view [data-callout-metadata*="float-left"].cm-embed-block.cm-callout {float: left; padding-top: 0.8em; }
+		.markdown-reading-view div[data-callout-metadata*="left"].callout {float: left;}
+
+		.markdown-source-view [data-callout-metadata*="float-right"].cm-embed-block.cm-callout {float: right; padding-top: 0.8em; }
+		.markdown-reading-view div[data-callout-metadata*="right"].callout {float: right; }
 
 		.markdown-source-view.mod-cm6 .cm-embed-block.cm-callout :is(.callout[data-callout-metadata*="left"], .callout[data-callout-metadata*="right"]) .callout-content > p:last-of-type { margin-bottom: auto;}
 
 		[data-callout-metadata*="float-right"].cm-embed-block.cm-callout {width: auto !important;}
-		div[data-callout*="blank"].callout:is(div[data-callout-metadata*="left"], div[data-callout-metadata*="right"]) {margin-top: 0; margin-bottom: 0;}
+		/* doing the gap */
+		div[data-callout*="blank"].callout:is(div[data-callout-metadata*="left"]) { margin: var(--float-left-callout-margin); }
+		div[data-callout*="blank"].callout:is(div[data-callout-metadata*="right"]) {margin: var(--float-right-callout-margin); }
+	}
+
+
+	/* Special Adjustment for Plugins / Markdown Elements */
+
+		/* Option for Caption */
+		div:is([data-callout-metadata*="caption"]).callout > .callout-content > p .image-embed[alt]:not([alt$=".png"], [alt$=".jpg"], [alt$=".jpeg"], [alt$=".tiff"])::after {content: attr(alt); text-align: center; display: block; font-style: italic; color: var(--text-muted); }
+		div:is([data-callout-metadata*="caption"]).callout > .callout-content > p img:not(.emoji) { display: block; margin-right: auto; margin-left: auto;}
+
+		/* Introduce clear to break the float */
+			/* .markdown-preview-view h2, *//* remove this as it has weird spacing effect */
+			.embedded-backlinks { clear: both; }
+
+		/* fix for blockquote underlap the float layout */
+			.markdown-preview-view :is(blockquote) { overflow-x: auto; } /* fix for blockquote underlap */
+			.markdown-preview-view :is(p) { overflow: unset; } /* fix for para not wrapping around float. applicable for Willemstad */
+
+		/* Special Adjustment for SNW plugin */
+		div:is([data-callout-metadata*="caption"],[data-callout-metadata*="left"],[data-callout-metadata*="right"]).callout > .callout-content > p .snw-embed-preview { display: var(--float-callout-snw-display); width: min-content; height: min-content; }
+		div:is([data-callout-metadata*="caption"],[data-callout-metadata*="left"],[data-callout-metadata*="right"]).callout > .callout-content > p .internal-embed.image-embed ~ br {display: none;}
+
+
+	/* Special Adjustment for Themes */
+
+		/* Special Adjustment for Minimal theme. Undo the theme flex layout by default. To apply per note basis */
+			body[class*="minimal-tab-title"].contextual-typography .minimal-float.markdown-preview-view.markdown-preview-view .markdown-preview-sizer { display: unset; }
+		/* Special Adjustment for Minimal theme Live Preview float support. Need to revert cm-content width to default theme but cm-embed to auto */
+			body[class*="minimal-tab-title"] .minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6.is-readable-line-width .cm-contentContainer { width: calc(var(--line-width-adaptive) - var(--folding-offset)); max-width: calc(var(--max-width) - var(--folding-offset)); margin-right: auto; margin-left: max(calc(50% + var(--folding-offset) - var(--line-width-adaptive)/ 2), calc(50% + var(--folding-offset) - var(--max-width)/ 2))!important; }
+			.minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6.is-readable-line-width .cm-line { width: auto; max-width: 100%; margin-left: 0 !important; }
+			body[class*="minimal-tab-title"] .minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6.is-readable-line-width .cm-embed-block.cm-callout> :is(.callout[data-callout-metadata*="left"], .callout[data-callout-metadata*="right"]) { max-width: none; margin-left: 0 !important;}
+			.minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6 .cm-embed-block.cm-callout > .callout { width: auto; }
+		/* Special Adjustment for Minimal theme Live Preview float support. Undo margin-left for Image */
+			.minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6 .cm-embed-block.cm-callout :is(.callout[data-callout-metadata*="left"], .callout[data-callout-metadata*="right"]) .internal-embed.image-embed { margin-left: auto !important; }
+
+			/* fix to support Breadcrumbs plugin */
+			body[class*="minimal-tab-title"].contextual-typography .minimal-float.markdown-preview-view.markdown-preview-view .BC-trail.markdown-preview-sizer { display: flex; }
+
+
+		/* Minimal. For gaps adjustment */
+		body[class*="minimal-tab-title"] .minimal-float div[data-callout*="blank"].cm-callout:is(div[data-callout-metadata*="left"]) { margin: var(--float-left-callout-margin) !important; }
+		body[class*="minimal-tab-title"] .minimal-float div[data-callout*="blank"].cm-callout:is(div[data-callout-metadata*="right"]) {margin: var(--float-right-callout-margin) !important; }
+		body[class*="minimal-tab-title"] .minimal-float.wide-page div[data-callout*="blank"].cm-callout:is(div[data-callout-metadata*="left"]) { margin-left: 20px !important; }
+
+/* === Floating Callout - Size Option === */
+	/* Main Code. Set the width for live preview and reading view */
+	@media (min-width: 500px){
 		div[class*="wide-"].markdown-source-view.mod-cm6.is-readable-line-width .cm-embed-block:is(.cm-callout, .admonition-parent) > div[data-callout-metadata*="-small"].callout,
 		div[data-callout-metadata*="-small"].callout {width: var(--float-small-width);}
 		div[class*="wide-"].markdown-source-view.mod-cm6.is-readable-line-width .cm-embed-block:is(.cm-callout, .admonition-parent) > div[data-callout-metadata*="-medium"].callout,
@@ -346,33 +455,17 @@ body{
 		div[data-callout-metadata$="large"].callout {width: var(--float-large-width);}
 	}
 
-	/* Introduce clear to break the float */
-		/* .markdown-preview-view h2, *//* remove this as it has weird spacing effect */
-		.embedded-backlinks { clear: both; }
 
-	/* fix for blockquote underlap the float layout */
-		.markdown-preview-view :is(blockquote) { overflow-x: auto; } /* fix for blockquote underlap */
-		.markdown-preview-view :is(p) { overflow: unset; } /* fix for para not wrapping around float. applicable for Willemstad */
+	/* Special Adjustment for Themes */
 
-
-	/* Special Adjustment for Minimal theme. To override (have higher specificity) the width param. Can be merged to main code later on */
-	@media (min-width: 500px){
-		.markdown-source-view.mod-cm6.is-readable-line-width .cm-embed-block.cm-callout > div[data-callout-metadata$="medium"].callout { width: var(--float-medium-width); margin-left: 0 !important; }
-		.markdown-source-view.mod-cm6.is-readable-line-width .cm-embed-block.cm-callout > div[data-callout-metadata$="small"].callout { width: var(--float-small-width); margin-left: 0 !important; }
-	}
-	@media (min-width: 750px){
-		.markdown-source-view.mod-cm6.is-readable-line-width .cm-embed-block.cm-callout > div[data-callout-metadata$="large"].callout { width: var(--float-large-width); margin-left: 0 !important; }
-	}
-
-	/* Special Adjustment for Minimal theme. Undo the theme flex layout by default. To apply per note basis */
-		.contextual-typography .minimal-float.markdown-preview-view.markdown-preview-view .markdown-preview-sizer { display: unset; }
-	/* Special Adjustment for Minimal theme Live Preview float support. Need to revert cm-content width to default theme but cm-embed to auto */
-		.minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6.is-readable-line-width .cm-contentContainer { width: calc(var(--line-width-adaptive) - var(--folding-offset)); max-width: calc(var(--max-width) - var(--folding-offset)); margin-right: auto; margin-left: max(calc(50% + var(--folding-offset) - var(--line-width-adaptive)/ 2), calc(50% + var(--folding-offset) - var(--max-width)/ 2))!important; }
-		.minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6.is-readable-line-width .cm-line { width: auto; max-width: 100%; margin-left: 0 !important; }
-		.minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6.is-readable-line-width .cm-embed-block.cm-callout> :is(.callout[data-callout-metadata*="left"], .callout[data-callout-metadata*="right"]) { max-width: 98%; }
-		.minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6 .cm-embed-block.cm-callout > .callout { width: auto; }
-	/* Special Adjustment for Minimal theme Live Preview float support. Undo margin-left for Image */
-		.minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6 .cm-embed-block.cm-callout :is(.callout[data-callout-metadata*="left"], .callout[data-callout-metadata*="right"]) .internal-embed.image-embed { margin-left: auto !important; }
+		/* Minimal. Uses body[class*="minimal-tab-title"] as identifier. To override (have higher specificity) the width param. Can be merged to main code later on */
+		@media (min-width: 500px){
+			body[class*="minimal-tab-title"] .markdown-source-view.mod-cm6.is-readable-line-width .cm-embed-block.cm-callout > div[data-callout-metadata$="medium"].callout { width: var(--float-medium-width); margin-left: 0 !important; }
+			body[class*="minimal-tab-title"] .markdown-source-view.mod-cm6.is-readable-line-width .cm-embed-block.cm-callout > div[data-callout-metadata$="small"].callout { width: var(--float-small-width); margin-left: 0 !important; }
+		}
+		@media (min-width: 750px){
+			body[class*="minimal-tab-title"] .markdown-source-view.mod-cm6.is-readable-line-width .cm-embed-block.cm-callout > div[data-callout-metadata$="large"].callout { width: var(--float-large-width); margin-left: 0 !important; }
+		}
 
 
 /* === Multi Column Lists (require Markdown Attributes) === */
@@ -381,30 +474,29 @@ body{
 	/* - xx-column-list-block apply at block level - but require JV's Markdown Attributes plugin */
 
 	@media (min-width: 500px ){
-		.two-column-list div > ul,
-		.two-column-list-block {columns: 2; column-gap: 3rem;}
-		.three-column-list div > ul,
-		.three-column-list-block {columns: 3; column-gap: 3rem;}
+		.two-column-list div > ul,   .two-column-list-block {columns: 2; column-gap: 3rem;}
+		.three-column-list div > ul,  .three-column-list-block {columns: 3; column-gap: 3rem;}
 	}
 
 
 	/* - dashboard style, page level only, apply to any first level */
 	/* -- applicable only when width > 400pt, else just single column */
 	/* grid list block level cannot be done, it breaks formatting */
-	@media (min-width: 500px)
-		{ .two-column-grid-list div > ul { display: grid; grid-column-gap:3em; grid-template-columns:repeat(2,1fr);} }
-	@media (min-width: 600px){
-		.three-column-grid-list div > ul
-			{ display: grid; grid-column-gap:3em; grid-template-columns:repeat(3,1fr);}
+	@media (min-width: 500px) {
+		.two-column-grid-list div > ul { display: grid; grid-column-gap:3em; grid-template-columns:repeat(2,1fr);}
+	}
+	@media (min-width: 600px) {
+		.three-column-grid-list div > ul { display: grid; grid-column-gap:3em; grid-template-columns:repeat(3,1fr);}
 	}
 
-	.multi-column-list div > ul,
-	.multi-column-list-block {
-		column-width: var(--list-min-width); column-gap: 3rem; column-rule: var(--col-rule-width) solid var(--col-rule-color);
-	}
+	.multi-column-list div > ul,  .multi-column-list-block { column-width: var(--list-min-width); column-gap: 3rem; column-rule: var(--col-rule-width) solid var(--col-rule-color); }
 
 	/* Special adjustment for footnotes applied with -colum-list-block -- obsidian creates a <br> tag at the last <li> */
 	.footnotes [class$="-column-list-block"] li:last-of-type br:last-of-type {display: none;}
+
+	/* Special adjustment for misaligned bullets (this is a hack, need to find better solution later) */
+	ul[class*="column-list"] li > .list-bullet::after { position: relative; }
+	.markdown-preview-view[class*="column-list"] li > .list-bullet::after { position: relative; }
 
 /* ========================================================================== */
 /* === Multi Column List using Tags (require Contextual Typography) === */
