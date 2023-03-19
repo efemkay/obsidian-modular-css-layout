@@ -1,7 +1,7 @@
 ---
 title: Gallery Cards Settings
 parent: Gallery Cards
-nav_order: 4
+nav_order: 5
 ---
 
 # Gallery Cards Style Settings

@@ -1,5 +1,5 @@
 ---
-title: Blank Callout and Float
+title: Blank and Float Callout
 parent: Multi Column
 nav_order: 4
 ---
@@ -25,7 +25,7 @@ nav_order: 4
 - To have the effect applicable also in Live Preview use the following callout metadata instead (prepend `float-` before `right` or `left`)
     - `> [!<anycallout>|float-<left|right>-<small|medium|large>]`
     - `> [!blank-container|float-<left|right}-<small|medium|large>]`
-> Note that editing float in Live Preview will be a bit off (or "janky"). Navigate using keyboard instead of mouse/trackpad and even better use Source Mode
+> Note that editing float in Live Preview will be a bit off (or "janky"). Navigate using keyboard instead of mouse/trackpad. Even better use Source Mode
 
 example
 `> [!warning|right-small]`
