@@ -19,12 +19,10 @@ List Column layout will allow you to create multi column layout using unordered 
 2. Apply at the specific list block using Markdown Attributes plugin.
 3. Apply at the frontmatter. This affects ALL unordered list in that particular note
 
-{: .note-title }
-> Making It in Live Preview
+{: .note }
+> Making it work in Live Preview {: .fs-4 .fw-500 }
 >
-> The column layout will only work on Reading View. If you want to make it work on Live Preview, there are a few options
-> - encapsulate the list block in MCL's `[blank-container]` callout, or
-> - using Custom Classes plugin, prepend the list block with any class e.g. (`class: none`)
+> The column layout will only work on Reading View. If you want to make it work on Live Preview, there are a few options. You can encapsulate the list block in MCL's `[blank-container]` callout, or alternatively, using Custom Classes plugin, prepend the list block with any class e.g. (`class: none`)
 
 ### Using hashtag i.e. `#mcl/list-column`
 `class: fancy-list`
@@ -112,8 +110,7 @@ cssClass: two-column-list
 ```
 
 ## Example
-
-![](docs/assets/mc-list-grid.png)
+![example of list column](https://raw.githubusercontent.com/efemkay/obsidian-modular-css-layout/main/docs/assets/mc-list-column.png)
 
 ---
 

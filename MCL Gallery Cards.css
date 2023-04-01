@@ -1,7 +1,9 @@
 /* === README ===
 	Snippet: MCL Gallery Cards / Author: Faiz Khuzaimah / twitter: @faizkhuzaimah / github: https://github.com/efemkay
-	Version 0.9.0 (updated 2023-xx-xx) (not official yet)
+	Version 0.9.0 (updated 2023-04-01)
 	- image float
+	- banner background
+	- card view for dataview table
 	Version 0.8.1 (updated 2022-12-10)
 	- fix gallery margin-left for minimal to be more targetted (fix issue with note embed issue)
 	- fix issue with Breadcrumbs plugin and minimal-float where the plugin "banner" flushed to left
@@ -122,7 +124,7 @@
 		/* Special Adjustment for Minimal theme. Undo the theme flex layout by default. To apply per note basis */
 			.contextual-typography .minimal-float.markdown-preview-view.markdown-preview-view .markdown-preview-sizer { display: unset; }
 		/* Special Adjustment for Minimal theme Live Preview float support. Need to revert cm-content width to default theme but cm-embed to auto */
-			.minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6.is-readable-line-width .cm-contentContainer { width: calc(var(--line-width-adaptive) - var(--folding-offset)); max-width: calc(var(--max-width) - var(--folding-offset)); margin-right: auto; margin-left: max(calc(50% + var(--folding-offset) - var(--line-width-adaptive)/ 2), calc(50% + var(--folding-offset) - var(--max-width)/ 2))!important; }
+			body[class*="minimal-tab-title"] .minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6.is-readable-line-width .cm-contentContainer { width: calc(var(--line-width-adaptive) - var(--folding-offset)); max-width: calc(var(--max-width) - var(--folding-offset)); margin-right: auto; margin-left: max(calc(50% + var(--folding-offset) - var(--line-width-adaptive)/ 2), calc(50% + var(--folding-offset) - var(--max-width)/ 2))!important; }
 			.minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6.is-readable-line-width .cm-line { width: auto; max-width: 100%; margin-left: 0 !important; }
 			.minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6.is-readable-line-width .cm-embed-block.cm-callout> :is(.callout[data-callout-metadata*="left"], .callout[data-callout-metadata*="right"]) { max-width: 98%; }
 			.minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6 .cm-embed-block.cm-callout > .callout { width: auto; }
@@ -164,27 +166,100 @@
 	}
 
 
-/* === ALPHA VERSION table-card === */
-	/* setting the borders */
-	.table-card table > tbody > tr,
-	.table-card.markdown-source-view.mod-cm6 .dataview.table-view-table .table-view-tbody tr {border: 1px solid black; border-radius: 0.5em;}
-	.table-card.markdown-source-view.mod-cm6 .dataview.table-view-table .table-view-tbody td {border-right: unset;}
+/* === Dataview related ===*/
 
-	:is(.theme-light, .theme-dark) .table-card table,
-	.table-card:is(*,.is-live-preview.is-live-preview) table :is(td,tr) {background-color: unset;}
-	.table-card .dataview.table-view-table.dataview.table-view-table {border: unset;} /* for primary */
-	.table-card table tbody {	display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 0.5em; clear: both;}
-	.table-card table > tbody > tr {display: flex; flex-direction: column; padding-inline: 0.5em;}
+	/* Change Dataview table into card view
+	   - no style settings option yet
+	*/
 
-	.table-card:is(*,.is-live-preview) table.table-view-table > tbody > tr > td:not(:first-child) {border-top: 1px solid gray; }
-	.table-card table.table-view-table > tbody > tr {margin: unset;}
+    body {
+        --bg-color-dv-card: var(--background-modifier-backlinks);
+        --border-color-dv-card: var(--background-modifier-border);
+    }
+    .dv-card table.dataview { position: relative; display: flex; flex-direction: column; font-size: 0.9em; }
 
-	/* thead adjustment */
-	/* table > thead {display: flex; } */
-	.table-card table > thead {float: right;}
-	.table-card table.table-view-table > thead > tr {margin: unset;}
-	.table-card table.table-view-table > thead > tr > th {border: unset;}
-	.table-card .dataview.table-view-table.dataview.table-view-table :is(thead, th) {padding-block: unset;}
+    /* convert the thead */
+    .dv-card table.dataview thead { display: flex; flex-flow: row-reverse; border-radius: var(--size-4-2); position: relative; padding-bottom: 0.4em; }
+    .dv-card table.dataview thead tr { margin: 0; }
+    .dv-card:is(*,.markdown-source-view.mod-cm6) table.dataview.table-view-table thead th { padding-left: 0; padding: 0.2em 1.3em 0 0.3em; border-width: 0; font-size: 0.9rem; color: var(--text-faint); font-family: var(--h3-font);}
+
+    /* convert the tbody into card like structure */
+    .dv-card table.dataview tbody { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); grid-gap: var(--size-4-2); }
+    .dv-card table.dataview tbody tr { background-color: var(--bg-color-dv-card); display: flex; flex-direction: column; border: 1px solid var(--border-color-dv-card); border-radius: var(--size-4-2); margin-top: 0; margin-bottom: 0; }
+    .dv-card table.dataview tbody tr:hover { background-color: var(--background-secondary) !important; }
+    .dv-card table.dataview tbody td { display: flex; padding-block: 0; }
+    .dv-card table.dataview tbody td:first-child { font-weight: var(--bold-weight); }
+    .dv-card table.dataview tbody td:not(:first-child) { color: var(--text-muted); font-size: 0.9em; }
+    .dv-card table.dataview tbody td:last-child { padding-bottom: 0.5em; }
+    .dv-card table.dataview tbody td:not(:last-child):not(:first-child)>.el-p:not(.el-embed-image) { border-bottom: 1px solid var(--border-color-dv-card); width: 100%; }
+    .dv-card table.dataview tbody td > * { padding-block: 0.5em; }
+    .dv-card table.dataview tbody td > ul { padding-block: 0.2em; }
+
+    /* Remove the li indent and other cosmetics */
+    .dv-card table.dataview :is(ul,ol) { padding-inline-start: 0; margin-block: 0 !important; }
+    .dv-card table.dataview li:not(:last-of-type).dataview-result-list-li {border-bottom: 1px dashed DarkSlateGray;}
+    .dv-card table.dataview li.dataview-result-list-li::marker { color: transparent; }
+
+    /* Special Adjustment for Stardust's Table Enhancer plugin */
+    table.dataview .table-height-adjust th, .table-height-adjust tr { height: revert !important; }
+
+	/* Special Adjustment for Listive theme */
+	.dv-card .table-view-table li:not(.cards li.dataview-result-list-li) {margin-left: revert; }
+
+	/* Special Adjustment for thead background for most themes */
+	.dv-card thead :is(tr, th.table-view-th) {background-color: transparent;}
+	.dv-card thead :is(tr, th) {border-width: 0;}
+
+
+
+/*=== MCL Banner ===*/
+/* banner using css only -- https://forum.obsidian.md/t/css-how-to-style-the-first-image-in-a-note/52839/ */
+
+    body {
+        --mcl-banner-height-normal: 200px;
+        --mcl-banner-height-tall: 300px;
+        --mcl-banner-overlap-title-adj: 0px;
+    }
+
+
+    /* make the div (in LP) containing the image doesn't control the css box-sizing */
+    .markdown-source-view .cm-line:has(> .internal-embed.image-embed > img[alt*="mcl-banner"]),
+    .markdown-source-view :is(.internal-embed.image-embed, .cm-line):has(> img[alt*="mcl-banner"]) { display: contents; }
+
+    /* original forum post snippet with minor tweak */
+    img[alt*="mcl-banner"] {
+        position: absolute;
+        top: 0; left: 0;
+        height: 200px; width: 100%;
+        margin-right: auto; margin-left: auto;
+        object-fit: cover; object-position: 50% 50%;
+        overflow: hidden;
+        user-select: none;
+     }
+
+     img[alt*="mcl-banner"][alt*="gradient"] {
+         -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, color-stop(80%, rgba(0,0,0,1)), color-stop(100%, rgba(0,0,0,0)) );
+         mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+     }
+
+     .view-content:has(img[alt*="mcl-banner"]) .inline-title { position: relative; padding-top: calc(150px + var(--mcl-banner-overlap-title-adj)); z-index: 1; }
+
+     /* add option to adjust vertical position by adding the alt metadata "higher" or "lower" */
+     img[alt*="mcl-banner"][alt*="y-20"] { object-position: 50% 30%; }
+     img[alt*="mcl-banner"][alt*="y-10"] { object-position: 50% 40%; }
+     img[alt*="mcl-banner"][alt*="y+10"] { object-position: 50% 60%; }
+     img[alt*="mcl-banner"][alt*="y+20"] { object-position: 50% 70%; }
+
+     /* tall adjustment */
+     img[alt*="mcl-banner"][alt*="-tall"] { height: 300px; }
+     .view-content:has(img[alt*="mcl-banner"][alt*="-tall"]) .inline-title { padding-top: calc(250px + var(--mcl-banner-overlap-title-adj)); }
+
+
+     /* minor tweak for me, since i have snippet to make image has rounded corner */
+     img[alt*="mcl-banner"] { border-radius: revert; }
+     /* minor tweak for me, to hide snw block reference counter for the banner */
+    .internal-embed.media-embed.image-embed.is-loaded + .snw-reference.snw-embed {display: none;}
+
 
 
 /* === ALPHA VERSION testing Timeline in lists === */

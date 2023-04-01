@@ -57,4 +57,4 @@ If you have Style Settings plugin installed, you may control the following aspec
 - Bottom border for the first header in the card
 
 ## Example
-![](docs/assets/mc-list-card.png)
+![example of list card](https://raw.githubusercontent.com/efemkay/obsidian-modular-css-layout/main/docs/assets/mc-list-card.png)

@@ -122,7 +122,10 @@ If you have Style Settings plugin installed, you may control the following aspec
 #### Example Screenshot - Multi Column (general)
 <img src="https://user-images.githubusercontent.com/42369515/163700561-c8d62aa3-0ac8-488c-a80e-8bfb3b539ca8.png" height="350px" />
 
-#### Example Screenshot - Multi Column Callout Width Control
+#### Example Screenshot - Multi Column Callout with Fixed Width
+![example of list column](https://raw.githubusercontent.com/efemkay/obsidian-modular-css-layout/main/docs/assets/mc-callout-fixed-width.png)
+
+#### Example Screenshot - Multi Column Callout with Width Control
 <img src="https://raw.githubusercontent.com/efemkay/obsidian-modular-css-layout/main/docs/assets/mc-callout-width-control.png" height="350px" />
 
 #### Example GIF - Install the snippet and apply Multi Column Callout

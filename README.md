@@ -75,9 +75,9 @@ This snippet provides you the following features:
     - it can also be done at block level (inside your note)
         - `multi-column-list-block` -- require Markdown Attributes plugin
 - Multi column layout using (Unordered) List AND tag (instead of css classes)
-	- `#mcl/list-column` -- require Contextual Typography plugin
-	- `#mcl/list-grid` -- require Contextual Typography plugin
-	- `#mcl/list-card` -- require Contextual Typography plugin
+	- `#mcl/list-column`
+	- `#mcl/list-grid`
+	- `#mcl/list-card`
 - Side / Floating Column using Callout
     - `> [!<anycallout>|<left|right>-<small|medium|large>]`
     - `> [!blank-container||<left|right>-<small|medium|large>]`
