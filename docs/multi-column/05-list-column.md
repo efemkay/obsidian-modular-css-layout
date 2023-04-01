@@ -19,9 +19,9 @@ List Column layout will allow you to create multi column layout using unordered 
 2. Apply at the specific list block using Markdown Attributes plugin.
 3. Apply at the frontmatter. This affects ALL unordered list in that particular note
 
-`{: .note-title}`
+{: .note-title }
 > #### Making It in Live Preview
-> 
+>
 > The column layout will only work on Reading View. If you want to make it work on Live Preview, there are a few options
 > - encapsulate the list block in MCL's `[blank-container]` callout, or
 > - using Custom Classes plugin, prepend the list block with any class e.g. (`class: none`)
@@ -80,7 +80,7 @@ cssClass: two-column-list
 > ---
 > cssClass: two-column-list
 > ---
-> 
+>
 > - list item 1 #mcl/list-column
 > - list item 2
 > - list item 3
@@ -118,4 +118,3 @@ cssClass: two-column-list
 ---
 
 <img src="https://user-images.githubusercontent.com/42369515/163700640-245e4275-f329-4cb2-9138-07cb276354cc.png" height="350px">
-
