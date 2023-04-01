@@ -19,13 +19,20 @@ List Column layout will allow you to create multi column layout using unordered 
 2. Apply at the specific list block using Markdown Attributes plugin.
 3. Apply at the frontmatter. This affects ALL unordered list in that particular note
 
-The column layout will only work on Reading View. If you want to make it work on Live Preview, you may encapsulate them in `[blank-container]` callout.
+`{: .note-title}`
+> #### Making It in Live Preview
+> 
+> The column layout will only work on Reading View. If you want to make it work on Live Preview, there are a few options
+> - encapsulate the list block in MCL's `[blank-container]` callout, or
+> - using Custom Classes plugin, prepend the list block with any class e.g. (`class: none`)
 
 ### Using hashtag i.e. `#mcl/list-column`
+`class: fancy-list`
 - This option require your Obsidian to be installed with installer version 1.1.9 or higher (note that there are installer and app versions).
 - Place the tag anywhere in the top-level list items (preferably in the first bullet for easy identification). If you have consecutive group of list that you actually meant to be a separate lists, ensure to properly "break" it by placing either a header, horizontal line or `<br/>` tag in between
 
 Here's an example markdown:
+
 ```md
 - list item 1 #mcl/list-column
 - list item 2
@@ -42,9 +49,9 @@ Here's an example markdown:
 
 ### Using Markdown Attributes plugin
 Using this approach will require [Markdown Attributes](https://github.com/valentine195/obsidian-markdown-attributes) plugin. Read the plugin documentation where to put the CSS class (typically at the end of the block). MCL provides the following CSS classes
-- `.two-column-list-block`
-- `.three-column-list-block`
-- `.multi-column-list-block` - number of columns depend of note's width and MCL settings on minimum width (default is 200px)
+- `{.two-column-list-block}`
+- `{.three-column-list-block}`
+- `{.multi-column-list-block}` - number of columns depend of note's width and MCL settings on minimum width (default is 200px)
 
 For this approach, do note that there's a dot (`.`) before the class name. This is following how CSS classes are referred in CSS file.
 
@@ -105,5 +112,10 @@ cssClass: two-column-list
 ```
 
 ## Example
+
+![](docs/assets/mc-list-grid.png)
+
+---
+
 <img src="https://user-images.githubusercontent.com/42369515/163700640-245e4275-f329-4cb2-9138-07cb276354cc.png" height="350px">
 
