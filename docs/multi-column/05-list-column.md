@@ -20,7 +20,7 @@ List Column layout will allow you to create multi column layout using unordered 
 3. Apply at the frontmatter. This affects ALL unordered list in that particular note
 
 {: .note-title }
-> #### Making It in Live Preview
+> Making It in Live Preview
 >
 > The column layout will only work on Reading View. If you want to make it work on Live Preview, there are a few options
 > - encapsulate the list block in MCL's `[blank-container]` callout, or
