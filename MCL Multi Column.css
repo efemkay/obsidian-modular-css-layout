@@ -1,5 +1,7 @@
 /* === README ===
 	Snippet: MCL Multi Column / Author: Faiz Khuzaimah / twitter: @faizkhuzaimah / github: https://github.com/efemkay
+	Version 0.9.1 (updated 2023-04-02)
+	- MC - fixed center option not properly coded
 	Version 0.9.0 (updated 2023-04-01)
 	- MC - add option to hide SNW block ref for images in MC Callout
 	- MC - added wide option for List Grid/Card
@@ -377,7 +379,7 @@ body{
 		div[data-callout="multi-column"][data-callout-metadata*="no-wrap"].callout > .callout-content > *:is(div,ul) { flex-shrink: 0; flex-basis: var(--callout-nowrap-min-width) }
 
 		/* Align center for items in callout */
-		div[data-callout="multi-column"] .callout[data-callout-metadata] { text-align: center; }
+		div[data-callout="multi-column"] .callout[data-callout-metadata*="center"] { text-align: center; }
 
 
 	/* == Special Adjustment for Community Themes */
