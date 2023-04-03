@@ -1,7 +1,9 @@
 /* === README ===
 	Snippet: MCL Multi Column / Author: Faiz Khuzaimah / twitter: @faizkhuzaimah / github: https://github.com/efemkay
-	Version 0.9.1 (updated 2023-04-02)
-	- MC - fixed center option not properly coded
+	Version 0.9.1 (updated 2023-04-03)
+	- fix MC "fixed center" option not properly coded
+	- fix MC List Grid previous not support sublist
+	- fix MC List Column margin top for first column
 	Version 0.9.0 (updated 2023-04-01)
 	- MC - add option to hide SNW block ref for images in MC Callout
 	- MC - added wide option for List Grid/Card
@@ -608,16 +610,21 @@ body{
 	.tag-mcllist-column:not([data-callout]) { column-width: var(--list-min-width); column-gap: 1rem; column-rule: var(--col-rule-width) solid var(--col-rule-color); }
 	.tag-mcllist-column.cm-callout {padding-block: 1em;} /* add block padding only for the one in callout */
 	.tag-mcllist-column .callout:first-of-type { margin-top: 0; }
-	.tag-mcllist-column ul:first-of-type { margin-top: 0; }
+
+	.tag-mcllist-column ul:first-of-type,
+	div:has(> ul > li > [href*="#mcl/list-column"]) ul:first-of-type
+		{ margin-top: 0; }
 
 	/* -- List Column using :has() */
-	li > ul:has(> li > [href="#mcl/list-column"]),
-	div[data-callout*="blank"]:has(div > ul > li > [href="#mcl/list-column"]),
-	div:has(> ul > li > [href="#mcl/list-column"])
+	li > ul:has(> li > [href*="#mcl/list-column"]),
+	div[data-callout*="blank"]:has(div > ul > li > [href*="#mcl/list-column"]),
+	div:has(> ul > li > [href*="#mcl/list-column"])
 		{ column-width: var(--list-min-width); column-gap: 1rem; }
-	div[data-callout*="blank"]:has(div > ul > li > [href="#mcl/list-column"]),
-	div:has(> ul > li > [href="#mcl/list-column"])
+	div[data-callout*="blank"]:has(div > ul > li > [hre*f="#mcl/list-column"]),
+	div:has(> ul > li > [href*="#mcl/list-column"])
 		{ column-rule: var(--col-rule-width) solid var(--col-rule-color); }
+	div:has(> ul > li > [href*="#mcl/list-column"])
+		{ margin-top: 1em; }
 
 	/* -- Special Adjustment for Plugins */
 
@@ -629,9 +636,11 @@ body{
 	/* supported (1) :has() and (2) Contextual Typography plugin */
 
 	/* List Grid */
-	ul:has(a[href*="#mcl/list-grid"]), div[class*="mcllist-grid"] ul:first-child { display: grid; grid-template-columns: repeat(auto-fit,minmax(var(--list-grid-min-width),1fr));}
-	ul:has(a[href*="#mcl/list-grid-wide"]), div[class*="mcllist-grid-wide"] ul:first-child { grid-template-columns: repeat(auto-fit,minmax(var(--list-grid-wide-min-width),1fr));}
-	ul:has(a[href*="#mcl/list-grid"]) > li:not(:last-of-type), div[class*="mcllist-grid"] ul:first-child > li:not(:last-of-type) {padding-right: 1.6em;}
+	ul:has(> li > [href*="#mcl/list-grid"]), div[class*="mcllist-grid"] ul:first-child { display: grid; grid-template-columns: repeat(auto-fit,minmax(var(--list-grid-min-width),1fr));}
+	ul:has(> li > [href*="#mcl/list-grid-wide"]), div[class*="mcllist-grid-wide"] ul:first-child { grid-template-columns: repeat(auto-fit,minmax(var(--list-grid-wide-min-width),1fr));}
+	ul:has(> li > [href*="#mcl/list-grid"]) > li:not(:last-of-type), div[class*="mcllist-grid"] ul:first-child > li:not(:last-of-type) {padding-right: 1.6em;}
+
+
 
 
 /* === List Card (using hashtag) === */
