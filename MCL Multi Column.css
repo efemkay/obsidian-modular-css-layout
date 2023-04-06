@@ -1,9 +1,10 @@
 /* === README ===
 	Snippet: MCL Multi Column / Author: Faiz Khuzaimah / twitter: @faizkhuzaimah / github: https://github.com/efemkay
-	Version 0.9.1 (updated 2023-04-03)
+	Version 0.9.1 (updated 2023-04-06)
 	- fix MC "fixed center" option not properly coded
 	- fix MC List Grid previous not support sublist
 	- fix MC List Column margin top for first column
+	- fix MC List Grid for first bullet header
 	Version 0.9.0 (updated 2023-04-01)
 	- MC - add option to hide SNW block ref for images in MC Callout
 	- MC - added wide option for List Grid/Card
@@ -636,9 +637,10 @@ body{
 	/* supported (1) :has() and (2) Contextual Typography plugin */
 
 	/* List Grid */
-	ul:has(> li > [href*="#mcl/list-grid"]), div[class*="mcllist-grid"] ul:first-child { display: grid; grid-template-columns: repeat(auto-fit,minmax(var(--list-grid-min-width),1fr));}
-	ul:has(> li > [href*="#mcl/list-grid-wide"]), div[class*="mcllist-grid-wide"] ul:first-child { grid-template-columns: repeat(auto-fit,minmax(var(--list-grid-wide-min-width),1fr));}
-	ul:has(> li > [href*="#mcl/list-grid"]) > li:not(:last-of-type), div[class*="mcllist-grid"] ul:first-child > li:not(:last-of-type) {padding-right: 1.6em;}
+
+	ul:has(> li > [data-heading] > [href*="#mcl/list-grid"]), ul:has(> li > [href*="#mcl/list-grid"]), div[class*="mcllist-grid"] ul:first-child { display: grid; grid-template-columns: repeat(auto-fit,minmax(var(--list-grid-min-width),1fr));}
+	ul:has(> li > [data-heading] > [href*="#mcl/list-grid-wide"]), ul:has(> li > [href*="#mcl/list-grid-wide"]), div[class*="mcllist-grid-wide"] ul:first-child { grid-template-columns: repeat(auto-fit,minmax(var(--list-grid-wide-min-width),1fr));}
+	ul:has(> li > [data-heading] > [href*="#mcl/list-grid"]) > li:not(:last-of-type), ul:has(> li > [href*="#mcl/list-grid"]) > li:not(:last-of-type), div[class*="mcllist-grid"] ul:first-child > li:not(:last-of-type) {padding-right: 1.6em;}
 
 
 
