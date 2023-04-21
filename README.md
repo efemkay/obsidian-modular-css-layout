@@ -2,7 +2,6 @@
 
 ![](https://img.shields.io/github/v/release/efemkay/obsidian-modular-css-layout) ![](https://img.shields.io/github/release-date/efemkay/obsidian-modular-css-layout) ![](https://img.shields.io/github/license/efemkay/obsidian-modular-css-layout) ![](https://img.shields.io/github/downloads/efemkay/obsidian-modular-css-layout/total)
 
-> - Fixes for Breadcrumbs plugin and list columns bullet alignment
 
 This is a repository for modular CSS layout hack for use with [Obsidian.md](https://obsidian.md/). It's meant to complement/assist Community Theme, focusing solely on providing alternative layout to standard width and standard top-bottom block view.
 
