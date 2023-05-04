@@ -1,32 +1,65 @@
 ---
-title: Image Float (Left/Right)
+title: Float Image
 parent: Gallery Cards
 nav_order: 4
 ---
 
-# Image Float
+# Float Image
+
 {: .no_toc }
 
 ## Table of Contents
+
 {: .no_toc .text-delta }
 
 1. TOC
-{:toc}
+   {:toc}
 
-## Float Left/Right in Reading View Only
-- Use this syntax to enable image float in Reading View only. In Live Preview it will be displayed on different lines
-- Syntax: `![[<imagefile.jpg>|<position>|<size>]]`
-- Example: `![[ryaneof-Jh_Xk8RQtG0-unsplash.jpg|right|300]]`
+## Overview
 
-## Float Left/Right in Live Preview and Reading View
-- Use this syntax to enable image float in both Live Preview and Reading View. In case you didn't notice, the difference is just prepending `float-` before the position.
-- Syntax: `![[<imagefile.jpg>|float-<position>|<size>]]`
-- Example: `![[ryaneof-Jh_Xk8RQtG0-unsplash.jpg|float-right|300]]`
+Float Image is similar to Float Callout but apply directly to the images (doesn't require you to wrap it in a callout). Currently it uses image caption to identify how you want to float it, but in the future I intend to make it work with anchor tag `#` as well.
 
-> Note that editing float in Live Preview will be a bit off (or "janky"). Navigate using keyboard instead of mouse/trackpad. Even better use Source Mode.
+### How to Use / Basic Syntax
+
+1. Add your image (either internal or external) as per normal
+2. Add `left` or `right` to the image caption (similar to markdown display text i.e. `|`) e.g. `![[image.jpg|right]]`
+
+Here's an example markdown
+
+```markdown
+### Main Article
+
+![[ryaneof-Jh_Xk8RQtG0-unsplash.jpg|right]]
+
+Content of the main article
+```
+
+> You can still specify image width per normal if you desire, just make sure the width is the last syntax before closing bracket `]]`, e.g. below
+>
+> `![[ryaneof-Jh_Xk8RQtG0-unsplash.jpg|right|300]]`
+
+### Apply to Live Preview
+
+By default, if you only specify either `left` or `right`, Float Image will only work in Reading View. If you want it to also work in Live Preview, prepend `float-` before the `left` or `right` e.g. `![[image.jpg|float-right]]`
+
+Here's an example markdown
+
+```markdown
+## Main Article
+
+![[ryaneof-Jh_Xk8RQtG0-unsplash.jpg|float-right]]
+
+Content of the main article
+```
 
 
-## External Images
+
+> Note that editing float in Live Preview will be a bit off (or "janky"), especially if you use `float-left` (`float-right` is less so). Navigate using keyboard instead of mouse/trackpad. Even better use Source Mode to edit.
+
+## Additional Notes
+
+### External Images
+
 Technically, the image float positioning can work with external link images but it is currently not aesthetically optimised (in term of gaps and other adjustment).
 
 I will update this in the future. But if you must use it now, the syntax is `![<position>|<size>](<imagefile.jpg>)` and `![float-<position>|<size>](<imagefile.jpg>)`
