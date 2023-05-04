@@ -5,15 +5,13 @@ nav_order: 4
 ---
 
 # Blank Callout
-
 {: .no_toc }
 
 ## Table of Contents
-
 {: .no_toc .text-delta }
 
 1. TOC
-   {:toc}
+{:toc}
 
 ## Overview
 
