@@ -14,13 +14,13 @@ nav_order: 7
 {:toc}
 
 ## Overview
-List Card layout will allow you to create multi column and multi row layout using a combination of (a) unordered lists (i.e.  `- list item`) and (b) custom hashtag at the specific list block. 
+List Card layout will allow you to create multi column and multi row layout using a combination of (a) unordered lists (i.e.  `- list item`) and (b) custom hashtag at the specific list block.
 
 This layout will only work on Reading View. If you want to make it work on Live Preview, you may encapsulate them in `[blank-container]` callout.
 
 There are no Markdown Attributes approach nor frontmatter approach due to underlying limitation of CSS.
 
-### How to use `#mcl/list-column`
+### How to Use `#mcl/list-card`
 
 Technically List Card is quite similar to List Grid but with extra customisation to make it card like. In order to enable it, place the hashtag anywhere in the top-level list items (preferably in the first bullet for easy identification). There are two options for List Card i.e.
 - `#mcl/list-card` - default minimum width 250px

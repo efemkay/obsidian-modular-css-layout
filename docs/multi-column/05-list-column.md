@@ -20,12 +20,11 @@ List Column layout will allow you to create multi column layout using unordered 
 3. Apply at the frontmatter. This affects ALL unordered list in that particular note
 
 {: .note }
-> Making it work in Live Preview {: .fs-4 .fw-500 }
+> **Making it work in Live Preview**
 >
-> The column layout will only work on Reading View. If you want to make it work on Live Preview, there are a few options. You can encapsulate the list block in MCL's `[blank-container]` callout, or alternatively, using Custom Classes plugin, prepend the list block with any class e.g. (`class: none`)
+> The column layout will only work on Reading View. If you want to make it work on Live Preview, there are a few options. You can encapsulate the list block in MCL's `[blank-container]` callout
 
 ### Using hashtag i.e. `#mcl/list-column`
-`class: fancy-list`
 - This option require your Obsidian to be installed with installer version 1.1.9 or higher (note that there are installer and app versions).
 - Place the tag anywhere in the top-level list items (preferably in the first bullet for easy identification). If you have consecutive group of list that you actually meant to be a separate lists, ensure to properly "break" it by placing either a header, horizontal line or `<br/>` tag in between
 

@@ -39,7 +39,6 @@ Content of the main article
 
 > Basic syntax will apply to Reading View. To make it work with Live Preview see Additional Controls below
 
-> Previous version of Float Callout is a bit janky to edit in Live Preview. With the latest update, I managed to make it work quite nice. Do raise issue in GitHub if there's anything amiss.
 
 ## Additional Controls
 
@@ -76,6 +75,13 @@ Here's an example markdown
 
 Content of the main article
 ```
+
+> **Note on Editing in Live Preview**
+>
+> In previous version of Float Image, editing text next to it was quite janky. I've improved it a bit (for `float-right` at least). For `float-left` you may still find selecting and navigating the text (up and down) still not possible.
+>
+> To edit, it's better to navigate using keyboard (from the top or bottom) instead of mouse/trackpad. Even better, use Source Mode to edit.
+
 
 ### Combining the Additional Controls
 

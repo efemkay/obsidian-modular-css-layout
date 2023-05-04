@@ -4,7 +4,7 @@ parent: Multi Column
 nav_order: 6
 ---
 
-# List Card
+# List Grid
 {: .no_toc }
 
 ## Table of Contents
@@ -33,7 +33,7 @@ If you have consecutive group of list that you actually meant to be a separate l
 
 Here's an example markdown:
 ```md
-- #### Core Work #mcl/list-card
+- #### Core Work #mcl/list-grid
     - [[00 Home|Main Goal 1]]
     - [[00 Home|Main Goal 1]]
     - [[00 Home|Main Goal 1]]

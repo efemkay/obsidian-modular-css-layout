@@ -36,6 +36,12 @@ Content of the main article
 >
 > `![[ryaneof-Jh_Xk8RQtG0-unsplash.jpg|right|300]]`
 
+
+
+
+
+## Additional Controls (and Notes)
+
 ### Apply to Live Preview
 
 By default, if you only specify either `left` or `right`, Float Image will only work in Reading View. If you want it to also work in Live Preview, prepend `float-` before the `left` or `right` e.g. `![[image.jpg|float-right]]`
@@ -50,11 +56,12 @@ Here's an example markdown
 Content of the main article
 ```
 
+> **Note on Editing in Live Preview**
+>
+> In previous version of Float Image, editing text next to it was quite janky. I've improved it a bit (for `float-right` at least). For `float-left` you may still find selecting and navigating the text (up and down) still not possible.
+>
+> To edit, it's better to navigate using keyboard (from the top or bottom) instead of mouse/trackpad. Even better, use Source Mode to edit.
 
-
-> Note that editing float in Live Preview will be a bit off (or "janky"), especially if you use `float-left` (`float-right` is less so). Navigate using keyboard instead of mouse/trackpad. Even better use Source Mode to edit.
-
-## Additional Notes
 
 ### External Images
 
