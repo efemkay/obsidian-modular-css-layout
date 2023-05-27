@@ -1,5 +1,7 @@
 /* === README ===
 	Snippet: MCL Gallery Cards / Author: Faiz Khuzaimah / twitter: @faizkhuzaimah / github: https://github.com/efemkay
+	Version 0.9.2 (updated 2023-05-27)
+	- fix div width for float image also affecting normal image embed
 	Version 0.9.0 (updated 2023-04-01)
 	- image float
 	- banner background
@@ -118,7 +120,7 @@
 		body[class*="notebook-liked-markdown-page"] .view-content .internal-embed.is-loaded img[alt*="right"]:not([class*="emoji"]) { margin: var(--float-right-margin) !important; }
 
 		/* Minimal. Uses body[class*="minimal-tab-title"] as identifier */
-		body[class*="minimal-tab-title"] .markdown-source-view.mod-cm6 .internal-embed.image-embed {width: auto; max-width: unset; margin-left: 0 !important;}
+		body[class*="minimal-tab-title"] .markdown-source-view.mod-cm6 .internal-embed.image-embed[alt*="float"] {width: auto; max-width: unset; margin-left: 0 !important;}
 
 		/* Duplicate from Multi Column, in case users don't enable that snippet (row 426-437) */
 		/* Special Adjustment for Minimal theme. Undo the theme flex layout by default. To apply per note basis */
