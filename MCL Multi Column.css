@@ -1,7 +1,8 @@
 /* === README ===
 	Snippet: MCL Multi Column / Author: Faiz Khuzaimah / twitter: @faizkhuzaimah / github: https://github.com/efemkay
-	Version 0.9.2 (updated 2023-04-21)
+	Version 0.9.2 (updated 2023-05-27)
 	- fix MC List Card mistakenly affect non List Card bullet list padding in same note
+	- fix obsidian default bullet "draw" not rendered properly in List Column (for the ones using tag and contextual typography plugin)
 	Version 0.9.1 (updated 2023-04-06)
 	- fix MC "fixed center" option not properly coded
 	- fix MC List Grid previous not support sublist
@@ -18,6 +19,13 @@
 	- fix issue with Breadcrumbs plugin and minimal-float where the plugin "banner" flushed to left
 	Version 0.8.0 (updated 2022-11-26)
 	- feature: `no-wrap` option for `[!multi-column]` using callout-metadata
+	Version 0.7.2 (updated 2022-11-24)
+	- fix margin-left for float `right`
+	- improved support for Minimal theme for live preview float-right when in normal width note
+	Version 0.7.0 (updated 2022-11-18)
+	- feature: list column, list grid and list card using tags (need Contextual Typography plugin)
+	- feature: float in live preview using float-right
+	- refine: [!blank] callout as alternative to [!blank-container]
 
 	What is this snippet for?
 	- to allow Obsidian users to change the layout with preset css by just specifying
@@ -586,9 +594,6 @@ body{
 	/* Special adjustment for footnotes applied with -colum-list-block -- obsidian creates a <br> tag at the last <li> */
 	.footnotes [class$="-column-list-block"] li:last-of-type br:last-of-type {display: none;}
 
-	/* Special adjustment for misaligned bullets (this is a hack, need to find better solution later) */
-	ul[class*="column-list"] li > .list-bullet::after { position: relative; }
-	.markdown-preview-view[class*="column-list"] li > .list-bullet::after { position: relative; }
 
 
 /* ========================================================================== */
@@ -621,6 +626,14 @@ body{
 		{ column-rule: var(--col-rule-width) solid var(--col-rule-color); }
 	div:has(> ul > li > [href*="#mcl/list-column"])
 		{ margin-top: 1em; }
+
+	/* Adjustment for misaligned bullets (this is a hack, need to find better solution later) */
+	ul:has([href="#mcl/list-column"]) li > .list-bullet::after, /* :has() */
+	.markdown-preview-view[class*="column-list"] li > .list-bullet::after, /* yaml cssclass */
+	.tag-mcllist-column ul li > .list-bullet::after, /* contextual typography */
+	ul[class*="column-list"] li > .list-bullet::after /* markdown attributes */
+		{ position: relative; }
+
 
 	/* -- Special Adjustment for Plugins */
 
