@@ -14,9 +14,12 @@ I mainly do casual test on select popular themes like ITS, Primary, Shimmering F
 - [Gallery Cards](#gallery-cards)
 - [Support Me](#support-me)
 
+
+
 ## Installation / Download and Enable
 
 This is actually just a CSS code snippets collection. So it isn't an installation per se, but rather download and enable in Obsidian. The best way is to use Mara Li's [Snippet Downloader](https://github.com/Mara-Li/obsidian-snippet-downloader) plugin as I have plans to update this snippets from time to time
+
 
 
 ## Wide Views
@@ -53,70 +56,123 @@ cssClass: wide-page
 <img src="https://user-images.githubusercontent.com/42369515/163697717-911d36b3-f505-49c2-803b-775f1d7fae9a.png" height="350px">
 
 
+
 ## Multi Column
 > CSS snippet: `MCL Multi Column.css`
-
+>
 > This section only briefly explains Multi Column snippet. Please go through the documentation site [Multi Column - Modular CSS Layout](https://efemkay.github.io/obsidian-modular-css-layout/multi-column/) for more details.
 
-
 This snippet provides you the following features:
+- Multi Column layout using Callout i.e. `> [!multi-column]`
+- List Column/Grid/Card layout using (Unordered) list by either (a) using tag, (b) using Markdown Attributes plugin, or (c) specifying in the frontmatter (YAML)
+- Float (Aside) Callout using callout metadata e.g. `> [!info|right-medium]`
 
+### Multi Column Callout
 
-- Multi column layout using Callout
-	- `> [!multi-column]`
-	- `> [!blank-container]`
-- Multi column layout using (Unordered) List
-    - it can be done via custom `cssClass` at the frontmatter
-        - `two-column-list`
-        - `three-column-list`
-        - `two-column-grid-list`
-        - `three-column-grid-list`
-    - it can also be done at block level (inside your note)
-        - `multi-column-list-block` -- require Markdown Attributes plugin
-- Multi column layout using (Unordered) List AND tag (instead of css classes)
-	- `#mcl/list-column`
-	- `#mcl/list-grid`
-	- `#mcl/list-card`
-- Side / Floating Column using Callout
-    - `> [!<anycallout>|<left|right>-<small|medium|large>]`
-    - `> [!blank-container||<left|right>-<small|medium|large>]`
+Multi Column Callout layout take advantage of Obsidian Callout - leveraging it as parent ‘div’ to house the sub callout (including Dataview results block). You can nest as many sub-callouts within it. The sub-callout will expand if [!multi-column] callout has extra space or overflow to next row if it doesn’t.
 
+![](https://raw.githubusercontent.com/efemkay/obsidian-modular-css-layout/main/docs/assets/hero-mc-callout.png)
 
-#### Example Multi Column using Callout
-```markdown
-> [!multi-column]
->
->> [!note]+ Work
->> your notes or lists here. using markdown formatting
->
->> [!warning]+ Personal
->> your notes or lists here. using markdown formatting
->
->> [!summary]+ Charity
->> your notes or lists here. using markdown formatting
+#### Example of Multi Column Callout
+> *Example below is for the three callouts side-by-side in the picture above*
 
-```
+	> [!multi-column]
+	>
+	>> [!note]+ Use Case
+	>> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+	>> ##### User Case Background
+	>> Vitae nunc sed velit dignissim sodales. In cursus turpis massa tincidunt dui ut ornare lectus.
+	>
+	>> [!warning]+ Resources
+	>> #### Requirement
+	>> - Lorem ipsum dolor sit amet
+	>> - Vitae nunc sed velit dignissim sodales.
+	>> - In cursus turpis massa tincidunt dui ut ornare lectus.
+	>
+	>> [!todo]+
+	>> - [x] Define Use Case
+	>> - [ ] Craft User Story
+	>> - [ ] Develop draft sketches
+
 
 > note that when you insert callout within callout, the line separating the callouts should only use single angle bracket (">")
 
-<img src="https://user-images.githubusercontent.com/42369515/163700561-c8d62aa3-0ac8-488c-a80e-8bfb3b539ca8.png" height="350px" >
 
-#### Example Multi Column using List
-<img src="https://user-images.githubusercontent.com/42369515/163700640-245e4275-f329-4cb2-9138-07cb276354cc.png" height="350px">
+### List Column/Grid/Card
+This layout take advantage of markdown unordered list (i.e. `- list item`) to create multi column (and multi row for List Grid/Card) layout by matching with an identifier i.e. either `#mcl` tag, Markdown Attributes plugin syntax, or `cssclass:` key at frontmatter.
+
+![](https://raw.githubusercontent.com/efemkay/obsidian-modular-css-layout/main/docs/assets/hero-mc-list-column-grid-card.png)
+
+Here are quick reference on the syntax for List Column/Grid/Card
+
+| Type | Using Tag | MD Attr plugin | Frontmatter |
+|---|---|---|---|
+| LCol |`#mcl/list-column`|`two-column-list-block` <br/> `three-column-list-block` <br/> `four-column-list-block` <br/> `multi-column-list-block`|`two-column-list` <br/> `three-column-list` <br/> `four-column-list` <br/> `multi-column-list`|
+| LGrd |`#mcl/list-grid` <br/> `#mcl/list-grid-wide`|-|`two-column-grid-list` <br/> `three-column-grid-list`|
+| LCrd |`#mcl/list-card` <br/> `#mcl/list-card-wide`|-|-|
+
+> Note: LCol = List Column // LGrd = List Grid // LCrd = List Card
+
+
+#### Example of List Grid
+*Example below is for the "Goals and Objectives" in the picture above*
+
+```markdown
+## List Grid Example - Goals and Objectives
+
+- #### Core Work #mcl/list-grid
+    - [[00 Home|Main Goal 1]]
+    - [[00 Home|Main Goal 2]]
+    - [[00 Home|Main Goal 3]]
+        - Collaboration with Jane
+    - [[00 Home|Main Goal 4]]
+- #### Learning & System
+    - [[00 Home|Learning Goal 1]]
+    - [[00 Home|Initiative 1]]
+    - [[00 Home|Initiative 2]]
+- #### Personal
+    - [[00 Home|Personal Goal 1]]
+    - [[00 Home|Personal Goal 2]]
+```
+
+
+### Float Callout
+
+Float Callout will allow you to position side note or info box either to the left or right of the main note with other content wrapping around it. It uses callout-metadata to specify which side to float to and the size of the callout
+
+You can apply to any callout as the identifier is done on the callout-metadata i.e. after the `|` in `[!<callout-type>|<callout-metadata>]`. Table below gives some understanding of the syntax structure.
+
+|Apply in LP? | Which Side? | Preset FC Size | Example |
+|---|---|---|---|
+|`<empty>` <br/> `float`|`left`<br/>`right`|`small` <br/> `medium` <br/> `large`| `[!info\|float-right-medium]` <br/> `[!blank\|right-small]`|
+
 
 
 ## Gallery Cards
 > CSS snippet: `MCL Gallery Cards.css`
-
+>
 > This section only briefly explains Gallery Cards snippet. Please go through the documentation site [Gallery Cards - Modular CSS Layout](https://efemkay.github.io/obsidian-modular-css-layout/gallery-cards/) for more details.
 
 This snippet provides you the following features:
 - Image gallery using callout by specifying the callout-metadata `gallery` e.g. `> [!NOTE|gallery]`
 - Image gallery using YAML/frontmatter .`cssClass: image-gallery`
+- Float Image using image alt-text
 - Image and Mermaid Diagram Controls
 	- Dimension control for images in bullet list
 	- Image Zoom
 	- Mermaid Scale and Zoom
+
+### Float Image
+Float Image is similar to Float Callout but apply directly to the images (doesn’t require you to wrap it in a callout). Currently it uses image caption to identify how you want to float it, but in the future I intend to make it work with anchor tag `#` as well.
+
+![](https://raw.githubusercontent.com/efemkay/obsidian-modular-css-layout/main/docs/assets/hero-gc-float-image.png)
+
+You can apply to any image as the identifier is done on the alt-text i.e. after the `|` in `[[path/to/image.jpg|alt-text]]` or the text inside `[]` in `[alt-text](path/to/image.jpg)`. Table below gives some understanding of the syntax structure.
+
+|Apply in LP? | Which Side? | Preset FC Size | Example |
+|---|---|---|---|
+|`<empty>` <br/> `float`|`left`<br/>`right`|`small` <br/> `medium` <br/> `large`| `[[image.jpg\|float-right-medium]]` <br/> `[right-small](image.jpg)`|
+
 
 
 ## Support Me
