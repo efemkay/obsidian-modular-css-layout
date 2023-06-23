@@ -3,20 +3,34 @@ title: Image Gallery
 parent: Gallery Cards
 nav_order: 2
 ---
-
 # Image Gallery
+
 {: .no_toc }
 
 ## Table of Contents
+
 {: .no_toc .text-delta }
 
 1. TOC
-{:toc}
+   {:toc}
 
----
 
-## Image Gallery Using Callout
-- Transcluded/embedded images will be stacked side by side. Add empty lines in between the images to create new row
+## Overview
+
+Image Gallery layout will allow you to create masonry like image gallery layout by placing image embed (i.e. `![[path/to/image.jpg]]`) in successive row of line. There are 2 different ways you can do so i.e.
+
+1. Using Obsidian Callout (by specifying the callout metadata `gallery`)
+2. Using frontmatter (by specifying `cssclass: image-gallery`)
+
+{: .warning}
+> **Markdown image embed (i.e. `![](path/to/image.jpg)`) not supported**
+>
+> Due to how Obsidian renders markdown image embed, I currently cannot implement Image Gallery using such syntax. So for this part, always use wikilink embed (i.e. `![[path/to/image.jpg]]`)
+
+### How to Use -- with Callout
+
+- Insert callout (it will work with any callout) and enter `gallery` in the callout metadata. E.g.  `> [!info|gallery]`
+- Insert transcluded/embedded images. Add empty lines in between the images to create new row. Images "grouped" between empty lines will be stacked side by side
 
 ```markdown
 > [!blank-container|no-margin gallery] Title
@@ -31,14 +45,14 @@ nav_order: 2
 ```
 
 #### Example
+
 ![](https://raw.githubusercontent.com/efemkay/obsidian-modular-css-layout/main/docs/assets/gallery-callout-langkawi.png)
 
----
 
-## Image Gallery Using YAML `cssClass: image-gallery`
+### How to Use -- with Frontmatter `cssClass: image-gallery`
+
 - Specify the following frontmatter at the very top of your markdown notes
 - Similar to using callout, transcluded/embedded images will be stacked side by side. Add empty lines in between the images to create new row
-
 
 ```markdown
 ---
@@ -55,14 +69,15 @@ cssClass: image-gallery
 ```
 
 #### Example
+
 ![](https://raw.githubusercontent.com/efemkay/obsidian-modular-css-layout/main/docs/assets/gallery-cssclass-langkawi.png)
 
----
 
 ## Credits
+
 - Pictures in Gallery example are from Unsplash
-	- [@ryaneof](https://unsplash.com/photos/Jh_Xk8RQtG0)
-	- [@manish_tulaskar](https://unsplash.com/photos/o0TRwfgXhdw)
-	- [@izuddinhelmi](https://unsplash.com/photos/dIArrAUjQV0)
-	- [@jaysithutun](https://unsplash.com/photos/0dF2fJjTHCw)
-	- [@ramzigraphy](https://unsplash.com/photos/WeiERYmWIT4)
+  - [@ryaneof](https://unsplash.com/photos/Jh_Xk8RQtG0)
+  - [@manish_tulaskar](https://unsplash.com/photos/o0TRwfgXhdw)
+  - [@izuddinhelmi](https://unsplash.com/photos/dIArrAUjQV0)
+  - [@jaysithutun](https://unsplash.com/photos/0dF2fJjTHCw)
+  - [@ramzigraphy](https://unsplash.com/photos/WeiERYmWIT4)
