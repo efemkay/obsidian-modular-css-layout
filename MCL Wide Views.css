@@ -1,5 +1,8 @@
 /* === README ===
 	Snippet: MCL Wide Views / Author: Faiz Khuzaimah / twitter: @faizkhuzaimah / github: https://github.com/efemkay
+	Version 0.9.4 (updated 2023-07-05)
+	- fixed wide-backlinks not working since Obsidian V1
+	- improved support for Minimal V7
 	Version 0.6.3 (updated 2022-11-18)
 	- compatibility update to Minimal theme v6.1.9 especially multi column admonition and wide-page
 	Version 0.6.2 (updated 2022-10-22)
@@ -125,7 +128,7 @@ body{
 		- .cm-contentContainer, .cm-contentContainer > .cm-content, .cm-contentContainer > .cm-content > div
 		- .embedded-backlinks, .embedded-backlinks > div */
 	:is(body[class*="wide-"]:not(.max-view-enabled), div[class*="wide-"].markdown-source-view.mod-cm6) :is(.cm-contentContainer.cm-contentContainer, .cm-contentContainer.cm-contentContainer > .cm-content, .cm-contentContainer.cm-contentContainer > .cm-content > div, .embedded-backlinks, .embedded-backlinks > div)
-		{ max-width: 100%; width: 98%;}
+		{ max-width: 99%; width: auto;}
 
 	/* Special adjustment - for Minimal
 		- it has table also set with max-width. but table require separate line because we don't want width: 100% as that would stretch the table
@@ -186,16 +189,21 @@ body{
 	:is(body[class*="wide-"]:not(.max-view-enabled) .mod-root .markdown-source-view.mod-cm6:not(.wide-page), div.markdown-source-view.mod-cm6:is(.wide-dataview,.wide-table,.wide-backlinks,.wide-callout)) .cm-sizer > .inline-title
 		{ max-width: var(--normal-max-width); width: 100%; margin-inline: auto; }
 	/* set normal width to `.cm-content > div` and `.embedded-links` only (override the WPEV) */
-	:is(body[class*="wide-"]:not(.max-view-enabled) .markdown-source-view.mod-cm6:not(.wide-page), div[class*="wide-"].markdown-source-view.mod-cm6:not(.wide-page)) :is(.cm-contentContainer.cm-contentContainer > .cm-content > div, .cm-sizer > .embedded-backlinks)
+	:is(body[class*="wide-"]:not(.max-view-enabled) .markdown-source-view.mod-cm6:not(.wide-page),
+	div[class*="wide-"].markdown-source-view.mod-cm6:not(.wide-page)) :is(.cm-contentContainer.cm-contentContainer > .cm-content > div, .cm-sizer > .embedded-backlinks)
 		{ max-width: var(--normal-max-width); margin-inline: auto !important; } /* important for margin needed because app.css:1473 use it for .cm-contentContainer > .cm-content > * */
+
+	div[class*="wide-"].markdown-source-view.mod-cm6:not(.wide-backlinks) .cm-sizer > .embedded-backlinks { width: var(--normal-max-width) !important; }
+
+
 
 	/* selectors to set dataview, table, callout and/or backlinks to wide */
 	:is(body.wide-dataview-global:not(.max-view-enabled) .mod-root .markdown-source-view.mod-cm6, div[class*="-dataview"].markdown-source-view.mod-cm6) .cm-contentContainer.cm-contentContainer > div > div:is(.cm-preview-code-block),
 	:is(body.wide-table-global:not(.max-view-enabled) .mod-root .markdown-source-view.mod-cm6, div[class*="-table"].markdown-source-view.mod-cm6) .cm-contentContainer.cm-contentContainer > div > div:is(.HyperMD-table-row, .cm-table-widget),
 	:is(body.wide-callout-global:not(.max-view-enabled) .mod-root .markdown-source-view.mod-cm6, div[class*="-callout"].markdown-source-view.mod-cm6) .cm-contentContainer.cm-contentContainer > div > div:is(.cm-callout),
 	/* selectors to set backlinks to wide -- not fix yet for 0.16.x */
-	:is(body.wide-backlinks-global:not(.max-view-enabled) .mod-root .markdown-source-view.mod-cm6, div[class*="-backlinks"].markdown-source-view.mod-cm6) .cm-sizer > div:is(.embedded-backlinks)
-		{ max-width: 100%; }
+	:is(body.wide-backlinks-global:not(.max-view-enabled) .mod-root .markdown-source-view.mod-cm6, div[class*="-backlinks"].markdown-source-view.mod-cm6):not(.wide-page) .cm-sizer > div:is(.embedded-backlinks)
+		{ max-width: 100%; margin-inline: 0 !important; }
 
 
 	/* Special adjustment - for Minimal */
@@ -225,10 +233,10 @@ body{
 	:is(body.wide-dataview-global, div[class*="-dataview"].markdown-preview-view) .markdown-preview-sizer.markdown-preview-sizer > div:is(.el-lang-dataview),
 	:is(body.wide-table-global, div[class*="-table"].markdown-preview-view) .markdown-preview-sizer.markdown-preview-sizer > div:is(.el-table),
 	:is(body.wide-callout-global, div[class*="-callout"].markdown-preview-view) .markdown-preview-sizer.markdown-preview-sizer > div[data-callout],
-	/* comment out wide backlinks as no possible fix (yet) for 0.16.x due to notes above *//*
-	:is(body.wide-backlinks-global, div[class*="-backlinks"].markdown-preview-view) .markdown-preview-sizer.markdown-preview-sizer > div:is(.embedded-backlinks)
+
+	:is(body.wide-backlinks-global, div[class*="-backlinks"].markdown-preview-view) .markdown-preview-sizer.markdown-preview-sizer > div.mod-footer:has(div.embedded-backlinks)
 		{ max-width: 100%; }
-	*/
+
 
 	/* Special adjustment - for Minimal - it also somehow set the table width within dataview block */
 	:is(body.wide-dataview-global, div[class*="-dataview"].markdown-preview-view) .markdown-preview-sizer.markdown-preview-sizer > div:is(.el-lang-dataview) table

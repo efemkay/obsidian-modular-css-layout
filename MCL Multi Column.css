@@ -1,5 +1,8 @@
 /* === README ===
 	Snippet: MCL Multi Column / Author: Faiz Khuzaimah / twitter: @faizkhuzaimah / github: https://github.com/efemkay
+	Version 0.9.4 (draft updated 2023-07-02)
+	- improved MC Callout compatibility with Minimal theme V7.0
+	- improved MC Callout compatibility with Blue Topaz
 	Version 0.9.3 (updated 2023-06-24)
 	- add support for List Column for li that's also a header
 	- fixes on column ruler to apply properly only for List Column on first ul only
@@ -139,6 +142,11 @@ body{
 		/* No-Wrap Option (using callout-metadata) - for single row with horizontal scrollbar */
 		div[data-callout="multi-column"][data-callout-metadata*="no-wrap"].callout {flex-wrap: nowrap; overflow-x: scroll;}
 		div[data-callout="multi-column"][data-callout-metadata*="no-wrap"].callout > .callout-content > *:is(div,ul) { flex-shrink: 0; flex-basis: var(--callout-nowrap-min-width) }
+		/* No-Wrap Option, Width Options */
+		.callout[data-callout="multi-column"][data-callout-metadata*="no-wrap"] .callout[data-callout-metadata*="small"] { flex-basis: 300px; }
+		.callout[data-callout="multi-column"][data-callout-metadata*="no-wrap"] .callout[data-callout-metadata*="medium"] { flex-basis: 400px; }
+		.callout[data-callout="multi-column"][data-callout-metadata*="no-wrap"] .callout[data-callout-metadata*="large"] { flex-basis: 600px; }
+
 
 		/* Align center for items in callout */
 		div[data-callout="multi-column"] .callout[data-callout-metadata*="center"] { text-align: center; }
@@ -149,6 +157,9 @@ body{
 		 /* Special Adjustment -- for theme with negative margin & box shadow. (e.g. Prism) */
 		div[data-callout="multi-column"].callout > .callout-content { margin-top: unset;}
 		div[data-callout="multi-column"].callout:not(.is-collapsed) { box-shadow: unset;}
+
+		/* Blue Topaz. remove box shadow from main [!multi-column] */
+		body[class*="notebook-liked-markdown-page"].shade-callout-style .callout[data-callout="multi-column"] { box-shadow: unset !important; }
 
 		/* Special Adjustment -- for Sanctum because it has "column" callout, Obsidian v0.16.x. Not required for multi-flex as it Sanctum expects the name ends with *=column */
 		.callout[data-callout*=column] .callout-title { display: flex; }
@@ -256,9 +267,14 @@ body{
 
 		[data-callout-metadata*="float-right"].cm-embed-block.cm-callout {width: auto !important;}
 
+		/* remove margin from first para in the float callout */
+		.callout:is(div[data-callout-metadata*="left"],div[data-callout-metadata*="right"]) .callout-content > :is(p:first-child,ul:first-child,ol:first-child) {margin-top: 0;}
+
 		/* Adjustable Gap */
 		/* 26Mar2023 only top for now, to work on left-right later */
-		.markdown-source-view.mod-cm6 .callout:is(div[data-callout-metadata*="right"]) { margin-top: calc(1em * var(--line-height-normal) + var(--float-callout-top-margin)); }
+		.markdown-source-view.mod-cm6 .callout:is(div[data-callout-metadata*="left"]),
+		.markdown-source-view.mod-cm6 .callout:is(div[data-callout-metadata*="right"])
+			{ margin-top: calc(1em * var(--line-height-normal) + var(--float-callout-top-margin)); }
 	}
 
 	/* -- FC Size Options -- */
@@ -296,22 +312,34 @@ body{
 
 	/* -- Special Adjustment for Themes -- */
 
+
+		/* Minimal. Minimal Float. (duplicate from Multi Column. Redid "minimal-float" for Minimal V7.0 */
+		/* undo the Minimal "cm-line" sizing */
+		:is(body[class*="minimal-tab-title"] .markdown-source-view.mod-cm6.is-readable-line-width, .minimal-float.markdown-source-view.mod-cm6) .cm-contentContainer.cm-contentContainer>.cm-content>div,
+		:is(body[class*="minimal-tab-title"] .markdown-source-view.mod-cm6.is-readable-line-width, .minimal-float.markdown-source-view.mod-cm6) .cm-sizer>.embedded-backlinks,
+		:is(body[class*="minimal-tab-title"] .markdown-source-view.mod-cm6.is-readable-line-width, .minimal-float.markdown-source-view.mod-cm6) .cm-sizer>.inline-title
+			{ max-width: none; width: auto; }
+		/* Re-set the default "cm-sizer" width but respect Minimal Settings */
+		:is(body[class*="minimal-tab-title"] .markdown-source-view.mod-cm6.is-readable-line-width, .minimal-float.markdown-source-view.mod-cm6) .cm-sizer { max-width: var(--max-width); width: var(--line-width); }
+
+		/* to be deleted by 30 Sep 2023 */
 		/* Minimal - Undo the theme flex layout by default. To apply per note basis */
-			body[class*="minimal-tab-title"].contextual-typography .minimal-float.markdown-preview-view.markdown-preview-view .markdown-preview-sizer { display: unset; }
+			/* body[class*="minimal-tab-title"].contextual-typography .minimal-float.markdown-preview-view.markdown-preview-view .markdown-preview-sizer { display: unset; } */
 		/* Minimal - Live Preview float support. Need to revert cm-content width to default theme but cm-embed to auto */
-			body[class*="minimal-tab-title"] .minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6.is-readable-line-width .cm-contentContainer { width: calc(var(--line-width-adaptive) - var(--folding-offset)); max-width: calc(var(--max-width) - var(--folding-offset)); margin-right: auto; margin-left: max(calc(50% + var(--folding-offset) - var(--line-width-adaptive)/ 2), calc(50% + var(--folding-offset) - var(--max-width)/ 2)) !important; }
-			.minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6.is-readable-line-width .cm-line { width: auto; max-width: 100%; margin-left: 0 !important; }
-			/*body[class*="minimal-tab-title"] .minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6.is-readable-line-width .cm-embed-block.cm-callout> :is(.callout[data-callout-metadata*="left"], .callout[data-callout-metadata*="right"]) { max-width: none; margin-left: 0 !important;} */
-			body[class*="minimal-tab-title"] .minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6 .cm-embed-block.cm-callout > .callout { width: auto; }
+			/* body[class*="minimal-tab-title"] .minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6.is-readable-line-width .cm-contentContainer { width: calc(var(--line-width-adaptive) - var(--folding-offset)); max-width: calc(var(--max-width) - var(--folding-offset)); margin-right: auto; margin-left: max(calc(50% + var(--folding-offset) - var(--line-width-adaptive)/ 2), calc(50% + var(--folding-offset) - var(--max-width)/ 2)) !important; } */
+			/* .minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6.is-readable-line-width .cm-line { width: auto; max-width: 100%; margin-left: 0 !important; } */
+			/* body[class*="minimal-tab-title"] .minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6.is-readable-line-width .cm-embed-block.cm-callout> :is(.callout[data-callout-metadata*="left"], .callout[data-callout-metadata*="right"]) { max-width: none; margin-left: 0 !important;} */
+			/* body[class*="minimal-tab-title"] .minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6 .cm-embed-block.cm-callout > .callout { width: auto; } */
 		/* Minimal - Live Preview float support. Undo margin-left for Image */
-			.minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6 .cm-embed-block.cm-callout :is(.callout[data-callout-metadata*="left"], .callout[data-callout-metadata*="right"]) .internal-embed.image-embed { margin-left: auto !important; }
+			/* .minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6 .cm-embed-block.cm-callout :is(.callout[data-callout-metadata*="left"], .callout[data-callout-metadata*="right"]) .internal-embed.image-embed { margin-left: auto !important; } */
 
 			/* fix to support Breadcrumbs plugin. Sub to the above LP float fix for Minimal */
 			body[class*="minimal-tab-title"].contextual-typography .minimal-float.markdown-preview-view.markdown-preview-view .BC-trail.markdown-preview-sizer { display: flex; }
 
 
-		/* Minimal - Gaps/Margin adjustment */
-		body[class*="minimal-tab-title"] .minimal-float.wide-page div[data-callout*="blank"].cm-callout:is(div[data-callout-metadata*="left"]) { margin-left: 20px !important; }
+		/* Minimal - Gaps/Margin adjustment. to be removed by 31 Aug 2023 */
+		/* body[class*="minimal-tab-title"] .minimal-float.wide-page div[data-callout*="blank"].cm-callout:is(div[data-callout-metadata*="left"]) { margin-left: 20px !important; } */
+
 
 		/* Minimal - Size Option fix due to !important */
 		/* Minimal. Uses body[class*="minimal-tab-title"] as identifier. To override (have higher specificity) the width param. Can be merged to main code later on */

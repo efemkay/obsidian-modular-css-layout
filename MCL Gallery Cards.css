@@ -1,5 +1,9 @@
 /* === README ===
 	Snippet: MCL Gallery Cards / Author: Faiz Khuzaimah / twitter: @faizkhuzaimah / github: https://github.com/efemkay
+	Version 0.9.4 (draft 2023-07-02)
+	- improve Float Image for editing text in Editing View
+	- fix for Float Image for Minimal (and respect width settings). No longer require cssClass "minimal-float" but require Style Settings
+	- improve Image Gallery especially for use in Live Preview without callout
 	Version 0.9.2 (updated 2023-05-27)
 	- fix div width for float image also affecting normal image embed
 	Version 0.9.0 (updated 2023-04-01)
@@ -45,34 +49,39 @@
 
 	/* Editing and Reading View - Gallery using <p> and Callout. Using <p> (in Reading View) to contain and format as gallery view using metadata="gallery" to contain and format as gallery view */
 		/* Create display: flex and key adjustment on margin and gap */
-		.image-gallery div[data-embed-type="image"] > p,
+		.image-gallery div:has(> p .image-embed) > p,
 		div[data-callout-metadata*="gallery"].callout > .callout-content > p
 			{ display: flex; gap: var(--callout-gallery-gap); margin-top: calc( var(--callout-gallery-gap) ); margin-bottom: 0; }
-		.image-gallery div[data-embed-type="image"].el-embed-image.el-p { margin-top: var(--callout-gallery-gap); }
+		.image-gallery div:has(> p .image-embed) { margin-top: var(--callout-gallery-gap); }
 		div[data-callout-metadata*="gallery"].callout > .callout-content { --callout-content-padding: 0.5rem 0 0 0; }
 		/* Introduce subtle border and make the gallery as object-fit: cover */
-		.image-gallery div[data-embed-type="image"] > p img,
+		.image-gallery div:has(> p .image-embed) > p img,
 		div[data-callout-metadata*="gallery"].callout > .callout-content > p img
 			{ max-height: var(--img-max-height); border: 1px solid var(--background-modifier-border); object-fit: cover; display: block;}
 		/* display: block for img is important to control the hidden margin-bottom but for Minimal, it uses display: flex for top level divs which pose another "margin" issues no plan to solve yet as this is not critical */
 
-		/* Editing View - as alternate to <p> in Reading View since there's no natural container in Editing View using <p> */
-		.image-gallery div:not(.cm-callout):not(.HyperMD-list-line).image-embed img
-			{ max-height: calc(var(--img-max-height)/1.5); display: unset; object-fit: cover; margin-right: var(--callout-gallery-gap); }
-		/* previously i have max-width: 50% */
+		/* Hack to emulate Reading View masonry in Editing View (for use without callout) - there's no <p> tag to be container but we can hack to use .cm-line with the help of :has() */
+		.image-gallery div.cm-line:has(> .image-embed:not(.cm-callout)):not(.HyperMD-list-line):not(.cm-active) { display: flex; gap: var(--callout-gallery-gap); }
+		.image-gallery div.cm-line:has(> .image-embed:not(.cm-callout)):not(.HyperMD-list-line):not(.cm-active) > :is(img,span) { display: none !important; }
+		.image-gallery div:not(.cm-callout):not(.HyperMD-list-line).image-embed img { max-height: calc(var(--img-max-height)/1); display: unset; object-fit: cover; }
 
-	/* Special Adjustment for Shimmering Focus. Reading View. Overriding max-width */
+
+	/* -- Adjustment for Themes -- */
+
+		/* Special Adjustment for Shimmering Focus. Reading View. Overriding max-width */
 		body:not(.is-mobile) .app-container.app-container .image-gallery p img[src],
 		body:not(.is-mobile) .app-container.app-container div[data-callout-metadata*="gallery"].callout img[src]
 			{ max-width: 100%; width: unset; margin-block: unset;}
 
-	/* Special Adjustment for Minimal theme. Left margin. Editing Live Preview. */
-	.markdown-source-view.mod-cm6 div[data-callout-metadata*="gallery"] .internal-embed.image-embed
-		{ margin-left: 0 !important; width: unset;}
-	/* Special Adjustment for Minimal theme. Override width: 100% */
-		.full-width-media .image-gallery .image-embed img:not(.emoji):not([width]) { width: unset; }
+		/* Minimal. Editing View. Left margin. */
+		.markdown-source-view.mod-cm6 div[data-callout-metadata*="gallery"] .internal-embed.image-embed { margin-left: 0 !important; width: unset;}
 
-	/* Special Adjustment - for SNW plugin */
+		/* Minimal. Editing View. Revert img max width */
+		body[class*="minimal-tab-title"] .markdown-source-view.mod-cm6.is-readable-line-width .cm-contentContainer.cm-contentContainer>.cm-content>div:has(.image-embed) img { max-width: 100%; }
+
+	/* -- Adjustment for Plugins -- */
+
+		/* Special Adjustment - for SNW plugin */
 		.image-gallery div[data-embed-type="image"] > p .snw-embed-preview,
 		.image-gallery .internal-embed.image-embed ~ .snw-reference.snw-embed,
 		div[data-callout-metadata*="gallery"].callout > .callout-content > p .snw-embed-preview
@@ -103,38 +112,61 @@
 	}
 
 	/* float in both Live Preview and Reading View */
-	img[alt*="left"], .internal-embed.image-embed[alt*="float-left"] {float: left }
-	img[alt*="right"], .internal-embed.image-embed[alt*="float-right"] {float: right; }
-	img[alt*="left"] { margin: var(--float-left-margin); }
-	img[alt*="right"] { margin: var(--float-right-margin); }
+	img[alt*="left"] { float: left; margin: var(--float-left-margin); }
+	img[alt*="right"] { float: right; margin: var(--float-right-margin); }
+	/* disable box control for parent div to the float */
+	.internal-embed.image-embed[alt*="float-left"],
+	.internal-embed.image-embed[alt*="float-right"]
+		{display: contents; }
 
-	div.no-float {clear: both; display: inline-grid; height: 10px; width: 100%; background-color: blue;}
+	/* provide a float "escape" by allowing user to to add <div class="no-float"></div> */
+	div.no-float {clear: both; display: inline-grid; height: 1px; width: 100%; background-color: var(--background-secondary);}
 
-	/* Special Adjustment for SNW plugin */
-	.internal-embed.image-embed:is([alt="left"],[alt*="|left"],[alt*="left|"],[alt*="float-left"],[alt="right"],[alt*="|right"],[alt*="right|"],[alt*="float-right"]) + .snw-reference.snw-embed { display: var(--float-snw-display); }
-	.internal-embed.image-embed:is([alt="left"],[alt*="|left"],[alt*="left|"],[alt*="float-left"],[alt="right"],[alt*="|right"],[alt*="right|"],[alt*="float-right"]) + .snw-reference.snw-embed + br { display: none;}
+	/* remove the br between image and paragraph in Reading View */
+	p > :is(.image-embed[alt*="left"],.image-embed[alt*="right"]) + br {display: none;}
 
-	/* Special Adjustment for Themes */
+
+	/* -- Adjustment for Plugins */
+
+		/* Breadcrumbs with Minimal. Fix to support plugin */
+		body[class*="minimal-tab-title"].contextual-typography .minimal-float.markdown-preview-view.markdown-preview-view .BC-trail.markdown-preview-sizer { display: flex; }
+
+		/* SNW plugin */
+		.internal-embed.image-embed:is([alt="left"],[alt*="|left"],[alt*="left|"],[alt*="float-left"],[alt="right"],[alt*="|right"],[alt*="right|"],[alt*="float-right"]) + .snw-reference.snw-embed { display: var(--float-snw-display); }
+		.internal-embed.image-embed:is([alt="left"],[alt*="|left"],[alt*="left|"],[alt*="float-left"],[alt="right"],[alt*="|right"],[alt*="right|"],[alt*="float-right"]) + .snw-reference.snw-embed + br { display: none;}
+
+
+	/* -- Adjustment for Themes -- */
+
 		/* Blue Topaz. uses body[class*="notebook-liked-markdown-page"] as identifier */
 		body[class*="notebook-liked-markdown-page"] .view-content .internal-embed.is-loaded img[alt*="left"]:not([class*="emoji"]) { margin: var(--float-left-margin) !important; }
 		body[class*="notebook-liked-markdown-page"] .view-content .internal-embed.is-loaded img[alt*="right"]:not([class*="emoji"]) { margin: var(--float-right-margin) !important; }
 
 		/* Minimal. Uses body[class*="minimal-tab-title"] as identifier */
-		body[class*="minimal-tab-title"] .markdown-source-view.mod-cm6 .internal-embed.image-embed[alt*="float"] {width: auto; max-width: unset; margin-left: 0 !important;}
+		body[class*="minimal-tab-title"] .markdown-source-view.mod-cm6 .internal-embed.image-embed[alt*="float"] {width: auto !important; max-width: unset; margin-left: 0 !important;}
 
+		/* Minimal Float (duplicate from Multi Column. Redid "minimal-float" for Minimal V7.0 */
+		/* undo the Minimal "cm-line" sizing */
+		:is(body[class*="minimal-tab-title"] .markdown-source-view.mod-cm6.is-readable-line-width, .minimal-float.markdown-source-view.mod-cm6) .cm-contentContainer.cm-contentContainer>.cm-content>div,
+		:is(body[class*="minimal-tab-title"] .markdown-source-view.mod-cm6.is-readable-line-width, .minimal-float.markdown-source-view.mod-cm6) .cm-sizer>.embedded-backlinks,
+		:is(body[class*="minimal-tab-title"] .markdown-source-view.mod-cm6.is-readable-line-width, .minimal-float.markdown-source-view.mod-cm6) .cm-sizer>.inline-title
+			{ max-width: none; width: auto; }
+		/* Re-set the default "cm-sizer" width but respect Minimal Settings */
+		:is(body[class*="minimal-tab-title"] .markdown-source-view.mod-cm6.is-readable-line-width, .minimal-float.markdown-source-view.mod-cm6) .cm-sizer { max-width: var(--max-width); width: var(--line-width); }
+
+
+		/* to be deleted by 30 Sep 2023 */
 		/* Duplicate from Multi Column, in case users don't enable that snippet (row 426-437) */
 		/* Special Adjustment for Minimal theme. Undo the theme flex layout by default. To apply per note basis */
-			.contextual-typography .minimal-float.markdown-preview-view.markdown-preview-view .markdown-preview-sizer { display: unset; }
+			/* .contextual-typography .minimal-float.markdown-preview-view.markdown-preview-view .markdown-preview-sizer { display: unset; } */
 		/* Special Adjustment for Minimal theme Live Preview float support. Need to revert cm-content width to default theme but cm-embed to auto */
-			body[class*="minimal-tab-title"] .minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6.is-readable-line-width .cm-contentContainer { width: calc(var(--line-width-adaptive) - var(--folding-offset)); max-width: calc(var(--max-width) - var(--folding-offset)); margin-right: auto; margin-left: max(calc(50% + var(--folding-offset) - var(--line-width-adaptive)/ 2), calc(50% + var(--folding-offset) - var(--max-width)/ 2))!important; }
-			.minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6.is-readable-line-width .cm-line { width: auto; max-width: 100%; margin-left: 0 !important; }
-			.minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6.is-readable-line-width .cm-embed-block.cm-callout> :is(.callout[data-callout-metadata*="left"], .callout[data-callout-metadata*="right"]) { max-width: 98%; }
-			.minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6 .cm-embed-block.cm-callout > .callout { width: auto; }
+			/* body[class*="minimal-tab-title"] .minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6.is-readable-line-width .cm-contentContainer { width: calc(var(--line-width-adaptive) - var(--folding-offset)); max-width: calc(var(--max-width) - var(--folding-offset)); margin-right: auto; margin-left: max(calc(50% + var(--folding-offset) - var(--line-width-adaptive)/ 2), calc(50% + var(--folding-offset) - var(--max-width)/ 2))!important; } */
+			/* .minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6.is-readable-line-width .cm-line { width: auto; max-width: 100%; margin-left: 0 !important; } */
+			/* .minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6.is-readable-line-width .cm-embed-block.cm-callout> :is(.callout[data-callout-metadata*="left"], .callout[data-callout-metadata*="right"]) { max-width: 98%; } */
+			/* .minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6 .cm-embed-block.cm-callout > .callout { width: auto; } */
 		/* Special Adjustment for Minimal theme Live Preview float support. Undo margin-left for Image */
-			.minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6 .cm-embed-block.cm-callout :is(.callout[data-callout-metadata*="left"], .callout[data-callout-metadata*="right"]) .internal-embed.image-embed { margin-left: auto !important; }
+			/* .minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6 .cm-embed-block.cm-callout :is(.callout[data-callout-metadata*="left"], .callout[data-callout-metadata*="right"]) .internal-embed.image-embed { margin-left: auto !important; } */
 
-			/* fix to support Breadcrumbs plugin */
-			body[class*="minimal-tab-title"].contextual-typography .minimal-float.markdown-preview-view.markdown-preview-view .BC-trail.markdown-preview-sizer { display: flex; }
 
 
 /* === Image Zoom === */
