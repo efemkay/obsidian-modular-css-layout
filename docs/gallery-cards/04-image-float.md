@@ -22,21 +22,19 @@ Float Image is similar to Float Callout but apply directly to the images (doesn'
 1. Add your image (either internal or external) as per normal
 2. Add `left` or `right` to the image caption (similar to markdown display text i.e. `|`) e.g. `![[image.jpg|right]]`
 
+> You can still specify image width per normal if you desire, just make sure the width is the last syntax before closing bracket `]]`, e.g. below
+>
+> `![[ryaneof-Jh_Xk8RQtG0-unsplash.jpg|right|300]]`
+
 Here's an example markdown
 
 ```markdown
 ### Main Article
 
-![[ryaneof-Jh_Xk8RQtG0-unsplash.jpg|right]]
+![[ryaneof-Jh_Xk8RQtG0-unsplash.jpg|right|350]]
 
 Content of the main article
 ```
-
-> You can still specify image width per normal if you desire, just make sure the width is the last syntax before closing bracket `]]`, e.g. below
->
-> `![[ryaneof-Jh_Xk8RQtG0-unsplash.jpg|right|300]]`
-
-
 
 
 
@@ -51,7 +49,7 @@ Here's an example markdown
 ```markdown
 ## Main Article
 
-![[ryaneof-Jh_Xk8RQtG0-unsplash.jpg|float-right]]
+![[ryaneof-Jh_Xk8RQtG0-unsplash.jpg|float-right|350]]
 
 Content of the main article
 ```

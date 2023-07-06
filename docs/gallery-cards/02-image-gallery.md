@@ -3,16 +3,17 @@ title: Image Gallery
 parent: Gallery Cards
 nav_order: 2
 ---
-# Image Gallery
 
+# Image Gallery
 {: .no_toc }
 
-## Table of Contents
+`last update: 06 July 2023`
 
+## Table of Contents
 {: .no_toc .text-delta }
 
 1. TOC
-   {:toc}
+{:toc}
 
 
 ## Overview
@@ -51,22 +52,39 @@ Image Gallery layout will allow you to create masonry like image gallery layout 
 
 ### How to Use -- with Frontmatter `cssClass: image-gallery`
 
-- Specify the following frontmatter at the very top of your markdown notes
-- Similar to using callout, transcluded/embedded images will be stacked side by side. Add empty lines in between the images to create new row
+- Specify `cssClass: image-gallery` at the frontmatter *(top of your markdown notes fenced by two three-dashes `---`, see example below)*
+- Insert embedded images (i.e. `![[path/to/image.jpg]]`). Put next to each other (with single spacing) for same row placement. Add single empty line to create new row.
+
 
 ```markdown
 ---
 cssClass: image-gallery
 ---
 
-![[path/to/pic1.jpg]]
-![[path/to/pic2.jpg]]
+![[path/to/pic1.jpg]] ![[path/to/pic2.jpg]]
 
-![[path/to/pic3.png]]
-![[path/to/pic4.png]]
-![[path/to/pic5.png]]
+![[path/to/pic3.png]] ![[path/to/pic4.png]] ![[path/to/pic5.png]]
 
 ```
+
+> Note that with frontmatter declaration, you have to put the image embed syntax on same line if you want it to stack side by side in LP. Reading View is more robust and is okay with single line break for same row and empty line for creating new row
+>
+> **Syntax below only works with Reading View**
+> ```markdown
+> ---
+> cssClass: image-gallery
+> ---
+>
+> ![[path/to/pic1.jpg]]
+> ![[path/to/pic2.jpg]]
+>
+> ![[path/to/pic3.png]]
+> ![[path/to/pic4.png]]
+> ![[path/to/pic5.png]]
+>
+> ```
+
+
 
 #### Example
 
