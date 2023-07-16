@@ -1,0 +1,13 @@
+// custom SCSS (or CSS) goes here
+
+
+// adjustment to callouts. change text color and some padding */
+
+    p.note-title>p:first-child, blockquote.note-title>p:first-child {
+        margin-bottom: 1em;
+        color: hsl(258, 69%, 70%);
+    }
+
+    blockquote.note-title > ul:last-child {
+        margin-bottom: 0.5em
+    }
