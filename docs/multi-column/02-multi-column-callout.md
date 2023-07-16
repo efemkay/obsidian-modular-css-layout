@@ -18,6 +18,8 @@ Multi Column Callout layout take advantage of Obsidian Callout - leveraging it a
 
 The sub-callout will expand if `[!multi-column]` callout has extra space or overflow to next row if it doesn't. Some degree of control is available - see Additional Controls below
 
+![](/docs/assets/hero-mc-callout.png)
+
 ### How to Use / Basic Syntax
 Here's a quick steps to create the Multi Column Callout. It's best to start with sub-callouts first to avoid getting confused on how to nest them.
 1. Create the sub-callouts you want to include. In the example below they are `[!note]`, `[!warning]` and `[!summary]`
@@ -38,6 +40,16 @@ Here's an example markdown
 ```
 
 > Note that when you insert callout within callout, the line separating the callouts should only use single angle bracket (">")
+
+
+{: .note-title }
+> What Counts as Column in a `[!multi-column]`?
+>
+> By default, another callout (aka sub-callout) within `[!multi-column]` is how you create a "column". But this snippets do provide a few alternatives
+> - immediate dataview block (either table or list)
+> - immediate blockquote
+> - ordered/unordered list (but need to have `<br/>` tag between lists due to how obsidian override "markdown loose list")
+
 
 ## Additional Controls
 ### Fixed Width Option for `[!multi-column]`
@@ -119,8 +131,29 @@ If you have Style Settings plugin installed, you may control the following aspec
 
 ## Examples
 
-#### Example Screenshot - Multi Column (general)
-<img src="https://user-images.githubusercontent.com/42369515/163700561-c8d62aa3-0ac8-488c-a80e-8bfb3b539ca8.png" height="350px" />
+#### Standard Multi-Column Callout
+> ![](/docs/assets/mc-callout-standard.png)
+> ```
+> > [!multi-column]
+> >
+> >> [!note]+ Use Case
+> >> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+> >> ##### User Case Background
+> >> Vitae nunc sed velit dignissim sodales. In cursus turpis massa tincidunt dui ut ornare lectus.
+> >
+> >> [!warning]+ Resources
+> >> #### Requirement
+> >> - Lorem ipsum dolor sit amet
+> >> - Vitae nunc sed velit dignissim sodales.
+> >> - In cursus turpis massa tincidunt dui ut ornare lectus.
+> >
+> >> [!todo]+
+> >> - [x] Define Use Case
+> >> - [ ] Craft User Story
+> >> - [ ] Develop draft sketches
+> ```
+
+---
 
 #### Icon Links Dashboard using Fixed Width option
 > ![example of list column](https://raw.githubusercontent.com/efemkay/obsidian-modular-css-layout/main/docs/assets/mc-callout-fixed-width.png)
@@ -147,9 +180,12 @@ If you have Style Settings plugin installed, you may control the following aspec
 >
 > ```
 
+---
 
 #### Example Screenshot - Multi Column Callout with Width Control
 <img src="https://raw.githubusercontent.com/efemkay/obsidian-modular-css-layout/main/docs/assets/mc-callout-width-control.png" height="350px" />
+
+---
 
 #### Example GIF - Install the snippet and apply Multi Column Callout
 <img src="https://raw.githubusercontent.com/efemkay/obsidian-modular-css-layout/main/docs/assets/how%20to%20install%20and%20enable%20MCL.gif" height="350px" />

@@ -14,11 +14,22 @@ nav_order: 7
 {:toc}
 
 ## Overview
+
 List Card layout will allow you to create multi column and multi row layout using a combination of (a) unordered lists (i.e.  `- list item`) and (b) custom hashtag at the specific list block.
 
-This layout will only work on Reading View. If you want to make it work on Live Preview, you may encapsulate them in `[blank-container]` callout.
+![](/docs/assets/hero-mc-list-column-grid-card.png)
 
-There are no Markdown Attributes approach nor frontmatter approach due to underlying limitation of CSS.
+{: .note }
+> **Making it work in Live Preview**
+>
+> The column layout will only work on Reading View. If you want to make it work on Live Preview, there are a few options. You can encapsulate the list block in MCL's `[blank-container]` callout
+>
+> ...
+>
+> **There's no Markdown Attributes plugin approach**
+>
+> There are no Markdown Attributes approach due to limitation in specifying at the end of list block
+
 
 ### How to Use `#mcl/list-card`
 

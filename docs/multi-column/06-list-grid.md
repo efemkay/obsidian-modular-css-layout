@@ -18,9 +18,19 @@ List Grid layout will allow you to create multi column and multi row layout usin
 1. Apply at the specific list block using hashtag. This is the recommended option.
 2. Apply at the frontmatter. This affects ALL unordered list in that particular note
 
-This layout will only work on Reading View. If you want to make it work on Live Preview, you may encapsulate them in `[blank-container]` callout.
+![](/docs/assets/hero-mc-list-column-grid-card.png)
 
-There are no Markdown Attributes approach due to limitation in specifying at the end of list block
+{: .note }
+> **Making it work in Live Preview**
+>
+> The column layout will only work on Reading View. If you want to make it work on Live Preview, there are a few options. You can encapsulate the list block in MCL's `[blank-container]` callout
+>
+> ...
+>
+> **There's no Markdown Attributes plugin approach**
+>
+> There are no Markdown Attributes approach due to limitation in specifying at the end of list block
+
 
 ### How To - Using hashtag i.e. `#mcl/list-grid`
 Technically List Card is quite similar to List Grid but with extra customisation to make it card like. In order to enable it, place the hashtag anywhere in the top-level list items (preferably in the first bullet for easy identification). There are two options for List Card i.e.

@@ -19,6 +19,8 @@ List Column layout will allow you to create multi column layout using unordered 
 2. Apply at the specific list block using Markdown Attributes plugin.
 3. Apply at the frontmatter. This affects ALL unordered list in that particular note
 
+![](/docs/assets/hero-mc-list-column-grid-card.png)
+
 {: .note }
 > **Making it work in Live Preview**
 >
