@@ -1,6 +1,11 @@
 /* === README ===
 	Snippet: MCL Multi Column / Author: Faiz Khuzaimah / twitter: @faizkhuzaimah / github: https://github.com/efemkay
-	Version 0.9.4 (draft updated 2023-07-02)
+	Version 0.10.0 (beta, draft updated 2023-07-15)
+	-  introduce fw dw and pw
+	Version 0.9.5 (updated 2023-07-30)
+	- fixes on minimal float affecting Minimal own wide table feature
+	- fixes on properties padding affecting Minimal
+	Version 0.9.4 (updated 2023-07-06)
 	- improved MC Callout compatibility with Minimal theme V7.0
 	- improved MC Callout compatibility with Blue Topaz
 	Version 0.9.3 (updated 2023-06-24)
@@ -81,6 +86,47 @@ body{
 }
 
 
+/* === General === */
+
+	/* -- Fixed Width definition -- */
+	/* quadruple the last .callout to win specificity with main multi-column callout */
+	div[data-callout-metadata*="fw"].callout.callout.callout { flex-grow: 0; flex-shrink: 0;}
+	div[data-callout-metadata*="fw1"].callout.callout.callout.callout { flex-basis: 100px; width: 100px; }
+	div[data-callout-metadata*="fw2"].callout.callout.callout.callout { flex-basis: 200px; width: 200px; }
+	div[data-callout-metadata*="fw3"].callout.callout.callout.callout { flex-basis: 300px; width: 300px; }
+	div[data-callout-metadata*="fw4"].callout.callout.callout.callout { flex-basis: 400px; width: 400px; }
+	div[data-callout-metadata*="fw5"].callout.callout.callout.callout { flex-basis: 500px; width: 500px; }
+	div[data-callout-metadata*="fw6"].callout.callout.callout.callout { flex-basis: 600px; width: 600px; }
+	div[data-callout-metadata*="fw7"].callout.callout.callout.callout { flex-basis: 700px; width: 700px; }
+	div[data-callout-metadata*="fw8"].callout.callout.callout.callout { flex-basis: 800px; width: 800px; }
+	div[data-callout-metadata*="fw9"].callout.callout.callout.callout { flex-basis: 900px; width: 900px; }
+
+	div[data-callout-metadata*="pw1"].callout.callout.callout.callout { flex-basis: 10%; width: 10%; }
+	div[data-callout-metadata*="pw2"].callout.callout.callout.callout { flex-basis: 20%; width: 20%; }
+	div[data-callout-metadata*="pw3"].callout.callout.callout.callout { flex-basis: 30%; width: 30%; }
+	div[data-callout-metadata*="pw4"].callout.callout.callout.callout { flex-basis: 40%; width: 40%; }
+	div[data-callout-metadata*="pw5"].callout.callout.callout.callout { flex-basis: 50%; width: 50%; }
+	div[data-callout-metadata*="pw6"].callout.callout.callout.callout { flex-basis: 60%; width: 60%; }
+	div[data-callout-metadata*="pw7"].callout.callout.callout.callout { flex-basis: 70%; width: 70%; }
+	div[data-callout-metadata*="pw8"].callout.callout.callout.callout { flex-basis: 80%; width: 80%; }
+	div[data-callout-metadata*="pw9"].callout.callout.callout.callout { flex-basis: 90%; width: 90%; }
+
+
+	/* metadata "wide-x" to control subcallout flexible max width. only discrete 2,4,8,16 */
+	div[data-callout="multi-column"].callout > .callout-content > div[data-callout-metadata*="mw0"].callout.callout { flex-basis: 0; }
+	div[data-callout="multi-column"].callout > .callout-content > div[data-callout-metadata*="dw1"].callout { flex: 1 0 auto; }
+	div[data-callout="multi-column"].callout > .callout-content > div[data-callout-metadata*="dw2"].callout { flex: 2 0 auto; }
+	div[data-callout="multi-column"].callout > .callout-content > div[data-callout-metadata*="dw3"].callout { flex: 3 0 auto; }
+	div[data-callout="multi-column"].callout > .callout-content > div[data-callout-metadata*="dw4"].callout { flex: 4 0 auto; }
+	div[data-callout="multi-column"].callout > .callout-content > div[data-callout-metadata*="dw5"].callout { flex: 5 0 auto; }
+	div[data-callout="multi-column"].callout > .callout-content > div[data-callout-metadata*="dw6"].callout { flex: 6 0 auto; }
+	div[data-callout="multi-column"].callout > .callout-content > div[data-callout-metadata*="dw7"].callout { flex: 7 0 auto; }
+	div[data-callout="multi-column"].callout > .callout-content > div[data-callout-metadata*="dw8"].callout { flex: 8 0 auto; }
+	div[data-callout="multi-column"].callout > .callout-content > div[data-callout-metadata*="dw9"].callout { flex: 9 0 auto; }
+
+
+
+
 /* === Multi Column "DIV"'s Using Callout === */
 /* 	some issues still persists
 	(2) some theme uses transparency to affect .callout-title */
@@ -103,7 +149,7 @@ body{
 	div[data-callout="multi-column"].callout:not(.is-collapsed) .callout { margin-inline: var(--callout-margin); margin-block: var(--callout-margin); } /* to allow spacing for box shadow */
 	div[data-callout="multi-column"].callout .callout .callout-content { flex-grow: 1}
 
-	div[data-callout="multi-column"].callout > .callout-content > *:is(div,ul) { flex: 1 1 var(--callout-min-width); margin: 0;}
+	div[data-callout="multi-column"].callout > .callout-content > *:is(div,ul,blockquote) { flex: 1 1 var(--callout-min-width); margin: 0;}
 
 	/* metadata "wide-x" to control subcallout flexible max width. only discrete 2,4,8,16 */
 	div[data-callout="multi-column"].callout > .callout-content > div[data-callout-metadata*="min-0"] { flex-basis: 0; }
@@ -119,25 +165,39 @@ body{
 		div[data-callout="multi-column"].callout > div.callout-content .callout.is-collapsed { box-shadow: unset; height: min-content;}
 	}
 
-	/* -- Variations -- */
+
+	/* -- MCC Variation - Icons -- */
+
+		/* Main code */
+		div[data-callout="multi-column"][data-callout-metadata*="icons"].callout { justify-content: center; }
+		div[data-callout="multi-column"][data-callout-metadata*="icons"].callout .callout { display: flex; flex-direction: row; flex-wrap: wrap; }
+		div[data-callout="multi-column"][data-callout-metadata*="icons"].callout.callout .callout-content > p { flex-grow: 1; text-align: center; }
+		/* Options for number of columns */
+		div[data-callout="multi-column"][data-callout-metadata*="icons"][data-callout-metadata*="col2"].callout.callout .callout-content > p { flex-basis: 40%; }
+		div[data-callout="multi-column"][data-callout-metadata*="icons"][data-callout-metadata*="col3"].callout.callout .callout-content > p { flex-basis: 30%; }
+		div[data-callout="multi-column"][data-callout-metadata*="icons"][data-callout-metadata*="col4"].callout.callout .callout-content > p { flex-basis: 22%; }
+		div[data-callout="multi-column"][data-callout-metadata*="icons"][data-callout-metadata*="col5"].callout.callout .callout-content > p { flex-basis: 18%; }
+
+		/* listive theme */
+		div[data-callout="multi-column"][data-callout-metadata*="icons"].callout p:first-child {
+			margin-top: revert;
+		}
+
+
+	/* -- MCC Variation - Fixed Width Option -- */
 		/* Fixed Width Option (using callout-metadata) */
-		div[data-callout="multi-column"][data-callout-metadata*="center-fixed"].callout {
-			justify-content: center;
-		}
-		div[data-callout="multi-column"][data-callout-metadata*="left-fixed"].callout {
-			justify-content: flex-start;
-		}
-		div[data-callout="multi-column"][data-callout-metadata*="right-fixed"].callout {
-			justify-content: flex-end;
-		}
-		div[data-callout="multi-column"][data-callout-metadata*="fixed"].callout > .callout-content > *:is(div,ul) {
-			flex-grow: 0;
-		}
+		div[data-callout="multi-column"][data-callout-metadata*="center-fixed"].callout { justify-content: center; }
+		div[data-callout="multi-column"][data-callout-metadata*="left-fixed"].callout { justify-content: flex-start; }
+		div[data-callout="multi-column"][data-callout-metadata*="right-fixed"].callout { justify-content: flex-end; }
+		div[data-callout="multi-column"][data-callout-metadata*="fixed"].callout > .callout-content > *:is(div,ul) { flex-grow: 0; }
 
 		/* Callout size for Fixed Width Option */
 		div[data-callout="multi-column"][data-callout-metadata*="fixed"][data-callout-metadata*="small"].callout > .callout-content > *:is(div,ul) { flex-basis: calc( var(--float-small-width) * 0.5 ); }
 		div[data-callout="multi-column"][data-callout-metadata*="fixed"][data-callout-metadata*="medium"].callout > .callout-content > *:is(div,ul) { flex-basis: calc( var(--float-medium-width) * 0.65); }
 		div[data-callout="multi-column"][data-callout-metadata*="fixed"][data-callout-metadata*="large"].callout > .callout-content > *:is(div,ul) { flex-basis: calc( var(--float-large-width) * 0.8); }
+
+
+	/* -- MCC Variation - No Wrap Option -- */
 
 		/* No-Wrap Option (using callout-metadata) - for single row with horizontal scrollbar */
 		div[data-callout="multi-column"][data-callout-metadata*="no-wrap"].callout {flex-wrap: nowrap; overflow-x: scroll;}
@@ -314,13 +374,15 @@ body{
 
 
 		/* Minimal. Minimal Float. (duplicate from Multi Column. Redid "minimal-float" for Minimal V7.0 */
+		/* minimal own wide table will not work together with float */
 		/* undo the Minimal "cm-line" sizing */
-		:is(body[class*="minimal-tab-title"] .markdown-source-view.mod-cm6.is-readable-line-width, .minimal-float.markdown-source-view.mod-cm6) .cm-contentContainer.cm-contentContainer>.cm-content>div,
-		:is(body[class*="minimal-tab-title"] .markdown-source-view.mod-cm6.is-readable-line-width, .minimal-float.markdown-source-view.mod-cm6) .cm-sizer>.embedded-backlinks,
-		:is(body[class*="minimal-tab-title"] .markdown-source-view.mod-cm6.is-readable-line-width, .minimal-float.markdown-source-view.mod-cm6) .cm-sizer>.inline-title
+		:is(body[class*="minimal-tab-title"] .markdown-source-view.mod-cm6.is-readable-line-width:not(:has(table)), .minimal-float.markdown-source-view.mod-cm6) .cm-contentContainer.cm-contentContainer>.cm-content>div,
+		:is(body[class*="minimal-tab-title"] .markdown-source-view.mod-cm6.is-readable-line-width:not(:has(table)), .minimal-float.markdown-source-view.mod-cm6) .cm-sizer>.embedded-backlinks,
+		:is(body[class*="minimal-tab-title"] .markdown-source-view.mod-cm6.is-readable-line-width:not(:has(table)), .minimal-float.markdown-source-view.mod-cm6) .cm-sizer>.inline-title,
+		:is(body[class*="minimal-tab-title"] .markdown-source-view.mod-cm6.is-readable-line-width:not(:has(table)), .minimal-float.markdown-source-view.mod-cm6) .cm-sizer>.metadata-container
 			{ max-width: none; width: auto; }
 		/* Re-set the default "cm-sizer" width but respect Minimal Settings */
-		:is(body[class*="minimal-tab-title"] .markdown-source-view.mod-cm6.is-readable-line-width, .minimal-float.markdown-source-view.mod-cm6) .cm-sizer { max-width: var(--max-width); width: var(--line-width); }
+		:is(body[class*="minimal-tab-title"] .markdown-source-view.mod-cm6.is-readable-line-width:not(:has(table)), .minimal-float.markdown-source-view.mod-cm6) .cm-sizer { max-width: var(--max-width); width: var(--line-width); }
 
 		/* to be deleted by 30 Sep 2023 */
 		/* Minimal - Undo the theme flex layout by default. To apply per note basis */
@@ -380,7 +442,7 @@ body{
 		@media (min-width: 500px ){
 			.two-column-list div > ul,   .two-column-list-block {columns: 2; }
 			.three-column-list div > ul,  .three-column-list-block {columns: 3; }
-			.four-column-list div > ul,  .four-column-list-block {columns: 3; }
+			.four-column-list div > ul,  .four-column-list-block {columns: 4; }
 		}
 		.multi-column-list div > ul,  .multi-column-list-block { column-width: var(--list-min-width); }
 

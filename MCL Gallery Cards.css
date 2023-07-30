@@ -1,6 +1,10 @@
 /* === README ===
 	Snippet: MCL Gallery Cards / Author: Faiz Khuzaimah / twitter: @faizkhuzaimah / github: https://github.com/efemkay
-	Version 0.9.4 (draft 2023-07-02)
+	Version 0.9.5 (updated 2023-07-30)
+	- fixes on minimal float affecting Minimal own wide table feature
+	- fixes on properties padding affecting Minimal
+	- fixes Mermaid zoom in Editing View
+	Version 0.9.4 (updated 2023-07-06)
 	- improve Float Image for editing text in Editing View
 	- fix for Float Image for Minimal (and respect width settings). No longer require cssClass "minimal-float" but require Style Settings
 	- improve Image Gallery especially for use in Live Preview without callout
@@ -16,8 +20,6 @@
 	Version 0.8.0 (updated 2022-11-28)
 	- adjustment for SNW plugin indicators in image gallery. Option to hide (default) or show.
 	- fix gap between the images in image gallery (especially the vertical vs horizontal gap)
-	Version 0.6.2 (updated 2022-10-22)
-	- rollover main branch to support Obsidian 1.0.0
 
 	This snippet is part of MCL collection of snippets for customising layout, and it provides the following
 	- "gallery" callout-metadata i.e. [!<any-callout>|gallery] for flex/grid layout
@@ -145,14 +147,16 @@
 		/* Minimal. Uses body[class*="minimal-tab-title"] as identifier */
 		body[class*="minimal-tab-title"] .markdown-source-view.mod-cm6 .internal-embed.image-embed[alt*="float"] {width: auto !important; max-width: unset; margin-left: 0 !important;}
 
-		/* Minimal Float (duplicate from Multi Column. Redid "minimal-float" for Minimal V7.0 */
+		/* Minimal. Minimal Float. (duplicate from Multi Column. Redid "minimal-float" for Minimal V7.0 */
+		/* minimal own wide table will not work together with float */
 		/* undo the Minimal "cm-line" sizing */
-		:is(body[class*="minimal-tab-title"] .markdown-source-view.mod-cm6.is-readable-line-width, .minimal-float.markdown-source-view.mod-cm6) .cm-contentContainer.cm-contentContainer>.cm-content>div,
-		:is(body[class*="minimal-tab-title"] .markdown-source-view.mod-cm6.is-readable-line-width, .minimal-float.markdown-source-view.mod-cm6) .cm-sizer>.embedded-backlinks,
-		:is(body[class*="minimal-tab-title"] .markdown-source-view.mod-cm6.is-readable-line-width, .minimal-float.markdown-source-view.mod-cm6) .cm-sizer>.inline-title
+		:is(body[class*="minimal-tab-title"] .markdown-source-view.mod-cm6.is-readable-line-width:not(:has(table)), .minimal-float.markdown-source-view.mod-cm6) .cm-contentContainer.cm-contentContainer>.cm-content>div,
+		:is(body[class*="minimal-tab-title"] .markdown-source-view.mod-cm6.is-readable-line-width:not(:has(table)), .minimal-float.markdown-source-view.mod-cm6) .cm-sizer>.embedded-backlinks,
+		:is(body[class*="minimal-tab-title"] .markdown-source-view.mod-cm6.is-readable-line-width:not(:has(table)), .minimal-float.markdown-source-view.mod-cm6) .cm-sizer>.inline-title,
+		:is(body[class*="minimal-tab-title"] .markdown-source-view.mod-cm6.is-readable-line-width:not(:has(table)), .minimal-float.markdown-source-view.mod-cm6) .cm-sizer>.metadata-container
 			{ max-width: none; width: auto; }
 		/* Re-set the default "cm-sizer" width but respect Minimal Settings */
-		:is(body[class*="minimal-tab-title"] .markdown-source-view.mod-cm6.is-readable-line-width, .minimal-float.markdown-source-view.mod-cm6) .cm-sizer { max-width: var(--max-width); width: var(--line-width); }
+		:is(body[class*="minimal-tab-title"] .markdown-source-view.mod-cm6.is-readable-line-width:not(:has(table)), .minimal-float.markdown-source-view.mod-cm6) .cm-sizer { max-width: var(--max-width); width: var(--line-width); }
 
 
 		/* to be deleted by 30 Sep 2023 */
@@ -190,13 +194,27 @@
 
 	/* set scale to 100% for mermaid diagram */
 	body:not(.mermaid-scale-off) .view-content :is(.cm-editor, .markdown-preview-view) .mermaid svg { max-width: 100%; height: 100%}
-	.mermaid-zoom .view-content :is(.markdown-preview-view) .mermaid svg { cursor: zoom-in; }
+	body.mermaid-scale-off .mermaid { overflow-x: auto; }
+
+	.mermaid-zoom .view-content .mermaid svg { cursor: zoom-in; }
 
 	/* css zoom for mermaid diagram */
-	body.mermaid-zoom:not(.is-mobile) .view-content :is(.cm-edito,.markdown-preview-view) .mermaid svg:active {
+	body.mermaid-zoom:not(.is-mobile) .view-content .markdown-reading-view .mermaid svg:active {
 		cursor: zoom-out; display: block; object-fit:contain; margin: -0.5px auto 0; padding: 0;
 		max-height: calc(100% + 1px); max-width: calc(100% - 20px); height: calc(100% + 1px); width: 100%;
 		text-align: center; z-index: 100; position: fixed; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8);
+	}
+	/* editing view */
+	body.mermaid-zoom:not(.is-mobile) .markdown-source-view .cm-embed-block:has(.mermaid svg:active) {
+		top: 20%; left: 0;
+		z-index: 100;
+		position: fixed;
+	}
+	body.mermaid-zoom:not(.is-mobile) .markdown-source-view. .cm-embed-block:has(.mermaid svg:active) .mermaid { overflow-x: hidden; }
+	body.mermaid-zoom:not(.is-mobile) .markdown-source-view .mermaid svg:active {
+		cursor: zoom-out;
+		max-height: calc(100% + 1px); max-width: calc(100% - 20px); height: calc(100% + 1px); width: 100%;
+		background: rgba(0,0,0,0.8);
 	}
 
 
@@ -253,7 +271,14 @@
         --mcl-banner-height-normal: 200px;
         --mcl-banner-height-tall: 300px;
         --mcl-banner-overlap-title-adj: 0px;
+		--mcl-banner-no-title-adj: 0px;
     }
+	body:not(.show-inline-title) .markdown-reading-view {
+		--mcl-banner-no-title-adj: 25px; /* reading view bigger to adjust for minor overlap */
+	}
+	body:not(.show-inline-title) .markdown-source-view {
+		--mcl-banner-no-title-adj: 15px;
+	}
 
 
     /* make the div (in LP) containing the image doesn't control the css box-sizing */
@@ -264,11 +289,12 @@
     img[alt*="mcl-banner"] {
         position: absolute;
         top: 0; left: 0;
-        height: 200px; width: 100%;
+        height: var(--mcl-banner-height-normal); width: 100%;
         margin-right: auto; margin-left: auto;
         object-fit: cover; object-position: 50% 50%;
         overflow: hidden;
         user-select: none;
+		/* z-index: -1; */
      }
 
      img[alt*="mcl-banner"][alt*="gradient"] {
@@ -276,17 +302,32 @@
          mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
      }
 
-     .view-content:has(img[alt*="mcl-banner"]) .inline-title { position: relative; padding-top: calc(150px + var(--mcl-banner-overlap-title-adj)); z-index: 1; }
+	 /* padding to distance text content from banner V1 *//*
+     .view-content:has(img[alt*="mcl-banner"]) .inline-title
+	 	{ position: relative; padding-top: calc(var(--mcl-banner-height-normal) - 50px + var(--mcl-banner-overlap-title-adj) + var(--mcl-banner-no-title-adj)); z-index: 30; }
+	.view-content:has(img[alt*="mcl-banner"][alt*="-tall"]) :is(.cm-content > div:first-child, .mod-header)
+   	 	{ padding-top: calc(var(--mcl-banner-height-tall) - 50px + var(--mcl-banner-overlap-title-adj) + var(--mcl-banner-no-title-adj) ); }
+
+	 /* padding to distance text content from banner V2 */
+	.view-content:has(img[alt*="mcl-banner"]) :is(.cm-sizer, .markdown-preview-section)
+   	 	{ padding-top: calc(var(--mcl-banner-height-normal) - 50px + var(--mcl-banner-overlap-title-adj) + var(--mcl-banner-no-title-adj)); }
+   	.view-content:has(img[alt*="mcl-banner"][alt*="-tall"]) :is(.cm-sizer, .markdown-preview-section)
+  	 	{ padding-top: calc(var(--mcl-banner-height-tall) - 50px + var(--mcl-banner-overlap-title-adj) + var(--mcl-banner-no-title-adj) ); }
+	.view-content:has(img[alt*="mcl-banner"]) .inline-title
+   	 	{ position: relative; z-index: 30; }
+
+
 
      /* add option to adjust vertical position by adding the alt metadata "higher" or "lower" */
+     img[alt*="mcl-banner"][alt*="y-30"] { object-position: 50% 20%; }
      img[alt*="mcl-banner"][alt*="y-20"] { object-position: 50% 30%; }
      img[alt*="mcl-banner"][alt*="y-10"] { object-position: 50% 40%; }
      img[alt*="mcl-banner"][alt*="y+10"] { object-position: 50% 60%; }
      img[alt*="mcl-banner"][alt*="y+20"] { object-position: 50% 70%; }
+	 img[alt*="mcl-banner"][alt*="y+30"] { object-position: 50% 80%; }
 
      /* tall adjustment */
-     img[alt*="mcl-banner"][alt*="-tall"] { height: 300px; }
-     .view-content:has(img[alt*="mcl-banner"][alt*="-tall"]) .inline-title { padding-top: calc(250px + var(--mcl-banner-overlap-title-adj)); }
+     img[alt*="mcl-banner"][alt*="-tall"] { height: var(--mcl-banner-height-tall); }
 
 
      /* minor tweak for me, since i have snippet to make image has rounded corner */
@@ -294,6 +335,29 @@
      /* minor tweak for me, to hide snw block reference counter for the banner */
     .internal-embed.media-embed.image-embed.is-loaded + .snw-reference.snw-embed {display: none;}
 
+
+/* === Image Aspect Ratio === */
+	/* Apply to any images using either hashtag after image url or image alt-text */
+	.internal-embed.image-embed[src*="1-1"] > img,
+	img[src*="1-1"],
+	img[alt*="1-1"]
+		{ aspect-ratio: 1/1; object-fit: cover; }
+	.internal-embed.image-embed[src*="4-3"] > img,
+	img[src*="4-3"],
+	img[alt*="4-3"]
+		{ aspect-ratio: 4/3; object-fit: cover; }
+	.internal-embed.image-embed[src*="16-9"] > img,
+	img[src*="16-9"],
+	img[alt*="16-9"]
+		{ aspect-ratio: 16/9; object-fit: cover; }
+
+
+/* === Image Caption === */
+	/* This will only works with local images, web images cannot be supported
+		mainly because obsidian doesn't render a parent div for the image.
+		Local images with md link still works. */
+	:is(.markdown-source-view.mod-cm6, .markdown-reading-view) .internal-embed.image-embed[src*="caption"] { display: inline-block; width: fit-content; }
+	.image-embed[src*="caption"]::after { content: attr(alt); display: block; text-align: center; font-style: italic; }
 
 
 /* === ALPHA VERSION testing Timeline in lists === */
