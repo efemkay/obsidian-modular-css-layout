@@ -23,10 +23,12 @@ Image Gallery layout will allow you to create masonry like image gallery layout 
 1. Using Obsidian Callout (by specifying the callout metadata `gallery`)
 2. Using frontmatter (by specifying `cssclass: image-gallery`)
 
-{: .warning}
-> **Markdown image embed (i.e. `![](path/to/image.jpg)`) not supported**
+{: .warning-title}
+> Markdown image embed (i.e. `![](path/to/image.jpg)`) not supported
 >
 > Due to how Obsidian renders markdown image embed, I currently cannot implement Image Gallery using such syntax. So for this part, always use wikilink embed (i.e. `![[path/to/image.jpg]]`)
+
+
 
 ### How to Use -- with Callout
 

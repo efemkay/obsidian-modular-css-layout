@@ -19,10 +19,10 @@ List Column layout will allow you to create multi column layout using unordered 
 2. Apply at the specific list block using Markdown Attributes plugin.
 3. Apply at the frontmatter. This affects ALL unordered list in that particular note
 
-![](/docs/assets/hero-mc-list-column-grid-card.png)
+![](https://raw.githubusercontent.com/efemkay/obsidian-modular-css-layout/main/docs/assets/hero-mc-list-column-grid-card.png)
 
-{: .note }
-> **Making it work in Live Preview**
+{: .note-title }
+> Making it work in Live Preview
 >
 > The column layout will only work on Reading View. If you want to make it work on Live Preview, there are a few options. You can encapsulate the list block in MCL's `[blank-container]` callout
 
@@ -50,6 +50,7 @@ Here's an example markdown:
 Using this approach will require [Markdown Attributes](https://github.com/valentine195/obsidian-markdown-attributes) plugin. Read the plugin documentation where to put the CSS class (typically at the end of the block). MCL provides the following CSS classes
 - `{.two-column-list-block}`
 - `{.three-column-list-block}`
+- `{.four-column-list-block}`
 - `{.multi-column-list-block}` - number of columns depend of note's width and MCL settings on minimum width (default is 200px)
 
 For this approach, do note that there's a dot (`.`) before the class name. This is following how CSS classes are referred in CSS file.
@@ -92,6 +93,8 @@ cssClass: two-column-list
 Using this approach, you will have to specify the css for the column type at the frontmatter (it must be located at the very top of your document, wrapped by two sets of 3 dashes i.e. `---`, see example below for better understanding). MCL provides the following CSS classes
 - `two-column-list`
 - `three-column-list`
+- `four-column-list`
+- `multi-column-list`
 
 Here's an example markdown:
 ```md

@@ -108,7 +108,7 @@ If you have Style Settings plugin installed, you may control the following aspec
 ## Example
 
 #### Simple small callout float to the right
-> ![](/docs/assets/mc-float-callout.png)
+> ![](https://raw.githubusercontent.com/efemkay/obsidian-modular-css-layout/main/docs/assets/mc-float-callout.png)
 > ```
 > ## When is the best to ski in Switzerland?
 > > [!info|float-right-small] Average Temperatures and Rainfall

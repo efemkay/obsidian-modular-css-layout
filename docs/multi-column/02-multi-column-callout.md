@@ -18,7 +18,7 @@ Multi Column Callout layout take advantage of Obsidian Callout - leveraging it a
 
 The sub-callout will expand if `[!multi-column]` callout has extra space or overflow to next row if it doesn't. Some degree of control is available - see Additional Controls below
 
-![](/docs/assets/hero-mc-callout.png)
+![](https://raw.githubusercontent.com/efemkay/obsidian-modular-css-layout/main/docs/assets/hero-mc-callout.png)
 
 ### How to Use / Basic Syntax
 Here's a quick steps to create the Multi Column Callout. It's best to start with sub-callouts first to avoid getting confused on how to nest them.

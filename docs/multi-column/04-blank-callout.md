@@ -20,7 +20,7 @@ Blank Callout layout is just to provide an invisible container (or div). It is u
 - Creating floating picture with extensive caption
 - Creating side note without callout decoratives (like the background color and so on)
 - Invisible container for embedded images for a dashboard design
-- Invisble container to render things in Live Preview which normally need Reading View like List Columns/Grid/Card
+- Invisible container to render things in Live Preview which normally need Reading View like List Columns/Grid/Card
 
 ### How To Use / Basic Syntax
 

@@ -18,10 +18,10 @@ List Grid layout will allow you to create multi column and multi row layout usin
 1. Apply at the specific list block using hashtag. This is the recommended option.
 2. Apply at the frontmatter. This affects ALL unordered list in that particular note
 
-![](/docs/assets/hero-mc-list-column-grid-card.png)
+![](https://raw.githubusercontent.com/efemkay/obsidian-modular-css-layout/main/docs/assets/hero-mc-list-column-grid-card.png)
 
-{: .note }
-> **Making it work in Live Preview**
+{: .note-title }
+> Making it work in Live Preview
 >
 > The column layout will only work on Reading View. If you want to make it work on Live Preview, there are a few options. You can encapsulate the list block in MCL's `[blank-container]` callout
 >

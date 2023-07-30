@@ -17,10 +17,10 @@ nav_order: 7
 
 List Card layout will allow you to create multi column and multi row layout using a combination of (a) unordered lists (i.e.  `- list item`) and (b) custom hashtag at the specific list block.
 
-![](/docs/assets/hero-mc-list-column-grid-card.png)
+![](https://raw.githubusercontent.com/efemkay/obsidian-modular-css-layout/main/docs/assets/hero-mc-list-column-grid-card.png)
 
-{: .note }
-> **Making it work in Live Preview**
+{: .note-title }
+> Making it work in Live Preview
 >
 > The column layout will only work on Reading View. If you want to make it work on Live Preview, there are a few options. You can encapsulate the list block in MCL's `[blank-container]` callout
 >
