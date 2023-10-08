@@ -25,6 +25,7 @@ Snippet Downloader is an Obsidian community plugin by Mara Li. Since I'm plannin
 	- Search for `Obsidian 42 - BRAT: Plugins: Add a beta plugin for testing` and press `Enter`
 	- Enter Snippet Downloader URL into the input box
 	   `https://github.com/Lisandra-dev/obsidian-snippet-downloader`
+	- Enable Snippet Downloader by going back to `Settings > Community Plugins` and under **Installed Plugins** section toggle to ON the button next to Snippet 		  Downloader
 3. Ensure Obsidian snippets folder already created
 	- Go to `Settings > Appearance`
 	- Under **CSS snippets** section, click on the folder icon on the far right
