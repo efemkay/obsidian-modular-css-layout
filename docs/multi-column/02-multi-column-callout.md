@@ -91,7 +91,9 @@ Here's an example markdown
 >> your notes or lists here. using markdown formatting
 ```
 
-> #### Limitation on No-Wrap Multi Column
+{: .note-title }
+> Limitation on No-Wrap Multi Column
+>
 > Width Control (different width for sub-callout) for now is not valid for No-Wrap Multi Column. Columns will be mostly follow the minimum width -- it has separate minimum width than the Wrapped Multi Column
 
 ### Width Control
@@ -116,10 +118,14 @@ Here's an example markdown
 >> your notes or lists here. using markdown formatting
 ```
 
-> #### When Pairing with sub-callout with min width
+{: .note-title }
+> When Pairing with sub-callout with min width
+>
 > By default, sub-callout within multi-column callout has min width of 200px (unless you changed it via Style Settings). Applying `wide-x` metadata for sub-callout that paired with those callout will have different sizing behaviour
 
-> #### Understanding callout type and callout metadata
+{: .note-title }
+> Understanding callout type and callout metadata
+>
 > - `> [!<callout-type>]` e.g. `> [!Summary]`
 > - `> [!<callout-type>|<callout-metadata>]` e.g. `> [!Summary|wide-2]`
 
