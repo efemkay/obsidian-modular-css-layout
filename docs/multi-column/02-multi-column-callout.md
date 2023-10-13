@@ -2,6 +2,7 @@
 title: Multi Column Callout
 parent: Multi Column
 nav_order: 2
+has_children: true
 ---
 
 # Multi Column Callout
