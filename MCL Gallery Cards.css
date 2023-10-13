@@ -1,25 +1,21 @@
 /* === README ===
 	Snippet: MCL Gallery Cards / Author: Faiz Khuzaimah / twitter: @faizkhuzaimah / github: https://github.com/efemkay
-	Version 0.9.5 (updated 2023-07-30)
+	v0.9.7 (updated 2023-10-13)
+	- fixes #50 i.e. Gallery Card not working with Minimal due to Minimal max-width specificity
+	Ver 0.9.5 (updated 2023-07-30)
 	- fixes on minimal float affecting Minimal own wide table feature
 	- fixes on properties padding affecting Minimal
 	- fixes Mermaid zoom in Editing View
-	Version 0.9.4 (updated 2023-07-06)
+	Ver 0.9.4 (updated 2023-07-06)
 	- improve Float Image for editing text in Editing View
 	- fix for Float Image for Minimal (and respect width settings). No longer require cssClass "minimal-float" but require Style Settings
 	- improve Image Gallery especially for use in Live Preview without callout
-	Version 0.9.2 (updated 2023-05-27)
+	Ver 0.9.2 (updated 2023-05-27)
 	- fix div width for float image also affecting normal image embed
-	Version 0.9.0 (updated 2023-04-01)
+	Ver 0.9.0 (updated 2023-04-01)
 	- image float
 	- banner background
 	- card view for dataview table
-	Version 0.8.1 (updated 2022-12-10)
-	- fix gallery margin-left for minimal to be more targetted (fix issue with note embed issue)
-	- fix issue with Breadcrumbs plugin and minimal-float where the plugin "banner" flushed to left
-	Version 0.8.0 (updated 2022-11-28)
-	- adjustment for SNW plugin indicators in image gallery. Option to hide (default) or show.
-	- fix gap between the images in image gallery (especially the vertical vs horizontal gap)
 
 	This snippet is part of MCL collection of snippets for customising layout, and it provides the following
 	- "gallery" callout-metadata i.e. [!<any-callout>|gallery] for flex/grid layout
@@ -80,6 +76,14 @@
 
 		/* Minimal. Editing View. Revert img max width */
 		body[class*="minimal-tab-title"] .markdown-source-view.mod-cm6.is-readable-line-width .cm-contentContainer.cm-contentContainer>.cm-content>div:has(.image-embed) img { max-width: 100%; }
+
+		/* Minimal. Disable Max Width */
+		body[class*="minimal-tab-title"] {
+			&.full-width-media .markdown-preview-view .image-embed img:not(.link-favicon):not(.emoji):not([width]),
+			&.full-width-media .markdown-preview-view img:not(.link-favicon):not(.emoji):not([width]) {
+				max-width: unset;
+			}
+		}
 
 	/* -- Adjustment for Plugins -- */
 
@@ -449,13 +453,13 @@ settings:
 		collapsed: true
 	-
 	    id: float-left-margin
-		title: Max Height for Images (any unit, no space)
+		title: Margin for Image Float Right (any unit, no space)
 		description: Enter in following order - "top right bottom left"
 	    type: variable-text
 	    default: 4px 12px 4px 0px
 	-
 	    id: float-right-margin
-		title: Max Height for Images (any unit, no space)
+		title: Margin for Image Float Right (any unit, no space)
 		description: Enter in following order - "top right bottom left"
 	    type: variable-text
 	    default: 4px 0px 4px 12px
