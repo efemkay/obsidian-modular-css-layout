@@ -1,5 +1,8 @@
 /* === README ===
 	Snippet: MCL Gallery Cards / Author: Faiz Khuzaimah / twitter: @faizkhuzaimah / github: https://github.com/efemkay
+
+	ver 0.9.8 (updated 2023-11-03)
+	- re-fixes #50
 	v0.9.7 (updated 2023-10-13)
 	- fixes #50 i.e. Gallery Card not working with Minimal due to Minimal max-width specificity
 	Ver 0.9.5 (updated 2023-07-30)
@@ -81,7 +84,7 @@
 		body[class*="minimal-tab-title"] {
 			&.full-width-media .markdown-preview-view .image-embed img:not(.link-favicon):not(.emoji):not([width]),
 			&.full-width-media .markdown-preview-view img:not(.link-favicon):not(.emoji):not([width]) {
-				max-width: unset;
+				/* max-width: 100%; */
 			}
 		}
 
