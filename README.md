@@ -13,7 +13,7 @@ I mainly do casual test on select popular themes like ITS, Primary, Shimmering F
 - [Multi Column](#multi-column)
 - [Gallery Cards](#gallery-cards)
 - [Support Me](#support-me)
-
+.
 
 
 ## Installation / Download and Enable
