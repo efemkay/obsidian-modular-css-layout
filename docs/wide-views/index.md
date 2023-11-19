@@ -29,8 +29,8 @@ has_children: true
 - CSS snippet: `MCL Wide Views.css`
 - Custom CSS class available
 	- `wide-page`
-	- `wide-dataview` -- require Contextual Typography plugin
-	- `wide-table` -- require Contextual Typography plugin
+	- `wide-dataview`
+	- `wide-table`
 	- `wide-backlinks`
 
 This snippet allow you to use Obsidian CSS class helper to enable any of the wide views. To use it, add the helper class in the YAML (frontmatter) of your note (which must be at the top of the note) like below.
@@ -43,7 +43,8 @@ cssClass: wide-page
 <the rest of your note>
 ```
 
-For wide-dataview and wide-table, you will need to install [Contextual Typography](https://github.com/mgmeyers/obsidian-contextual-typography) plugin.
+{: .note }
+> Thanks to Obsidian updated Electron base to V21, I have managed to avoid using Contextual Typography plugin to support wide blocks with the release of [v0.9.6](https://github.com/efemkay/obsidian-modular-css-layout/releases/tag/0.9.6)
 
 ## Example
 

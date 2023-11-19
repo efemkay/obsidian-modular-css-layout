@@ -13,7 +13,7 @@ I mainly do casual test on select popular themes like ITS, Primary, Shimmering F
 - [Multi Column](#multi-column)
 - [Gallery Cards](#gallery-cards)
 - [Support Me](#support-me)
-.
+
 
 
 ## Installation / Download and Enable
@@ -30,8 +30,8 @@ This is actually just a CSS code snippets collection. So it isn't an installatio
 This snippet provides you the following features:
 - Full width page or blocks (dataview, table and backlinks) per page/note basis by specifying custom `cssClass` at the frontmatter (YAML)
 	- `wide-page`
-	- `wide-dataview` -- require Contextual Typography plugin
-	- `wide-table` -- require Contextual Typography plugin
+	- `wide-dataview`
+	- `wide-table`
 	- `wide-callout`
 	- `wide-backlinks`
 	- vault-wide toggle for each of the above
@@ -40,7 +40,8 @@ This snippet provides you the following features:
 - Adjustable RLL (custom css class toggle) applicable to entire vault
     - Disabled by default. Enable it via Style Settings plugin
 
-> For wide-dataview and wide-table, you will need to install [Contextual Typography](https://github.com/mgmeyers/obsidian-contextual-typography) plugin.
+> [!TIP]
+> Thanks to Obsidian updated Electron base to V21, I have managed to avoid using Contextual Typography plugin to support wide blocks with the release of [v0.9.6](https://github.com/efemkay/obsidian-modular-css-layout/releases/tag/0.9.6)
 
 
 #### Example
