@@ -167,11 +167,13 @@
         --wide-dv-min-left-ev: 6.5rem;
     }
     @container content-view (width > 50px) {
-        :is(.wide-dataview-global, .wide-dataview) .cm-preview-code-block:has(> .block-language-dataview) {
+        :is(.wide-dataview-global, .wide-dataview) .cm-preview-code-block:has(> .block-language-dataview),
+        :is(.wide-dataview-global, .wide-dataview) .cm-preview-code-block:has(> .block-language-dataviewjs) {
             width: calc(100cqi - 4rem );
             margin-left: calc( max( 100cqi - var(--wide-dv-width-ev), var(--wide-dv-min-left-ev) ) / 2 * -1 ) !important;
         }
-        :is(.wide-dataview-global, .wide-dataview) div:has(> .block-language-dataview) {
+        :is(.wide-dataview-global, .wide-dataview) div:has(> .block-language-dataview),
+        :is(.wide-dataview-global, .wide-dataview) div:has(> .block-language-dataviewjs) {
             width: 100cqi;
             margin-left: calc( max( 100cqi - var(--file-line-width), 1rem ) / 2 * -1 ) !important;
         }
@@ -193,13 +195,17 @@
         }
         @container content-view (width > 50px) {
             body[class*="minimal-tab-title"][class*="wide-dataview-global"] .markdown-source-view .cm-contentContainer.cm-contentContainer .cm-content .cm-preview-code-block:has(> .block-language-dataview),
-            body[class*="minimal-tab-title"] .wide-dataview.markdown-source-view .cm-contentContainer.cm-contentContainer .cm-content .cm-preview-code-block:has(> .block-language-dataview) {
+            body[class*="minimal-tab-title"] .wide-dataview.markdown-source-view .cm-contentContainer.cm-contentContainer .cm-content .cm-preview-code-block:has(> .block-language-dataview),
+            body[class*="minimal-tab-title"][class*="wide-dataview-global"] .markdown-source-view .cm-contentContainer.cm-contentContainer .cm-content .cm-preview-code-block:has(> .block-language-dataviewjs),
+            body[class*="minimal-tab-title"] .wide-dataview.markdown-source-view .cm-contentContainer.cm-contentContainer .cm-content .cm-preview-code-block:has(> .block-language-dataviewjs) {
                 width: calc(100cqi - 4rem);
                 max-width: 100%;
                 margin-left: calc( var(--wide-dv-left-ev-adj) / 2 * -1 ) !important;
             }
             body[class*="minimal-tab-title"][class*="wide-dataview-global"] .markdown-preview-view div:has(> .block-language-dataview),
-            body[class*="minimal-tab-title"] .wide-dataview.markdown-preview-view div:has(> .block-language-dataview) {
+            body[class*="minimal-tab-title"] .wide-dataview.markdown-preview-view div:has(> .block-language-dataview),
+            body[class*="minimal-tab-title"][class*="wide-dataview-global"] .markdown-preview-view div:has(> .block-language-dataviewjs),
+            body[class*="minimal-tab-title"] .wide-dataview.markdown-preview-view div:has(> .block-language-dataviewjs) {
                 width: calc(100cqi - 2rem - var(--wide-dv-width-adj) );
                 max-width: 100%;
                 margin-left: calc( var(--wide-dv-left-ev-adj) / 2 * -1 ) !important;
