@@ -5,6 +5,9 @@
 	- introduce fw dw and pw
 	- added left-right margin for Float Callout
 
+	Ver 0.9.9 (draft updated 2024-01-25)
+	- code cleanup (including -small -medium -large)
+	- improve css performance on float but require cssclass use again
 	Ver 0.9.8 (updated 2023-11-03)
 	- fixes on sub-callout becomes flexible height (and introduce option for such)
 	Ver 0.9.7 (updated 2023-10-13)
@@ -124,12 +127,11 @@ body{
 
 
 
-/* === Multi Column "DIV"'s Using Callout === */
-/* 	some issues still persists
-	(2) some theme uses transparency to affect .callout-title */
+/* === Multi Column Callout (MCC) === */
+	/* 	some issues still persists
+		(2) some theme uses transparency to affect .callout-title */
 
-	/* -- Main multi-column snippet using Callout */
-	/* variables */
+	/* common MCC variables */
 	body {
 		--mcc-img-snw-display: none;
 		--callout-min-width: 200px;
@@ -138,33 +140,33 @@ body{
 		--callout-margin: 0px;
 	}
 
-	/* remove callout-title and make callout-content as part of main callout for box formatting */
-	div[data-callout="multi-column"].callout > .callout-title { display: none; }
-	div[data-callout="multi-column"].callout > .callout-content { display: contents; }
-	/* make the main callout a flex and remove box formatting */
-	/* --columns: unset to undo Sanctum's mod */
-	div[data-callout="multi-column"].callout
-		{ display: flex; flex-wrap: wrap; gap: var(--callout-gap); background: unset; border: unset; margin: unset; padding: unset; clear: both; --columns: unset; }
-	/* make the subcallout in flex column to allow growing vertically */
-	div[data-callout="multi-column"].callout .callout:not([data-callout="multi-column"]) { display: flex; flex-direction: column; }
-	div[data-callout="multi-column"].callout:not(.is-collapsed) .callout { margin-inline: var(--callout-margin); margin-block: var(--callout-margin); } /* to allow spacing for box shadow */
-	div[data-callout="multi-column"].callout .callout .callout-content { flex-grow: 1}
+	/* -- Main MCC Code -- */
 
-	div[data-callout="multi-column"].callout > .callout-content > *:is(div,ul,blockquote,p) { flex: 1 1 var(--callout-min-width); margin: 0;}
+		/* remove callout-title and make callout-content as part of main callout for box formatting */
+		div[data-callout="multi-column"].callout > .callout-title { display: none; }
+		div[data-callout="multi-column"].callout > .callout-content { display: contents; }
+		/* make the main callout a flex and remove box formatting */
+		/* --columns: unset to undo Sanctum's mod */
+		div[data-callout="multi-column"].callout
+			{ display: flex; flex-wrap: wrap; gap: var(--callout-gap); background: unset; border: unset; margin: unset; padding: unset; clear: both; --columns: unset; }
+		/* make the subcallout in flex column to allow growing vertically */
+		div[data-callout="multi-column"].callout .callout:not([data-callout="multi-column"]) { display: flex; flex-direction: column; }
+		div[data-callout="multi-column"].callout:not(.is-collapsed) .callout { margin-inline: var(--callout-margin); margin-block: var(--callout-margin); } /* to allow spacing for box shadow */
+		div[data-callout="multi-column"].callout .callout .callout-content { flex-grow: 1}
 
-	/* metadata "wide-x" to control subcallout flexible max width. only discrete 2,4,8,16 */
-	div[data-callout="multi-column"].callout > .callout-content > div[data-callout-metadata*="min-0"] { flex-basis: 0; }
-	div[data-callout="multi-column"].callout > .callout-content > div[data-callout-metadata*="wide-2"] { flex-grow: 2; }
-	div[data-callout="multi-column"].callout > .callout-content > div[data-callout-metadata*="wide-3"] { flex-grow: 3; }
-	div[data-callout="multi-column"].callout > .callout-content > div[data-callout-metadata*="wide-4"] { flex-grow: 4; }
-	div[data-callout="multi-column"].callout > .callout-content > div[data-callout-metadata*="wide-5"] { flex-grow: 5; }
+		div[data-callout="multi-column"].callout > .callout-content > *:is(div,ul,blockquote,p) { flex: 1 1 var(--callout-min-width); margin: 0;}
 
+		/* metadata "wide-x" to control subcallout flexible max width. only discrete 2,4,8,16 */
+		div[data-callout="multi-column"].callout > .callout-content > div[data-callout-metadata*="min-0"] { flex-basis: 0; }
+		div[data-callout="multi-column"].callout > .callout-content > div[data-callout-metadata*="wide-2"] { flex-grow: 2; }
+		div[data-callout="multi-column"].callout > .callout-content > div[data-callout-metadata*="wide-3"] { flex-grow: 3; }
+		div[data-callout="multi-column"].callout > .callout-content > div[data-callout-metadata*="wide-4"] { flex-grow: 4; }
+		div[data-callout="multi-column"].callout > .callout-content > div[data-callout-metadata*="wide-5"] { flex-grow: 5; }
 
-	@media (min-width: 500px) {
-		/* .is-collapsed is used to draw the border-left only when it's collapsed */
-		/* adjusted for Obsidian 0.16.x, removed a number of previous adjustment as no longer required */
-		div[data-callout="multi-column"].callout > div.callout-content .callout.is-collapsed { box-shadow: unset; height: min-content;}
-	}
+		@media (min-width: 500px) {
+			/* .is-collapsed is used to draw the border-left only when it's collapsed */
+			div[data-callout="multi-column"].callout > div.callout-content .callout.is-collapsed { box-shadow: unset; height: min-content;}
+		}
 
 	/* -- MCC Variant - Flexible Height for Subcallout / Children -- */
 		/* also useful if one wants to have non callout children like table and don't want to fill the height */
@@ -180,18 +182,19 @@ body{
 	/* -- MCC Variation - Icons -- */
 
 		/* Main code */
-		div[data-callout="multi-column"][data-callout-metadata*="icons"].callout { justify-content: center; }
-		div[data-callout="multi-column"][data-callout-metadata*="icons"].callout .callout { display: flex; flex-direction: row; flex-wrap: wrap; }
-		div[data-callout="multi-column"][data-callout-metadata*="icons"].callout.callout .callout-content > p { flex-grow: 1; text-align: center; }
-		/* Options for number of columns */
-		div[data-callout="multi-column"][data-callout-metadata*="icons"][data-callout-metadata*="col2"].callout.callout .callout-content > p { flex-basis: 40%; }
-		div[data-callout="multi-column"][data-callout-metadata*="icons"][data-callout-metadata*="col3"].callout.callout .callout-content > p { flex-basis: 30%; }
-		div[data-callout="multi-column"][data-callout-metadata*="icons"][data-callout-metadata*="col4"].callout.callout .callout-content > p { flex-basis: 22%; }
-		div[data-callout="multi-column"][data-callout-metadata*="icons"][data-callout-metadata*="col5"].callout.callout .callout-content > p { flex-basis: 18%; }
+		div[data-callout="multi-column"][data-callout-metadata*="icons"] {
 
-		/* listive theme */
-		div[data-callout="multi-column"][data-callout-metadata*="icons"].callout p:first-child {
-			margin-top: revert;
+			&.callout { justify-content: center; }
+			&.callout .callout { display: flex; flex-direction: row; flex-wrap: wrap; }
+			&.callout.callout .callout-content > p { flex-grow: 1; text-align: center; }
+			/* Options for number of columns */
+			&[data-callout-metadata*="col2"].callout.callout .callout-content > p { flex-basis: 40%; }
+			&[data-callout-metadata*="col3"].callout.callout .callout-content > p { flex-basis: 30%; }
+			&[data-callout-metadata*="col4"].callout.callout .callout-content > p { flex-basis: 22%; }
+			&[data-callout-metadata*="col5"].callout.callout .callout-content > p { flex-basis: 18%; }
+
+			/* listive theme */
+			&.callout p:first-child { margin-top: revert; }
 		}
 
 
@@ -211,8 +214,10 @@ body{
 	/* -- MCC Variation - No Wrap Option -- */
 
 		/* No-Wrap Option (using callout-metadata) - for single row with horizontal scrollbar */
-		div[data-callout="multi-column"][data-callout-metadata*="no-wrap"].callout {flex-wrap: nowrap; overflow-x: scroll;}
-		div[data-callout="multi-column"][data-callout-metadata*="no-wrap"].callout > .callout-content > *:is(div,ul) { flex-shrink: 0; flex-basis: var(--callout-nowrap-min-width) }
+		div[data-callout="multi-column"][data-callout-metadata*="no-wrap"].callout {
+			flex-wrap: nowrap; overflow-x: scroll;
+			& > .callout-content > *:is(div,ul) { flex-shrink: 0; }
+		}
 		/* No-Wrap Option, Width Options */
 		.callout[data-callout="multi-column"][data-callout-metadata*="no-wrap"] .callout[data-callout-metadata*="small"] { flex-basis: 300px; }
 		.callout[data-callout="multi-column"][data-callout-metadata*="no-wrap"] .callout[data-callout-metadata*="medium"] { flex-basis: 400px; }
@@ -230,21 +235,17 @@ body{
 		div[data-callout="multi-column"].callout > .callout-content { margin-top: unset;}
 		div[data-callout="multi-column"].callout:not(.is-collapsed) { box-shadow: unset;}
 
-		/* Blue Topaz. remove box shadow from main [!multi-column] */
-		body[class*="notebook-liked-markdown-page"].shade-callout-style .callout[data-callout="multi-column"] { box-shadow: unset !important; }
-
-		/* Special Adjustment -- for Sanctum because it has "column" callout, Obsidian v0.16.x. Not required for multi-flex as it Sanctum expects the name ends with *=column */
-		/* 24Oct2023 to be removed */
-		/* body[class*="sanctum-"] .callout[data-callout*=column] .callout-title { display: flex; } */
-		/* body[class*="sanctum-"] .callout[data-callout*=column] .callout-content { display: unset; } */
+		/* Blue Topaz - remove box shadow from main [!multi-column] */
+			body[class*="notebook-liked-markdown-page"].shade-callout-style .callout[data-callout="multi-column"] { box-shadow: unset !important; }
 
 		/* Special Adjustment -- for minimal left margin *//*
 		.markdown-source-view.mod-cm6.is-readable-line-width .cm-embed-block.cm-callout > div[data-callout="multi-column"].callout
 			{ width: 100%; max-width: 100%; margin-inline: 0 !important; }
-		/* Special Adjustment -- for Minimal .dataview.list-view-ul width - Minimal set the width with --line-width-adaptive (40rem by default) */
+
+		/* Minimal -  .dataview.list-view-ul width - Minimal set the width with --line-width-adaptive (40rem by default) */
 		body:not(.table-100):not(.table-max):not(.table-wide) .markdown-preview-view.is-readable-line-width:not(.table-100):not(.table-max):not(.table-wide) div[data-callout="multi-column"].callout .dataview.list-view-ul {width: auto;}
 
-		/* for Minimal -- Callout Outline, to ensure sub-callout not overlapped and hidden */
+		/* Minimal -- Callout Outline, to ensure sub-callout not overlapped and hidden */
 		.callouts-outlined div[data-callout="multi-column"].callout:not(.is-collapsed) .callout:not([data-callout="multi-column"]) {
 			margin-top: 1em;
 		}
@@ -252,7 +253,7 @@ body{
 
 	/* == Special Adjustment for Plugins / Markdown Elements */
 
-		/* Special Adjustment for SNW plugin */
+		/* SNW plugin */
 		div[data-callout*="multi-column"].callout .callout-content span.image-embed + .snw-reference { display: var(--mcc-img-snw-display); }
 
 
@@ -280,11 +281,7 @@ body{
 
 
 
-	/* Special Adjustment for Themes */
-
-		/* Shimmering Focus. Differing font size in callout *//* no longer required as of v3.272
-		div[data-callout*="blank"] .callout-content :is(p,ul,li) { font-size: unset; line-height: inherit; }
-		div[data-callout*="blank"] .callout-content :is(li) { margin: unset; }
+	/* -- Special Adjustment for Themes -- */
 
 		/* Mado. Remove  theme's pseudo left border */
 		div[data-callout*="blank"] .callout-content::before { display: none; }
@@ -355,7 +352,7 @@ body{
 	}
 
 	/* -- FC Size Options -- */
-	/* -- small and medium for screen > 500px and large only for screen > 750px */
+	/* -- small and medium for screen > 500px and large only for screen > 750px *//*
 	@media (min-width: 500px){
 		div[class*="wide-"].markdown-source-view.mod-cm6.is-readable-line-width .cm-embed-block:is(.cm-callout, .admonition-parent) > div:is([data-callout-metadata*="left"],[data-callout-metadata*="right"])[data-callout-metadata*="-small"].callout,
 		div:is([data-callout-metadata*="left"],[data-callout-metadata*="right"])[data-callout-metadata*="-small"].callout {width: var(--float-small-width);}
@@ -366,6 +363,11 @@ body{
 		div[class*="wide-"].markdown-source-view.mod-cm6.is-readable-line-width .cm-embed-block:is(.cm-callout, .admonition-parent) > div:is([data-callout-metadata*="left"],[data-callout-metadata*="right"])[data-callout-metadata*="-large"].callout,
 		div[data-callout-metadata*="-large"].callout {width: var(--float-large-width);}
 	}
+
+	/* -- new version of width control */
+		[data-callout-metadata*="-small"].callout {width: var(--float-small-width);}
+		[data-callout-metadata*="-medium"].callout {width: var(--float-medium-width);}
+		[data-callout-metadata*="-large"].callout {width: var(--float-large-width);}
 
 
 	/* -- Special Adjustment for Plugins / Markdown Elements -- */
@@ -389,36 +391,32 @@ body{
 
 	/* -- Special Adjustment for Themes -- */
 
+		/* Minimal. Minimal Float. Updated for Minimal V7.4.7 */
+		/* "Reset" the default "cm-sizer" width but respect Minimal Settings, and require cssclass ".minimal-float" as Minimal own wide table will not work together with float i.e. removing :not(:has(table)) from .markdown-source-view.mod-cm6.is-readable-line-width:not(:has(table)) */
+		.minimal-float.markdown-source-view.mod-cm6 {
+			.cm-sizer {
+				max-width: var(--max-width); width: var(--line-width);
+			}
+			.cm-contentContainer.cm-contentContainer > .cm-content > div,
+			.cm-sizer > .embedded-backlinks,
+			.cm-sizer > .inline-title,
+			.cm-sizer > .metadata-container {
+				max-width: none; width: auto;
+			}
+		}
 
-		/* Minimal. Minimal Float. (duplicate from Multi Column. Redid "minimal-float" for Minimal V7.0 */
-		/* minimal own wide table will not work together with float */
-		/* undo the Minimal "cm-line" sizing */
+		/* Minimal. Previous Minimal Float but with performance issue. Kept for reference until 30 June 2024 */ /*
+		:is(body[class*="minimal-tab-title"] .markdown-source-view.mod-cm6.is-readable-line-width:not(:has(table)), .minimal-float.markdown-source-view.mod-cm6) .cm-sizer { max-width: var(--max-width); width: var(--line-width); }
+
 		:is(body[class*="minimal-tab-title"] .markdown-source-view.mod-cm6.is-readable-line-width:not(:has(table)), .minimal-float.markdown-source-view.mod-cm6) .cm-contentContainer.cm-contentContainer>.cm-content>div,
 		:is(body[class*="minimal-tab-title"] .markdown-source-view.mod-cm6.is-readable-line-width:not(:has(table)), .minimal-float.markdown-source-view.mod-cm6) .cm-sizer>.embedded-backlinks,
 		:is(body[class*="minimal-tab-title"] .markdown-source-view.mod-cm6.is-readable-line-width:not(:has(table)), .minimal-float.markdown-source-view.mod-cm6) .cm-sizer>.inline-title,
 		:is(body[class*="minimal-tab-title"] .markdown-source-view.mod-cm6.is-readable-line-width:not(:has(table)), .minimal-float.markdown-source-view.mod-cm6) .cm-sizer>.metadata-container
 			{ max-width: none; width: auto; }
-		/* Re-set the default "cm-sizer" width but respect Minimal Settings */
-		:is(body[class*="minimal-tab-title"] .markdown-source-view.mod-cm6.is-readable-line-width:not(:has(table)), .minimal-float.markdown-source-view.mod-cm6) .cm-sizer { max-width: var(--max-width); width: var(--line-width); }
 
-		/* to be deleted by 30 Sep 2023 */
-		/* Minimal - Undo the theme flex layout by default. To apply per note basis */
-			/* body[class*="minimal-tab-title"].contextual-typography .minimal-float.markdown-preview-view.markdown-preview-view .markdown-preview-sizer { display: unset; } */
-		/* Minimal - Live Preview float support. Need to revert cm-content width to default theme but cm-embed to auto */
-			/* body[class*="minimal-tab-title"] .minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6.is-readable-line-width .cm-contentContainer { width: calc(var(--line-width-adaptive) - var(--folding-offset)); max-width: calc(var(--max-width) - var(--folding-offset)); margin-right: auto; margin-left: max(calc(50% + var(--folding-offset) - var(--line-width-adaptive)/ 2), calc(50% + var(--folding-offset) - var(--max-width)/ 2)) !important; } */
-			/* .minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6.is-readable-line-width .cm-line { width: auto; max-width: 100%; margin-left: 0 !important; } */
-			/* body[class*="minimal-tab-title"] .minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6.is-readable-line-width .cm-embed-block.cm-callout> :is(.callout[data-callout-metadata*="left"], .callout[data-callout-metadata*="right"]) { max-width: none; margin-left: 0 !important;} */
-			/* body[class*="minimal-tab-title"] .minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6 .cm-embed-block.cm-callout > .callout { width: auto; } */
-		/* Minimal - Live Preview float support. Undo margin-left for Image */
-			/* .minimal-float:not([class*="wide-"]).markdown-source-view.mod-cm6 .cm-embed-block.cm-callout :is(.callout[data-callout-metadata*="left"], .callout[data-callout-metadata*="right"]) .internal-embed.image-embed { margin-left: auto !important; } */
 
-			/* fix to support Breadcrumbs plugin. Sub to the above LP float fix for Minimal */
+		/* Minimal - fix to support Breadcrumbs plugin. Sub to the above LP float fix for Minimal */
 			body[class*="minimal-tab-title"].contextual-typography .minimal-float.markdown-preview-view.markdown-preview-view .BC-trail.markdown-preview-sizer { display: flex; }
-
-
-		/* Minimal - Gaps/Margin adjustment. to be removed by 31 Aug 2023 */
-		/* body[class*="minimal-tab-title"] .minimal-float.wide-page div[data-callout*="blank"].cm-callout:is(div[data-callout-metadata*="left"]) { margin-left: 20px !important; } */
-
 
 		/* Minimal - Size Option fix due to !important */
 		/* Minimal. Uses body[class*="minimal-tab-title"] as identifier. To override (have higher specificity) the width param. Can be merged to main code later on */
@@ -497,6 +495,7 @@ body{
 		div:has(> ul > li > [data-heading] > [href*="#mcl/list-column"])
 			{ margin-top: 0.8em; }
 
+
 		/* readjust [!blank] display contents */
 		div[data-callout*="blank"] > .callout-content:has(li [href*="#mcl/list-column"]) {display: block; margin: 0; padding: 0; }
 
@@ -523,15 +522,25 @@ body{
 
 	/* -- Main Code -- */
 
-		ul:has(> li > [data-heading] > [href*="#mcl/list-grid"]), ul:has(> li > [href*="#mcl/list-grid"]), div[class*="mcllist-grid"] ul:first-child { display: grid; grid-template-columns: repeat(auto-fit,minmax(var(--list-grid-min-width),1fr));}
-		ul:has(> li > [data-heading] > [href*="#mcl/list-grid-wide"]), ul:has(> li > [href*="#mcl/list-grid-wide"]), div[class*="mcllist-grid-wide"] ul:first-child { grid-template-columns: repeat(auto-fit,minmax(var(--list-grid-wide-min-width),1fr));}
-		ul:has(> li > [data-heading] > [href*="#mcl/list-grid"]) > li:not(:last-of-type), ul:has(> li > [href*="#mcl/list-grid"]) > li:not(:last-of-type), div[class*="mcllist-grid"] ul:first-child > li:not(:last-of-type) {padding-right: 1.6em;}
+		ul:has(> li > [data-heading] > [href*="#mcl/list-grid"]),
+		ul:has(> li > [href*="#mcl/list-grid"]),
+		div[class*="mcllist-grid"] ul:first-child
+			{ display: grid; grid-template-columns: repeat(auto-fit,minmax(var(--list-grid-min-width),1fr)); }
+
+		ul:has(> li > [data-heading] > [href*="#mcl/list-grid-wide"]),
+		ul:has(> li > [href*="#mcl/list-grid-wide"]),
+		div[class*="mcllist-grid-wide"] ul:first-child
+			{ grid-template-columns: repeat(auto-fit,minmax(var(--list-grid-wide-min-width),1fr)); }
+
+		ul:has(> li > [data-heading] > [href*="#mcl/list-grid"]) > li:not(:last-of-type),
+		ul:has(> li > [href*="#mcl/list-grid"]) > li:not(:last-of-type),
+		div[class*="mcllist-grid"] ul:first-child > li:not(:last-of-type)
+			{ padding-right: 1.6em; }
 
 		ul:has(> li > [data-heading] > [href*="#mcl/list-grid-sm"]),
 		ul:has(> li > [href*="#mcl/list-grid-sm"]),
-		div[class*="mcllist-grid-sm"] ul:first-child {
-			--list-grid-min-width: 20%;
-		}
+		div[class*="mcllist-grid-sm"] ul:first-child
+			{ --list-grid-min-width: 20%; }
 
 
 		/* - dashboard style, page level only, apply to any first level */
@@ -560,43 +569,44 @@ body{
 	/* -- Main Code -- */
 
 		/* make the list grid, remove some ul padding */
-		:is(div:has(> ul [data-heading*="#mcl/list-card"]), [class*="mcllist-card"]) ul:first-child { display: grid; grid-template-columns: repeat(auto-fit,minmax(var(--list-grid-min-width),1fr));}
+
+		:is(div:has(> ul [data-heading*="#mcl/list-card"]), div:has(> ul [href*="#mcl/list-card"]), [class*="mcllist-card"]) ul:first-child { display: grid; grid-template-columns: repeat(auto-fit,minmax(var(--list-grid-min-width),1fr)); margin-block-start: 0.5em; }
 		:is(div:has(> ul [data-heading*="#mcl/list-card-wide"]), [class*="mcllist-card-wide"]) ul:first-child { grid-template-columns: repeat(auto-fit, minmax(var(--list-grid-wide-min-width),1fr));}
-		:is(div:has(> ul [data-heading*="#mcl/list-card"]), .tag-mcllist-card) ul ul:not(ul ul ul) { padding-left: 0.1em; }
-		:is(div:has(> ul [data-heading*="#mcl/list-card"]), div:has(> ul [data-heading*="#mcl/list-card"]) .callout-content, .tag-mcllist-card, .tag-mcllist-card .callout-content) > ul { padding-left: 0; }
+		:is(div:has(> ul [data-heading*="#mcl/list-card"]), div:has(> ul [href*="#mcl/list-card"]), .tag-mcllist-card) ul ul:not(ul ul ul) { padding-left: 0.1em; }
+		:is(div:has(> ul [data-heading*="#mcl/list-card"]), div:has(> ul [href*="#mcl/list-card"]), div:has(> ul [data-heading*="#mcl/list-card"]) .callout-content, .tag-mcllist-card, .tag-mcllist-card .callout-content) > ul { padding-left: 0; }
 		:is(.is-mobile .markdown-preview-section) :is(div:has([data-heading*="#mcl/list-card"]), .tag-mcllist-card) :is(ol:not(ol ol ol),  ul:not(ul ul ul)) {padding-left: 0;}
 		/* reposition the collapse indicator and hover behaviour */
-		:is(div:has(> ul [data-heading*="#mcl/list-card"]), div:has(> ul [data-heading*="#mcl/list-card"]) .callout-content, .tag-mcllist-card, .tag-mcllist-card .callout-content) > ul > li {position: relative;}
-		:is(div:has(> ul [data-heading*="#mcl/list-card"]), div:has(> ul [data-heading*="#mcl/list-card"]) .callout-content, .tag-mcllist-card, .tag-mcllist-card .callout-content) > ul > li:hover > .collapse-indicator,
-		:is(div:has(> ul [data-heading*="#mcl/list-card"]), div:has(> ul [data-heading*="#mcl/list-card"]) .callout-content, .tag-mcllist-card, .tag-mcllist-card .callout-content) > ul > li > ul > li:hover > .collapse-indicator {opacity: 1;}
-		:is(div:has(> ul [data-heading*="#mcl/list-card"]), div:has(> ul [data-heading*="#mcl/list-card"]) .callout-content, .tag-mcllist-card, .tag-mcllist-card .callout-content) > ul > li > .collapse-indicator,
-		:is(div:has(> ul [data-heading*="#mcl/list-card"]), div:has(> ul [data-heading*="#mcl/list-card"]) .callout-content, .tag-mcllist-card, .tag-mcllist-card .callout-content) > ul > li > ul > li > .collapse-indicator {position: absolute; right: 0.7em; padding-right: 0;}
-		:is(div:has(> ul [data-heading*="#mcl/list-card"]), .tag-mcllist-card) ul::before {display: none;}
+		:is(div:has(> ul [data-heading*="#mcl/list-card"]), div:has(> ul [href*="#mcl/list-card"]), div:has(> ul [data-heading*="#mcl/list-card"]) .callout-content, .tag-mcllist-card, .tag-mcllist-card .callout-content) > ul > li {position: relative;}
+		:is(div:has(> ul [data-heading*="#mcl/list-card"]), div:has(> ul [href*="#mcl/list-card"]), div:has(> ul [data-heading*="#mcl/list-card"]) .callout-content, .tag-mcllist-card, .tag-mcllist-card .callout-content) > ul > li:hover > .collapse-indicator,
+		:is(div:has(> ul [data-heading*="#mcl/list-card"]), div:has(> ul [href*="#mcl/list-card"]), div:has(> ul [data-heading*="#mcl/list-card"]) .callout-content, .tag-mcllist-card, .tag-mcllist-card .callout-content) > ul > li > ul > li:hover > .collapse-indicator {opacity: 1;}
+		:is(div:has(> ul [data-heading*="#mcl/list-card"]), div:has(> ul [href*="#mcl/list-card"]), div:has(> ul [data-heading*="#mcl/list-card"]) .callout-content, .tag-mcllist-card, .tag-mcllist-card .callout-content) > ul > li > .collapse-indicator,
+		:is(div:has(> ul [data-heading*="#mcl/list-card"]), div:has(> ul [href*="#mcl/list-card"]), div:has(> ul [data-heading*="#mcl/list-card"]) .callout-content, .tag-mcllist-card, .tag-mcllist-card .callout-content) > ul > li > ul > li > .collapse-indicator {position: absolute; right: 0.7em; padding-right: 0;}
+		:is(div:has(> ul [data-heading*="#mcl/list-card"]), div:has(> ul [href*="#mcl/list-card"]), .tag-mcllist-card) ul::before {display: none;}
 		/* decorate the first heading for cards */
 		:is(div:has(> ul [data-heading*="#mcl/list-card"]), div:has(> ul [data-heading*="#mcl/list-card"]) .callout-content, .tag-mcllist-card, .tag-mcllist-card .callout-content) > ul > li:not(.is-collapsed) > [data-heading] {border-bottom: var(--mcl-card-header-border-width) solid var(--mcl-card-border-color); margin-bottom: 0.2em;}
 		/* hide the list bullet for list-card for first and second level */
-		:is(div:has(> ul [data-heading*="#mcl/list-card"]), .tag-mcllist-card) > div > div > ul > li > .list-bullet::after,
-		:is(div:has(> ul [data-heading*="#mcl/list-card"]), .tag-mcllist-card) > div > div > ul > li > ul > li > .list-bullet::after,
-		:is(div:has(> ul [data-heading*="#mcl/list-card"]), .tag-mcllist-card) > ul > li::before,
-		:is(div:has(> ul [data-heading*="#mcl/list-card"]), .tag-mcllist-card) > ul > li > ul > li::before,
-		:is(div:has(> ul [data-heading*="#mcl/list-card"]), .tag-mcllist-card) > ul > li > .list-bullet::after,
-		:is(div:has(> ul [data-heading*="#mcl/list-card"]), .tag-mcllist-card) > ul > li > ul > li > .list-bullet::after {visibility: hidden;}
+		:is(div:has(> ul [data-heading*="#mcl/list-card"]), div:has(> ul [href*="#mcl/list-card"]), .tag-mcllist-card) > div > div > ul > li > .list-bullet::after,
+		:is(div:has(> ul [data-heading*="#mcl/list-card"]), div:has(> ul [href*="#mcl/list-card"]), .tag-mcllist-card) > div > div > ul > li > ul > li > .list-bullet::after,
+		:is(div:has(> ul [data-heading*="#mcl/list-card"]), div:has(> ul [href*="#mcl/list-card"]), .tag-mcllist-card) > ul > li::before,
+		:is(div:has(> ul [data-heading*="#mcl/list-card"]), div:has(> ul [href*="#mcl/list-card"]), .tag-mcllist-card) > ul > li > ul > li::before,
+		:is(div:has(> ul [data-heading*="#mcl/list-card"]), div:has(> ul [href*="#mcl/list-card"]), .tag-mcllist-card) > ul > li > .list-bullet::after,
+		:is(div:has(> ul [data-heading*="#mcl/list-card"]), div:has(> ul [href*="#mcl/list-card"]), .tag-mcllist-card) > ul > li > ul > li > .list-bullet::after {visibility: hidden;}
 		/* remove the indentation guide */
-		:is(div:has(> ul [data-heading*="#mcl/list-card"]), .tag-mcllist-card) ul:not(ul ul ul ul)::before {--indentation-guide-width: 0;}
+		:is(div:has(> ul [data-heading*="#mcl/list-card"]), div:has(> ul [href*="#mcl/list-card"]), .tag-mcllist-card) ul:not(ul ul ul ul)::before {--indentation-guide-width: 0;}
 		.markdown-rendered.show-indentation-guide :is(div:has(> ul [data-heading*="#mcl/list-card"]), .tag-mcllist-card) li > ul::before,
 		.markdown-rendered.show-indentation-guide :is(div:has(> ul [data-heading*="#mcl/list-card"]), .tag-mcllist-card) li > ol::before {border-right: 0; border-left: 0; }
-		:is(div:has(> ul [data-heading*="#mcl/list-card"]), .tag-mcllist-card) li {list-style: none;}
-		:is(div:has(> ul [data-heading*="#mcl/list-card"]), .tag-mcllist-card) li li li {list-style: circle;}
-		:is(div:has(> ul [data-heading*="#mcl/list-card"]), .tag-mcllist-card) .callout ul:not(ul ul) > li,
-		:is(div:has(> ul [data-heading*="#mcl/list-card"]), .tag-mcllist-card) ul:not(ul ul) > li
+		:is(div:has(> ul [data-heading*="#mcl/list-card"]), div:has(> ul [href*="#mcl/list-card"]), .tag-mcllist-card) li {list-style: none;}
+		:is(div:has(> ul [data-heading*="#mcl/list-card"]), div:has(> ul [href*="#mcl/list-card"]), .tag-mcllist-card) li li li {list-style: circle;}
+		:is(div:has(> ul [data-heading*="#mcl/list-card"]), div:has(> ul [href*="#mcl/list-card"]), .tag-mcllist-card) .callout ul:not(ul ul) > li,
+		:is(div:has(> ul [data-heading*="#mcl/list-card"]), div:has(> ul [href*="#mcl/list-card"]), .tag-mcllist-card) ul:not(ul ul) > li
 			{ margin-inline: var(--mcl-card-gap); margin-bottom: calc(var(--mcl-card-gap)*2); padding: 0.3em 0.5em; outline: var(--mcl-card-border-width) solid var(--mcl-card-border-color); border-radius: 0.5em; background-color: var(--mcl-card-bg-color);}
-		:is(div:has(> ul [data-heading*="#mcl/list-card"]), .tag-mcllist-card) ul:not(ul ul) > li img {width: 100%;}
-		:is(div:has(> ul [data-heading*="#mcl/list-card"]), .tag-mcllist-card) ul img {margin: 0; float: none;}
+		:is(div:has(> ul [data-heading*="#mcl/list-card"]), div:has(> ul [href*="#mcl/list-card"]), .tag-mcllist-card) ul:not(ul ul) > li img {width: 100%;}
+		:is(div:has(> ul [data-heading*="#mcl/list-card"]), div:has(> ul [href*="#mcl/list-card"]), .tag-mcllist-card) ul img {margin: 0; float: none;}
 
 
 	/* -- Special Adjustment for Themes -- */
 
-		/* special adjustment for Sanctum */
+		/* Sanctum */
 		.markdown-rendered .tag-mcllist-card ul img[alt*=right] {margin: 0;}
 
 

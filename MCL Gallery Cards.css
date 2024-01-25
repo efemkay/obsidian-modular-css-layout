@@ -1,6 +1,8 @@
 /* === README ===
 	Snippet: MCL Gallery Cards / Author: Faiz Khuzaimah / twitter: @faizkhuzaimah / github: https://github.com/efemkay
 
+	ver 0.9.9 (draft upd 2024-01-14)
+	- minor performance improvement by reducing image gallery has() scope, focusing on editing view
 	ver 0.9.8 (updated 2023-11-03)
 	- re-fixes #50
 	v0.9.7 (updated 2023-10-13)
@@ -50,20 +52,21 @@
 
 	/* Editing and Reading View - Gallery using <p> and Callout. Using <p> (in Reading View) to contain and format as gallery view using metadata="gallery" to contain and format as gallery view */
 		/* Create display: flex and key adjustment on margin and gap */
-		.image-gallery div:has(> p .image-embed) > p,
+		.image-gallery .markdown-rendered div:has(> p .image-embed) > p,
 		div[data-callout-metadata*="gallery"].callout > .callout-content > p
 			{ display: flex; gap: var(--callout-gallery-gap); margin-top: calc( var(--callout-gallery-gap) ); margin-bottom: 0; }
-		.image-gallery div:has(> p .image-embed) { margin-top: var(--callout-gallery-gap); }
+		.image-gallery .markdown-rendered div:has(> p .image-embed) { margin-top: var(--callout-gallery-gap); }
 		div[data-callout-metadata*="gallery"].callout > .callout-content { --callout-content-padding: 0.5rem 0 0 0; }
 		/* Introduce subtle border and make the gallery as object-fit: cover */
-		.image-gallery div:has(> p .image-embed) > p img,
+		.image-gallery .markdown-rendered div:has(> p .image-embed) > p img,
 		div[data-callout-metadata*="gallery"].callout > .callout-content > p img
 			{ max-height: var(--img-max-height); border: 1px solid var(--background-modifier-border); object-fit: cover; display: block;}
 		/* display: block for img is important to control the hidden margin-bottom but for Minimal, it uses display: flex for top level divs which pose another "margin" issues no plan to solve yet as this is not critical */
 
 		/* Hack to emulate Reading View masonry in Editing View (for use without callout) - there's no <p> tag to be container but we can hack to use .cm-line with the help of :has() */
-		.image-gallery div.cm-line:has(> .image-embed:not(.cm-callout)):not(.HyperMD-list-line):not(.cm-active) { display: flex; gap: var(--callout-gallery-gap); }
-		.image-gallery div.cm-line:has(> .image-embed:not(.cm-callout)):not(.HyperMD-list-line):not(.cm-active) > :is(img,span) { display: none !important; }
+		/* improved the css performance */
+		.image-gallery div.cm-line:not(.HyperMD-list-line):not(.cm-active):has(> .image-embed:not(.cm-callout)) { display: flex; gap: var(--callout-gallery-gap); --img-gallery__buffer-display: none; }
+		.image-gallery div.cm-line > :is(img.cm-widgetBuffer,span[contenteditable]) { display: var(--img-gallery__buffer-display) !important; }
 		.image-gallery div:not(.cm-callout):not(.HyperMD-list-line).image-embed img { max-height: calc(var(--img-max-height)/1); display: unset; object-fit: cover; }
 
 
@@ -121,8 +124,8 @@
 	}
 
 	/* float in both Live Preview and Reading View */
-	img[alt*="left"] { float: left; margin: var(--float-left-margin); }
-	img[alt*="right"] { float: right; margin: var(--float-right-margin); }
+	img[alt^="left"], img[alt^="float-left"] { float: left; margin: var(--float-left-margin); }
+	img[alt^="right"], img[alt^="float-right"] { float: right; margin: var(--float-right-margin); }
 	/* disable box control for parent div to the float */
 	.internal-embed.image-embed[alt*="float-left"],
 	.internal-embed.image-embed[alt*="float-right"]
@@ -213,15 +216,18 @@
 	}
 	/* editing view */
 	body.mermaid-zoom:not(.is-mobile) .markdown-source-view .cm-embed-block:has(.mermaid svg:active) {
-		top: 20%; left: 0;
+		text-align: center;
+		top: 0; left: 0; right: 0; bottom: 0;
 		z-index: 100;
 		position: fixed;
+		background: rgba(0,0,0,0.8)
 	}
 	body.mermaid-zoom:not(.is-mobile) .markdown-source-view. .cm-embed-block:has(.mermaid svg:active) .mermaid { overflow-x: hidden; }
 	body.mermaid-zoom:not(.is-mobile) .markdown-source-view .mermaid svg:active {
 		cursor: zoom-out;
-		max-height: calc(100% + 1px); max-width: calc(100% - 20px); height: calc(100% + 1px); width: 100%;
-		background: rgba(0,0,0,0.8);
+		position: fixed;
+		width: 100%; height: 100%;
+		top: 0; left: 0;
 	}
 
 
