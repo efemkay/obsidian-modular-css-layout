@@ -5,7 +5,9 @@
 	- introduce fw dw and pw
 	- added left-right margin for Float Callout
 
-	Ver 0.9.9 (draft updated 2024-01-25)
+	Ver 0.9.10 (updated 2024-06-26)
+	- fix issues #81 and #89
+	Ver 0.9.9 (updated 2024-01-25)
 	- code cleanup (including -small -medium -large)
 	- improve css performance on float but require cssclass use again
 	Ver 0.9.8 (updated 2023-11-03)
@@ -380,9 +382,9 @@ body{
 			/* .markdown-preview-view h2, *//* remove this as it has weird spacing effect */
 			.embedded-backlinks { clear: both; }
 
-		/* for Blockquote underlap the float layout */
-			.markdown-preview-view :is(blockquote) { overflow-x: auto; } /* fix for blockquote underlap */
-			.markdown-preview-view :is(p) { overflow: unset; } /* fix for para not wrapping around float. applicable for Willemstad */
+		/* for Blockquote underlap the float layout -- to remove by 30Jun2024, no longer needed */
+			/* .markdown-preview-view :is(blockquote) { overflow-x: auto; } /* fix for blockquote underlap */
+			/* .markdown-preview-view :is(p) { overflow: unset; } /* fix for para not wrapping around float. applicable for Willemstad */
 
 		/* for SNW plugin */
 		div:is([data-callout-metadata*="caption"],[data-callout-metadata*="left"],[data-callout-metadata*="right"]).callout > .callout-content > p .snw-embed-preview { display: var(--float-callout-snw-display); width: min-content; height: min-content; }
@@ -572,7 +574,9 @@ body{
 
 		:is(div:has(> ul [data-heading*="#mcl/list-card"]), div:has(> ul [href*="#mcl/list-card"]), [class*="mcllist-card"]) ul:first-child { display: grid; grid-template-columns: repeat(auto-fit,minmax(var(--list-grid-min-width),1fr)); margin-block-start: 0.5em; }
 		:is(div:has(> ul [data-heading*="#mcl/list-card-wide"]), [class*="mcllist-card-wide"]) ul:first-child { grid-template-columns: repeat(auto-fit, minmax(var(--list-grid-wide-min-width),1fr));}
-		:is(div:has(> ul [data-heading*="#mcl/list-card"]), div:has(> ul [href*="#mcl/list-card"]), .tag-mcllist-card) ul ul:not(ul ul ul) { padding-left: 0.1em; }
+		/* unindent first level bullet */
+		:is(div:has(> ul [data-heading*="#mcl/list-card"]), div:has(> ul [href*="#mcl/list-card"]), .tag-mcllist-card) ul ul:not(ul ul ul) { padding-left: 0.1em; } /* with v1.6 this is somewhat redundant */
+		:is(div:has(> ul [data-heading*="#mcl/list-card"]), div:has(> ul [href*="#mcl/list-card"]), .tag-mcllist-card) ul ul:not(ul ul ul) > li { margin-inline-start: 0; }
 		:is(div:has(> ul [data-heading*="#mcl/list-card"]), div:has(> ul [href*="#mcl/list-card"]), div:has(> ul [data-heading*="#mcl/list-card"]) .callout-content, .tag-mcllist-card, .tag-mcllist-card .callout-content) > ul { padding-left: 0; }
 		:is(.is-mobile .markdown-preview-section) :is(div:has([data-heading*="#mcl/list-card"]), .tag-mcllist-card) :is(ol:not(ol ol ol),  ul:not(ul ul ul)) {padding-left: 0;}
 		/* reposition the collapse indicator and hover behaviour */
