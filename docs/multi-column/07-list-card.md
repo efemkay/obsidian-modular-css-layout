@@ -60,6 +60,12 @@ Here's an example markdown:
 
 > The number of cards can appear per row is subject to card's minimum width and note's width. Card's minimum width is adjustable via Style Settings plugin.
 
+{: .note-title }
+> List Card applies only to first level bullet
+>
+> Due to some constraints, current implementation of List Card applies to first level bullet despite declaring the hashtag in the sub bullet.
+
+
 ## Additional Controls
 If you have Style Settings plugin installed, you may control the following aspects (go to `Style Settings > Modular CSS Layout - Multi Column > List Grid and List Card`)
 - Card's width and background Color
