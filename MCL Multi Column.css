@@ -1,10 +1,10 @@
 /* === README ===
 	Snippet: MCL Multi Column / Author: Faiz Khuzaimah / twitter: @faizkhuzaimah / github: https://github.com/efemkay
 
-	Version 0.10.0 (beta, draft updated 2023-08-15)
+	Ver 0.9.11 (draft 2024-09-01)
 	- introduce fw dw and pw
 	- added left-right margin for Float Callout
-
+	- refactor List Column code to improve performance
 	Ver 0.9.10 (updated 2024-06-26)
 	- fix issues #81 and #89
 	Ver 0.9.9 (updated 2024-01-25)
@@ -141,6 +141,9 @@ body{
 		--callout-gap: 1em;
 		--callout-margin: 0px;
 	}
+	[data-callout="multi-column"].callout {
+		--callout-blend-mode: normal;
+	}
 
 	/* -- Main MCC Code -- */
 
@@ -220,25 +223,24 @@ body{
 			flex-wrap: nowrap; overflow-x: scroll;
 			& > .callout-content > *:is(div,ul) { flex-shrink: 0; }
 		}
-		/* No-Wrap Option, Width Options */
+
+		/* No-Wrap Option, Width Options. Legacy width option. better to dw, pw and fw options at the top */
 		.callout[data-callout="multi-column"][data-callout-metadata*="no-wrap"] .callout[data-callout-metadata*="small"] { flex-basis: 300px; }
 		.callout[data-callout="multi-column"][data-callout-metadata*="no-wrap"] .callout[data-callout-metadata*="medium"] { flex-basis: 400px; }
 		.callout[data-callout="multi-column"][data-callout-metadata*="no-wrap"] .callout[data-callout-metadata*="large"] { flex-basis: 600px; }
-
 
 		/* Align center for items in callout */
 		div[data-callout="multi-column"] .callout[data-callout-metadata*="center"] { text-align: center; }
 
 
-
-	/* == Special Adjustment for Community Themes */
+	/* -- Special Adjustment for Community Themes -- */
 
 		 /* Special Adjustment -- for theme with negative margin & box shadow. (e.g. Prism) */
 		div[data-callout="multi-column"].callout > .callout-content { margin-top: unset;}
 		div[data-callout="multi-column"].callout:not(.is-collapsed) { box-shadow: unset;}
 
 		/* Blue Topaz - remove box shadow from main [!multi-column] */
-			body[class*="notebook-liked-markdown-page"].shade-callout-style .callout[data-callout="multi-column"] { box-shadow: unset !important; }
+		body[class*="notebook-liked-markdown-page"].shade-callout-style .callout[data-callout="multi-column"] { box-shadow: unset !important; }
 
 		/* Special Adjustment -- for minimal left margin *//*
 		.markdown-source-view.mod-cm6.is-readable-line-width .cm-embed-block.cm-callout > div[data-callout="multi-column"].callout
@@ -253,7 +255,7 @@ body{
 		}
 
 
-	/* == Special Adjustment for Plugins / Markdown Elements */
+	/* -- Special Adjustment for Plugins / Markdown Elements -- */
 
 		/* SNW plugin */
 		div[data-callout*="multi-column"].callout .callout-content span.image-embed + .snw-reference { display: var(--mcc-img-snw-display); }
@@ -280,7 +282,6 @@ body{
 		div[data-callout*="blank"].callout .callout-content > p:only-child {
 			margin-block: 0;
 		}
-
 
 
 	/* -- Special Adjustment for Themes -- */
@@ -354,19 +355,8 @@ body{
 	}
 
 	/* -- FC Size Options -- */
-	/* -- small and medium for screen > 500px and large only for screen > 750px *//*
-	@media (min-width: 500px){
-		div[class*="wide-"].markdown-source-view.mod-cm6.is-readable-line-width .cm-embed-block:is(.cm-callout, .admonition-parent) > div:is([data-callout-metadata*="left"],[data-callout-metadata*="right"])[data-callout-metadata*="-small"].callout,
-		div:is([data-callout-metadata*="left"],[data-callout-metadata*="right"])[data-callout-metadata*="-small"].callout {width: var(--float-small-width);}
-		div[class*="wide-"].markdown-source-view.mod-cm6.is-readable-line-width .cm-embed-block:is(.cm-callout, .admonition-parent) > div:is([data-callout-metadata*="left"],[data-callout-metadata*="right"])[data-callout-metadata*="-medium"].callout,
-		div:is([data-callout-metadata*="left"],[data-callout-metadata*="right"])[data-callout-metadata*="-medium"].callout {width: var(--float-medium-width);}
-	}
-	@media (min-width: 750px){
-		div[class*="wide-"].markdown-source-view.mod-cm6.is-readable-line-width .cm-embed-block:is(.cm-callout, .admonition-parent) > div:is([data-callout-metadata*="left"],[data-callout-metadata*="right"])[data-callout-metadata*="-large"].callout,
-		div[data-callout-metadata*="-large"].callout {width: var(--float-large-width);}
-	}
 
-	/* -- new version of width control */
+		/* legacy width option. better to dw, pw and fw options at the top */
 		[data-callout-metadata*="-small"].callout {width: var(--float-small-width);}
 		[data-callout-metadata*="-medium"].callout {width: var(--float-medium-width);}
 		[data-callout-metadata*="-large"].callout {width: var(--float-large-width);}
@@ -467,36 +457,20 @@ body{
 		.footnotes [class$="-column-list-block"] li:last-of-type br:last-of-type {display: none;}
 
 
-	/* -- List Column Using Tag (CSS :has() and CT plugin) -- */
+	/* -- List Column Using Tag (using CSS has) -- */
 
-		/* - List Column using Contextual Typography plugin */
-		.tag-mcllist-column > .callout[data-callout*="blank"],
-		.tag-mcllist-column > .callout > .callout-content,
-		.tag-mcllist-column:not([data-callout]) { column-width: var(--list-min-width); column-gap: 1rem; column-rule: var(--col-rule-width) solid var(--col-rule-color); }
-		.tag-mcllist-column.cm-callout {padding-block: 1em;} /* add block padding only for the one in callout */
-		.tag-mcllist-column .callout:first-of-type { margin-top: 0; }
-
-		.tag-mcllist-column ul:first-of-type,
-		div:has(> ul > li > [href*="#mcl/list-column"]) ul:first-of-type
-			{ margin-top: 0; }
-
-		/* - List Column using :has() */
+		/* set the column rules at ul level and adjust the margin */
 		ul:has(> li > [data-heading] > [href*="#mcl/list-column"]),
-		ul:has(> li > [href*="#mcl/list-column"])
-			{ column-width: var(--list-min-width); column-gap: 1rem; }
-
-		/* - List Column using :has() but override for LC on first ul to have column rule */
-		div:has(> ul > li > [data-heading] > [href*="#mcl/list-column"]),
-		div:has(> ul > li > [href*="#mcl/list-column"]),
-		div[data-callout*="blank"] > .callout-content:has(> ul > li > [data-heading] > [href*="#mcl/list-column"]),
-		div[data-callout*="blank"] > .callout-content:has(> ul > li > [href*="#mcl/list-column"])
-			{ column-width: var(--list-min-width); column-gap: 1rem; column-rule: var(--col-rule-width) solid var(--col-rule-color); }
+		ul:has(> li > [href*="#mcl/list-column"]) {
+			margin-top: 0;
+            column-width: var(--list-min-width); column-gap: 1rem;
+            column-rule: var(--col-rule-width) solid var(--col-rule-color);
+        }
 
 		/* give some margin for the div, for first ul only */
 		div:has(> ul > li > [href*="#mcl/list-column"]),
 		div:has(> ul > li > [data-heading] > [href*="#mcl/list-column"])
 			{ margin-top: 0.8em; }
-
 
 		/* readjust [!blank] display contents */
 		div[data-callout*="blank"] > .callout-content:has(li [href*="#mcl/list-column"]) {display: block; margin: 0; padding: 0; }
