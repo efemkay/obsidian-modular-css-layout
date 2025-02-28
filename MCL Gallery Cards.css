@@ -222,7 +222,7 @@
 		position: fixed;
 		background: rgba(0,0,0,0.8)
 	}
-	body.mermaid-zoom:not(.is-mobile) .markdown-source-view. .cm-embed-block:has(.mermaid svg:active) .mermaid { overflow-x: hidden; }
+	body.mermaid-zoom:not(.is-mobile) .markdown-source-view .cm-embed-block:has(.mermaid svg:active) .mermaid { overflow-x: hidden; }
 	body.mermaid-zoom:not(.is-mobile) .markdown-source-view .mermaid svg:active {
 		cursor: zoom-out;
 		position: fixed;
