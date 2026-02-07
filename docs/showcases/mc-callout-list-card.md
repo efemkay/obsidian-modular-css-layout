@@ -11,7 +11,7 @@ parent: Showcases
 
 ```md
 ---
-cssClass: minimal-float, wide-page
+cssclasses: minimal-float, wide-page
 ---
 
 > #### What do you need to achieve this?

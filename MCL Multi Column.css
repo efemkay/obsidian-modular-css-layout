@@ -43,13 +43,13 @@
 
 	What is this snippet for?
 	- to allow Obsidian users to change the layout with preset css by just specifying
-	  the cssClass in the frontmatter (YAML) or naming the Callout block
-	- available cssClass
-		- cssClass: two-column-list
-		- cssClass: {.two-column-list-block}
-		- cssClass: three-column-list
-		- cssClass: {.three-column-list-block}
-		- cssClass: multi-column-list
+	  the cssclasses in the frontmatter (YAML) or naming the Callout block
+	- available cssclasses
+		- cssclasses: two-column-list
+		- cssclasses: {.two-column-list-block}
+		- cssclasses: three-column-list
+		- cssclasses: {.three-column-list-block}
+		- cssclasses: multi-column-list
 	- available Callout format
 		- [!multi-column]
 		- [!blank] / [!blank-container]
@@ -384,7 +384,7 @@ body{
 	/* -- Special Adjustment for Themes -- */
 
 		/* Minimal. Minimal Float. Updated for Minimal V7.4.7 */
-		/* "Reset" the default "cm-sizer" width but respect Minimal Settings, and require cssclass ".minimal-float" as Minimal own wide table will not work together with float i.e. removing :not(:has(table)) from .markdown-source-view.mod-cm6.is-readable-line-width:not(:has(table)) */
+		/* "Reset" the default "cm-sizer" width but respect Minimal Settings, and require cssclasses ".minimal-float" as Minimal own wide table will not work together with float i.e. removing :not(:has(table)) from .markdown-source-view.mod-cm6.is-readable-line-width:not(:has(table)) */
 		.minimal-float.markdown-source-view.mod-cm6 {
 			.cm-sizer {
 				max-width: var(--max-width); width: var(--line-width);
@@ -422,7 +422,7 @@ body{
 
 
 /* === List Column ===*/
-	/* supported for (1) css :has(), (2) yaml cssclass, (3) CT plugin, and (4) MA plugin
+	/* supported for (1) css :has(), (2) yaml cssclasses, (3) CT plugin, and (4) MA plugin
 		- CSS :has() can be applied to sublists, so no column rule. CT plugin apply to div that houses the ul, so column gap is different
 		- xx-column-list for first level only list, but apply anywhere but xx-column-list-block apply at block level. Both require JV's Markdown Attributes plugin
 	*/
@@ -436,7 +436,7 @@ body{
 		.cm-s-obsidian .HyperMD-list-line span[class*="mcl"] {background-color: var(--background-primary) !important; color: var(--text-faint); font-size: 0.9rem; }
 
 
-	/* -- List Column using YAML cssclass and Markdown Attributes i.e. {.three-column-list-block} -- */
+	/* -- List Column using YAML cssclasses and Markdown Attributes i.e. {.three-column-list-block} -- */
 
 		/* define the column gap and column rule */
 		.two-column-list div > ul,   .two-column-list-block,
@@ -480,7 +480,7 @@ body{
 
 		/* Adjustment for misaligned bullets (this is a hack, need to find better solution later) */
 		ul:has([href="#mcl/list-column"]) li > .list-bullet::after, /* :has() */
-		.markdown-preview-view[class*="column-list"] li > .list-bullet::after, /* yaml cssclass */
+		.markdown-preview-view[class*="column-list"] li > .list-bullet::after, /* yaml cssclasses */
 		.tag-mcllist-column ul li > .list-bullet::after, /* contextual typography */
 		ul[class*="column-list"] li > .list-bullet::after /* markdown attributes */
 			{ position: relative; }

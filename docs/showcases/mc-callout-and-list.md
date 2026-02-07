@@ -12,7 +12,7 @@ nav_order: 3
 
 ```md
 ---
-cssclass: wide-page
+cssclasses: wide-page
 ---
 
 > [!multi-column]

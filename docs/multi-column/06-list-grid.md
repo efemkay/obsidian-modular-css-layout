@@ -69,7 +69,7 @@ Using this approach, you will have to specify the css for the column type at the
 Here's an example markdown:
 ```md
 ---
-cssClass: two-column-grid-list
+cssclasses: two-column-grid-list
 ---
 
 - #### Core Work

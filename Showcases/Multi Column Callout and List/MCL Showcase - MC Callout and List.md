@@ -1,5 +1,5 @@
 ---
-cssclass: wide-page
+cssclasses: wide-page
 ---
 
 > [!multi-column]

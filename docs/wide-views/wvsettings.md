@@ -17,12 +17,12 @@ Set the max width for normal-width page. Enable Adjustable RLL option above must
 ## Wide Page Settings
 
 ### Max Width for Normal Width block
-Set the max width for normal-width blocks for page/note that you specify with `cssClass: wide-<dataview|table|backlinks>`
+Set the max width for normal-width blocks for page/note that you specify with `cssclasses: wide-<dataview|table|backlinks>`
 
 ## Narrow Page Settings
 
 ### Max Width for Narrow View page
-Set the max width for the page/note that you specify with `cssClass: narrow-page`.
+Set the max width for the page/note that you specify with `cssclasses: narrow-page`.
 
 ---
 

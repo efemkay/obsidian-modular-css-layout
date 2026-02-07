@@ -28,14 +28,14 @@ This is actually just a CSS code snippets collection. So it isn't an installatio
 > This section only briefly explains Wide Views snippet. Please go through the documentation site [Wide Views - Modular CSS Layout](https://efemkay.github.io/obsidian-modular-css-layout/wide-views/) for more details.
 
 This snippet provides you the following features:
-- Full width page or blocks (dataview, table and backlinks) per page/note basis by specifying custom `cssClass` at the frontmatter (YAML)
+- Full width page or blocks (dataview, table and backlinks) per page/note basis by specifying custom `cssclasses` at the frontmatter (YAML)
 	- `wide-page`
 	- `wide-dataview`
 	- `wide-table`
 	- `wide-callout`
 	- `wide-backlinks`
 	- vault-wide toggle for each of the above
-- Narrow width page per page/note basis for vault with RLL disabled by specifying custom `cssClass` at the frontmatter (YAML)
+- Narrow width page per page/note basis for vault with RLL disabled by specifying custom `cssclasses` at the frontmatter (YAML)
     - `narrow-page`
 - Adjustable RLL (custom css class toggle) applicable to entire vault
     - Disabled by default. Enable it via Style Settings plugin
@@ -48,7 +48,7 @@ This snippet provides you the following features:
 
 ```markdown
 ---
-cssClass: wide-page
+cssclasses: wide-page
 ---
 
 <the rest of your note>
@@ -100,7 +100,7 @@ Multi Column Callout layout take advantage of Obsidian Callout - leveraging it a
 
 
 ### List Column/Grid/Card
-This layout take advantage of markdown unordered list (i.e. `- list item`) to create multi column (and multi row for List Grid/Card) layout by matching with an identifier i.e. either `#mcl` tag, Markdown Attributes plugin syntax, or `cssclass:` key at frontmatter.
+This layout take advantage of markdown unordered list (i.e. `- list item`) to create multi column (and multi row for List Grid/Card) layout by matching with an identifier i.e. either `#mcl` tag, Markdown Attributes plugin syntax, or `cssclasses:` key at frontmatter.
 
 ![](https://raw.githubusercontent.com/efemkay/obsidian-modular-css-layout/main/docs/assets/hero-mc-list-column-grid-card.png)
 
@@ -156,7 +156,7 @@ You can apply to any callout as the identifier is done on the callout-metadata i
 
 This snippet provides you the following features:
 - Image gallery using callout by specifying the callout-metadata `gallery` e.g. `> [!NOTE|gallery]`
-- Image gallery using YAML/frontmatter .`cssClass: image-gallery`
+- Image gallery using YAML/frontmatter .`cssclasses: image-gallery`
 - Float Image using image alt-text
 - Image and Mermaid Diagram Controls
 	- Dimension control for images in bullet list

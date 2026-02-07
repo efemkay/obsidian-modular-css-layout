@@ -21,7 +21,7 @@ nav_order: 2
 Image Gallery layout will allow you to create masonry like image gallery layout by placing image embed (i.e. `![[path/to/image.jpg]]`) in successive row of line. There are 2 different ways you can do so i.e.
 
 1. Using Obsidian Callout (by specifying the callout metadata `gallery`)
-2. Using frontmatter (by specifying `cssclass: image-gallery`)
+2. Using frontmatter (by specifying `cssclasses: image-gallery`)
 
 {: .warning-title}
 > Markdown image embed (i.e. `![](path/to/image.jpg)`) not supported
@@ -52,15 +52,15 @@ Image Gallery layout will allow you to create masonry like image gallery layout 
 ![](https://raw.githubusercontent.com/efemkay/obsidian-modular-css-layout/main/docs/assets/gallery-callout-langkawi.png)
 
 
-### How to Use -- with Frontmatter `cssClass: image-gallery`
+### How to Use -- with Frontmatter `cssclasses: image-gallery`
 
-- Specify `cssClass: image-gallery` at the frontmatter *(top of your markdown notes fenced by two three-dashes `---`, see example below)*
+- Specify `cssclasses: image-gallery` at the frontmatter *(top of your markdown notes fenced by two three-dashes `---`, see example below)*
 - Insert embedded images (i.e. `![[path/to/image.jpg]]`). Put next to each other (with single spacing) for same row placement. Add single empty line to create new row.
 
 
 ```markdown
 ---
-cssClass: image-gallery
+cssclasses: image-gallery
 ---
 
 ![[path/to/pic1.jpg]] ![[path/to/pic2.jpg]]
@@ -74,7 +74,7 @@ cssClass: image-gallery
 > **Syntax below only works with Reading View**
 > ```markdown
 > ---
-> cssClass: image-gallery
+> cssclasses: image-gallery
 > ---
 >
 > ![[path/to/pic1.jpg]]

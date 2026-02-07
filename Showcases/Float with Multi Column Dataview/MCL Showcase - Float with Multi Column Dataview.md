@@ -1,5 +1,5 @@
 ---
-cssclass: text-justify
+cssclasses: text-justify
 ---
 
 ## General linear model

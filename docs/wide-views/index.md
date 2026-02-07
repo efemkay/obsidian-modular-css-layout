@@ -18,13 +18,13 @@ has_children: true
 ## Understanding the snippet
 - CSS snippet file: [MCL Wide Views.css](https://github.com/efemkay/obsidian-modular-css-layout/blob/main/MCL%20Wide%20Views.css)
 - This snippet will provide the following features
-	- Wide views using YAML `cssClass: wide-<page/blocks>` for applying to a specific individual note
+	- Wide views using YAML `cssclasses: wide-<page/blocks>` for applying to a specific individual note
 	- Wide views using vault-wide toggle for applying to all notes in your vault
 		- will require Style Settings plugin to enable the feature
 
 ---
 
-## Using YAML (specifying `cssClass`)
+## Using YAML (specifying `cssclasses`)
 
 - CSS snippet: `MCL Wide Views.css`
 - Custom CSS class available
@@ -37,7 +37,7 @@ This snippet allow you to use Obsidian CSS class helper to enable any of the wid
 
 ```markdown
 ---
-cssClass: wide-page
+cssclasses: wide-page
 ---
 
 <the rest of your note>

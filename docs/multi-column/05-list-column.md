@@ -58,7 +58,7 @@ For this approach, do note that there's a dot (`.`) before the class name. This 
 Here's an example markdown:
 ```md
 ---
-cssClass: two-column-list
+cssclasses: two-column-list
 ---
 
 - list item 1 #mcl/list-column
@@ -78,7 +78,7 @@ cssClass: two-column-list
 > Note that this approach do not work well if the last bullet is indented (not part of top level list). Example here
 > ```md
 > ---
-> cssClass: two-column-list
+> cssclasses: two-column-list
 > ---
 >
 > - list item 1 #mcl/list-column
@@ -99,7 +99,7 @@ Using this approach, you will have to specify the css for the column type at the
 Here's an example markdown:
 ```md
 ---
-cssClass: two-column-list
+cssclasses: two-column-list
 ---
 
 - list item 1 #mcl/list-column

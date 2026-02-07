@@ -8,7 +8,7 @@
 
 	What is this snippet for?
 	- for any users to use with any theme to complement any missing page/block width control
-	- available cssClass:
+	- available cssclasses:
 		- wide-page
         - wide-table
 		- wide-dataview
@@ -46,7 +46,7 @@
 
 
 /* === Adjustable RLL === */
-    /* cssClass toggle to allow users to adjust the RLL via Style Settings.
+    /* cssclasses toggle to allow users to adjust the RLL via Style Settings.
        Obsidian v1.0.0 makes it easier to do adjustable RLL ;) */
 
 	/* -- Main Code - Editing and Reading View -- */
@@ -55,7 +55,7 @@
 
 
 /* === Narrow Page === */
-    /* cssClass YAML to allow users with disabled RLL to introduce RLL per
+    /* cssclasses YAML to allow users with disabled RLL to introduce RLL per
        page/note basis. width is following obsidian default setting, or you
        can change it via MCL's Adjustable RLL */
 
@@ -383,7 +383,7 @@ settings:
     -
         id: narrow-view-title
         title: Narrow Page Settings
-		description: Control max-width page/note with cssClass `narrow-page`. RLL must be **disabled**
+		description: Control max-width page/note with cssclasses `narrow-page`. RLL must be **disabled**
         type: heading
         level: 2
         collapsed: true

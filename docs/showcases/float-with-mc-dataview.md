@@ -12,7 +12,7 @@ nav_order: 2
 
 ```md
 ---
-cssclass: text-justify, wide-page, minimal-float
+cssclasses: text-justify, wide-page, minimal-float
 ---
 
 ## General linear model

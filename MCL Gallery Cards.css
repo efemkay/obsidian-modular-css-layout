@@ -25,7 +25,7 @@
 	This snippet is part of MCL collection of snippets for customising layout, and it provides the following
 	- "gallery" callout-metadata i.e. [!<any-callout>|gallery] for flex/grid layout
 		- use together with MCL Multi Column [!blank-container] for invisible container
-	- YAML `cssClass: image-gallery` to achieve similar to callout but using only Contextual Typography plugin & <p>
+	- YAML `cssclasses: image-gallery` to achieve similar to callout but using only Contextual Typography plugin & <p>
 	- Image Zoom via css
 	- Dimension control for images in lists <ul>
 
